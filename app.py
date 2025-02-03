@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
-mongo = PyMongo(app)
+# mongo = PyMongo(app)
 
 @app.route('/')
 def index():
