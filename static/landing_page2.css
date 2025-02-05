@@ -1,0 +1,46 @@
+body {
+  background-color: rgb(106, 157, 215);
+}
+
+.image-hero {
+  position: relative;
+}
+
+#cloud-left, #cloud-right {
+  position: absolute;
+  width: 100rem;
+  margin-top: -30rem;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  backdrop-filter: blur(10px);
+  margin: 1rem;
+  border-radius: 1rem;
+  padding: 1rem 2rem;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+}
+
+.nav-center {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-right {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
