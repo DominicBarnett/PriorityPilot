@@ -1,0 +1,27 @@
+#log-in-header {
+  font-family: "Liter", serif;
+  font-weight: 800;
+  font-style: normal;
+  font-size: 10vh;
+  text-shadow: -15px 30px 7px #DDDDDD;
+}
+
+.login-main-content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 30%;
+  align-items: center;
+  height: 70%;
+  background-color: white;
+}
+
+#login-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  box-sizing: border-box;
+  margin: 0;
+  background-color: #A3C7E0;
+}
