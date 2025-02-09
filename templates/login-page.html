@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PriorityPilot</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Liter&display=swap"
+      rel="stylesheet"
+    />
+    <link href="../static/login-page.css" rel="stylesheet" />
+  </head>
+  <body id="login-body">
+    <main class="login-main-content">
+      <div class="login-main-content-wrapper">
+        <h1 id="log-in-header">Log in</h1>
+        <form class="login-form">
+          <div class="form-input-wrapper">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" required maxlength="25" />
+          </div>
+          <div class="form-input-wrapper">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required maxlength="25" />
+          </div>
+          <div class="form-button-wrapper">
+            <button type="submit">Log In</button>
+          </div>
+        </form>
+        <div class="login-button-footer">
+          <p>Don't have an account?</p>
+          <button>Sign up</button>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

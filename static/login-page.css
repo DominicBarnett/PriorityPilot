@@ -1,0 +1,112 @@
+* {
+  font-family: "Liter", serif;
+  font-style: normal;
+}
+
+#log-in-header {
+  font-weight: 800;
+  font-size: 10vh;
+  text-shadow: -15px 30px 8px #DDDDDD;
+  margin: 0;
+  margin-bottom: 1vh;
+  color: #2a5c87;
+}
+
+.login-main-content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 30%;
+  align-items: center;
+  height: 80%;
+  background-color: white;
+  box-sizing: border-box;
+  padding: 2rem;
+  border-radius: 15px;
+}
+
+#login-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  box-sizing: border-box;
+  margin: 0;
+  background-color: #A3C7E0;
+}
+
+.login-main-content-wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+
+.form-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.form-input-wrapper > input {
+  width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+  font-size: 1.75vh;
+}
+
+.form-input-wrapper > label {
+  font-weight: 400;
+  font-size: 2.5vh;
+  margin-bottom: 0.5vh;
+}
+
+.login-form {
+  width: 100%;
+}
+
+.form-button-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.form-button-wrapper > button {
+  font-weight: 400;
+  font-size: 2vh;
+  padding: 10px;
+  border-radius: 10px;
+  border-color: transparent;
+  background-color: #3A7D9C;
+  color: white;
+  margin-top: 2vh;
+}
+
+.login-button-footer {
+  margin-top: 2vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.login-button-footer > p {
+  font-size: 2vh;
+  font-weight: 400;
+  margin: 0;
+  margin-bottom: 1.5vh;
+}
+
+.login-button-footer > button {
+  font-size: 2vh;
+  font-weight: 400;
+  padding: 10px;
+  border-radius: 10px;
+  border-color: transparent;
+  background-color: black;
+  color: white;
+}
