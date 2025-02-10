@@ -33,10 +33,21 @@ def register():
         if not (username and password and email):
             return render_template('register.html', message='All feilds are required.')
         
+        # Check if user already exists
+        existing_user = mongo.db.users.find_one({'$or': [{'username': username}, {'email': email}]})
+        if existing_user:
+            return render_template('register.html', message='User already exists.')
+        
         # Block the Password
         hashed_password = generate_password_hash(password)
 
-        # Database Code Goes Here
+        # Insert user data into the database
+        user_data ={
+            'username': username,
+            'password': hashed_password,
+            'email': email
+        }
+        mongo.db.users.insert_one(user_data)
 
         return redirect('/login')
     
@@ -50,7 +61,7 @@ def login():
         password = request.form.get('password')
 
         # Retrieve user data from the database
-        # Database query code goes here
+        user = mongo.db.users.find_one({'username': username})
 
         # Check if username exists and password is correct
         if user and check_password_hash(user.password, password):
@@ -60,6 +71,21 @@ def login():
             return render_template('login.html', message='Invalid username or password')
         
     return render_template('login.html')
+
+# Layout Route
+@app.route('/layout')
+def layout():
+    if 'user_id' not in session:
+        return redirect('/login')
+    
+    user_id = session['user_id']
+    user = mongo.db.users.find_one({'_id': ObjectId(user_id)})
+
+    if not user:
+        session.clear()
+        return redirect('/login')
+    
+    return render_template('layout.html', username=user['username'])
 
 @app.route('/logout')
 def logout():
