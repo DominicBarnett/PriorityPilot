@@ -21,9 +21,17 @@ mongo = PyMongo(app)
 def index():
     return render_template('index.html')
 
+@app.route('/landing-page-info')
+def landing_age_info():
+    return render_template('landing-page-info.html')
+
 @app.route('/login')
 def login():
     return render_template('login-page.html')
+
+@app.route('/signup')
+def signup():
+    return render_template('signup-page.html')
 
 
 if __name__ == '__main__':
