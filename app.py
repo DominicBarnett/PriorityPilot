@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from flask_pymongo import PyMongo
-from bson.objectid import ObjectId
+#from flask_pymongo import PyMongo
+#from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
