@@ -12,7 +12,7 @@
   color: #2a5c87;
 }
 
-.login-main-content {
+#login-main-content {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -33,6 +33,7 @@
   box-sizing: border-box;
   margin: 0;
   background-color: #A3C7E0;
+  overflow: hidden;
 }
 
 .login-main-content-wrapper {
@@ -109,4 +110,14 @@
   border-color: transparent;
   background-color: black;
   color: white;
+}
+
+.cloud {
+  position: absolute;
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.1s linear;
+  opacity: 0.9;
+  transition: opacity 0.3s ease-in-out; 
 }

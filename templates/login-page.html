@@ -13,17 +13,29 @@
     <link href="../static/login-page.css" rel="stylesheet" />
   </head>
   <body id="login-body">
-    <main class="login-main-content">
+    <main id="login-main-content">
       <div class="login-main-content-wrapper">
         <h1 id="log-in-header">Log in</h1>
         <form class="login-form">
           <div class="form-input-wrapper">
             <label for="username">Username</label>
-            <input type="text" name="username" id="username" required maxlength="25" />
+            <input
+              type="text"
+              name="username"
+              id="username"
+              required
+              maxlength="25"
+            />
           </div>
           <div class="form-input-wrapper">
             <label for="password">Password</label>
-            <input type="password" name="password" id="password" required maxlength="25" />
+            <input
+              type="password"
+              name="password"
+              id="password"
+              required
+              maxlength="25"
+            />
           </div>
           <div class="form-button-wrapper">
             <button type="submit">Log In</button>
@@ -35,5 +47,12 @@
         </div>
       </div>
     </main>
+
+    <!-- <img src="{{ url_for('static', filename='images/transparent-cloud.png') }}" class="cloud" id="cloud1"> -->
+    <!-- <img src="{{ url_for('static', filename='images/transparent-cloud.png') }}" class="cloud" id="cloud2">
+    <img src="{{ url_for('static', filename='images/transparent-cloud.png') }}" class="cloud" id="cloud3"> -->
+
+
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
   </body>
 </html>
