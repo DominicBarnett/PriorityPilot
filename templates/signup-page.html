@@ -10,12 +10,12 @@
       href="https://fonts.googleapis.com/css2?family=Liter&display=swap"
       rel="stylesheet"
     />
-    <link href="../static/login-page.css" rel="stylesheet" />
+    <link href="../static/signup-page.css" rel="stylesheet" />
   </head>
   <body id="login-body">
     <main id="login-main-content">
       <div class="login-main-content-wrapper">
-        <h1 id="log-in-header">Log in</h1>
+        <h1 id="log-in-header">Sign up</h1>
         <form class="login-form">
           <div class="form-input-wrapper">
             <label for="username">Username</label>
@@ -38,21 +38,15 @@
             />
           </div>
           <div class="form-button-wrapper">
-            <button type="submit">Log In</button>
+            <button type="submit">Sign up</button>
           </div>
         </form>
         <div class="login-button-footer">
-          <p>Don't have an account?</p>
-          <button>Sign up</button>
+          <p>Have an account?</p>
+          <button>Log in</button>
         </div>
       </div>
     </main>
-
-    <!-- <img src="{{ url_for('static', filename='images/transparent-cloud.png') }}" class="cloud" id="cloud1"> -->
-    <!-- <img src="{{ url_for('static', filename='images/transparent-cloud.png') }}" class="cloud" id="cloud2">
-    <img src="{{ url_for('static', filename='images/transparent-cloud.png') }}" class="cloud" id="cloud3"> -->
-
-
-    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/signup.js') }}"></script>
   </body>
 </html>

@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   let cloud1 = document.createElement("img");
-  cloud1.src = "/static/images/cloud-gif.gif";
+  cloud1.src = "/static/images/plane.gif";
   cloud1.id = "cloud1";
   cloud1.classList.add("cloud");
 
@@ -16,16 +16,17 @@ document.addEventListener("DOMContentLoaded", function () {
     let mainDiv = document.getElementById("login-main-content");
 
     let divRect = mainDiv.getBoundingClientRect();
-    let cloudSize = 280;
+    let cloudSize = 300;
 
     let newX = event.clientX + 10;
     let newY = event.clientY + 10;
 
-    // Detect if the mouse enters the div from the left or right
     if (event.clientX < divRect.left) {
       lastMouseEntry = "left";
+      cloud1.style.transform = "scaleX(-1)"; // Flip vertically
     } else if (event.clientX > divRect.right) {
       lastMouseEntry = "right";
+      cloud1.style.transform = "scaleX(1)"; // Reset to normal
     }
 
     // Stop at the left border if coming from the left
@@ -43,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
       newX < divRect.right &&
       newX + cloudSize > divRect.left
     ) {
-      newX = divRect.right;
+      newX = divRect.right; // Position just outside the right border
     }
 
     cloud1.style.left = newX + "px";
