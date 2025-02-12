@@ -111,6 +111,7 @@ body {
   text-decoration: none;
   margin-top: 2rem;
   transition: all 0.3s ease;
+  z-index: 1000;
 }
 
 #get-started:hover {
@@ -119,13 +120,80 @@ body {
   transform: scale(1.05);
 }
 
+.fluffy-clouds-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
 
+.fluffy-cloud {
+  position: absolute;
+  width: 20vw;
+  max-width: 300px;
+  height: auto;
+  opacity: 0.6;
+  animation: moveLeft 20s linear infinite;
+}
+
+.fluffy-cloud:nth-child(1) {
+  top: 10%;
+  animation-delay: 0s;
+}
+
+.fluffy-cloud:nth-child(2) {
+  top: 30%;
+  animation-delay: -5s;
+}
+
+.fluffy-cloud:nth-child(3) {
+  top: 50%;
+  animation-delay: -10s;
+}
+
+.fluffy-cloud:nth-child(4) {
+  top: 70%;
+  animation-delay: -15s;
+}
+
+@keyframes moveLeft {
+  from {
+    left: 100%;
+  }
+  to {
+    left: -20%;
+  }
+}
+
+.hero-text {
+  position: relative;
+  z-index: 1;
+}
+
+
+.penguin-plane {
+  position: absolute;
+  width: 300px;
+  top: 50%;
+  right: -450px;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  transition: transform 0.3s ease-out;
+}
 /* LANDING PAGE INFO STYLING OR ABOUT US */
 @font-face {
   font-family: "CloudFont";
   src: url("/static/fonts/so-cloudy-font/SoCloudy-PV7yd.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
+}
+
+.about-us {
+  margin-top: 10rem;
+  margin-left: 2rem;
 }
 
 #info-section-header {
