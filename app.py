@@ -34,6 +34,8 @@ def index():
 
 
 # Signup Route
+# Prompt user to enter First name and Last name
+# Prompt user to enter password for double verification
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
