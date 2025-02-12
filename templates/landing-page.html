@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landing Page 2</title>
+  <link rel="stylesheet" href="../static/styles/landing-page.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+  
+</head>
+<body>
+  <nav class="navbar">
+    <a href="#" ><img src="../static/images/prioritypilot-logo.svg" class="nav-logo"></a>
+    <div class="nav-right">
+        <a href="{{ url_for('login') }}"><img src="../static/images/signup-logo.svg" id="signup-logo"></a>
+    </div>
+  </nav>
+
+  <section class="image-hero">
+    <div class="fluffy-clouds-container">
+      <img src="../static/images/fluffy-cloud.svg" class="fluffy-cloud" />
+      <img src="../static/images/fluffy-cloud.svg" class="fluffy-cloud" />
+      <img src="../static/images/fluffy-cloud.svg" class="fluffy-cloud" />
+      <img src="../static/images/fluffy-cloud.svg" class="fluffy-cloud" />
+    </div>
+    <img src="../static/images/penguin-plane.svg" class="penguin-plane" alt="Flying penguin">
+    <div class="hero-text">
+      <p id="app-name">PRIORITY PILOT</p>
+      <p id="app-description">Too many tasks, not enough time? Priority Pilot helps you rank, organize, and schedule your to-do list—so you can focus on what truly matters.</p>
+      <a href="{{ url_for('login') }}" id="get-started">Get Started</a>
+    </div>
+    <img src="../static/images/cloud-left.svg" id="cloud-left">
+    <img src="../static/images/cloud-right.svg" id="cloud-right">
+  </section>
+
+  <section class="about-us">
+    <h2 id="info-section-header">What's PriorityPilot?</h2>
+    <h3 id="info-section-sub-header">
+      PriorityPilot is a task manager to help you:
+    </h3>
+    <div class="info-section-wrapper">
+      <div class="info-point">
+        <div>
+          <img
+            src="../static/images/plane-bullet-points.png"
+            class="plane-bullet-points-image"
+          />
+        </div>
+        <div>
+          <h4>
+            Organize tasks by urgency and importance to stay focused on what
+            matters most.
+          </h4>
+        </div>
+      </div>
+      <div class="info-point">
+        <div>
+          <img
+            src="../static/images/plane-bullet-points.png"
+            class="plane-bullet-points-image"
+          />
+        </div>
+        <div>
+          <h4>
+            Plan your day effortlessly with an intuitive calendar and reminders.
+          </h4>
+        </div>
+      </div>
+      <div class="info-point">
+        <div>
+          <img
+            src="../static/images/plane-bullet-points.png"
+            class="plane-bullet-points-image"
+          />
+        </div>
+        <div>
+          <h4>
+            Create, edit, and reorder tasks.
+          </h4>
+        </div>
+      </div>
+      <div class="info-point">
+        <div>
+          <img
+            src="../static/images/plane-bullet-points.png"
+            class="plane-bullet-points-image"
+          />
+        </div>
+        <div>
+          <h4>
+            Compete against your friends to see who can complete the most tasks.
+          </h4>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <script src="{{url_for('static', filename='js/landing-page.js') }}"></script>
+</body>
+</html>
+
+

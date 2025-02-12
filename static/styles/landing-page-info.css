@@ -1,0 +1,37 @@
+@font-face {
+  font-family: "CloudFont";
+  src: url("/static/fonts/so-cloudy-font/SoCloudy-PV7yd.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+#info-section-header {
+  font-family: "CloudFont", sans-serif;
+  font-size: 8vh;
+  margin: 0;
+}
+
+#info-section-sub-header, .info-section-wrapper > * {
+  font-family: "Liter", serif;
+  font-style: normal;
+}
+
+#info-section-sub-header {
+    font-size: 4vh;
+    margin: 0;
+    padding: 2vh 0;
+}
+
+.info-point {
+    display: flex;
+    align-items: center;
+    column-gap: 2vw;
+}
+
+.info-point h4 {
+    font-size: 2.5vh;
+}
+
+.plane-bullet-points-image {
+    width: 5vw;
+}
