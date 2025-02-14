@@ -5,6 +5,11 @@
   font-style: normal;
 }
 
+.about-us {
+  margin-top: 10rem;
+  margin-left: 2rem;
+}
+
 #info-section-header {
   font-family: "CloudFont", sans-serif;
   font-size: 8vh;
