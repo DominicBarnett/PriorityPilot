@@ -61,7 +61,7 @@ def register():
 
         return redirect('/login')
 
-    return render_template('register.html')
+    return render_template('signup-page.html')
 
 
 # Login Route (Allows Login with Either Username or Email)
@@ -79,7 +79,7 @@ def login():
         else:
             return render_template('login.html', message='Invalid username or password')
 
-    return render_template('login.html')
+    return render_template('login-page.html')
 
 
 # Layout Route
@@ -144,4 +144,5 @@ def reset_password(token):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
+
