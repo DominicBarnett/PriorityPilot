@@ -7,9 +7,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Liter&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Quicksand:wght@300..700&display=swap"
       rel="stylesheet"
     />
+    <script
+      src="https://kit.fontawesome.com/cca020387c.js"
+      crossorigin="anonymous"
+    ></script>
     <link href="../static/styles/signup-page.css" rel="stylesheet" />
   </head>
   <body id="login-body">
@@ -24,18 +28,38 @@
               name="username"
               id="username"
               required
-              maxlength="25"
+              maxlength="200"
             />
           </div>
           <div class="form-input-wrapper">
             <label for="password">Password</label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              required
-              maxlength="25"
-            />
+            <div class="password-input-wrapper">
+              <input
+                type="password"
+                name="password"
+                id="password"
+                required
+                maxlength="25"
+              />
+              <button type="button" class="eye-icon-button">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+            </div>
+          </div>
+          <div class="form-input-wrapper">
+            <label for="confirm-password">Confirm Password</label>
+            <div class="password-input-wrapper">
+              <input
+                type="confirm-password"
+                name="confirm-password"
+                id="confirm-password"
+                required
+                maxlength="25"
+              />
+              <button type="button" class="eye-icon-button">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+            </div>
           </div>
           <div class="form-button-wrapper">
             <button type="submit">Sign up</button>
