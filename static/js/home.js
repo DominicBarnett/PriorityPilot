@@ -15,8 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const todayTaskCount = document.getElementById("total-task-count");
   const todayTasks = document.getElementsByClassName(
     "today-all-tasks-wrapper"
-  )[0].children;
-  todayTaskCount.innerText = todayTasks.length;
+  )[0];
+  todayTaskCount.innerText = todayTasks.children.length;
 
   const completionStatusButtons =
     document.getElementsByClassName("completion-circle");
@@ -80,6 +80,58 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("click", (event) => {
       if (!wrapper.contains(event.target)) {
         prioritySelectMenu.classList.add("hidden");
+      }
+    });
+  });
+
+  const addTodayTaskButton = document.getElementById("add-today-task-button");
+
+  addTodayTaskButton.addEventListener("click", () => {
+    const newTask = document.createElement("div");
+    newTask.classList.add("today-single-task-wrapper");
+    newTask.innerHTML = `<i class="fa-regular fa-circle completion-circle"></i>
+                <form>
+                  <input value="" />
+                  <div class="custom-priority-wraper">
+                    <button class="open-priority-menu" type="button">
+                      <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                    <ul class="hidden priority-options">
+                      <li data-value="high-priority"><i class="fa-solid fa-plane-circle-exclamation"></i></li>
+                      <li data-value="medium-priority"><i class="fa-solid fa-plane-departure"></i></li>
+                      <li data-value="low-priority"><i class="fa-solid fa-paper-plane"></i></li>
+                    </ul>
+                  </div>
+                  <input type="hidden" name="priority" value="low-priority" />
+                </form>`;
+    todayTasks.appendChild(newTask);
+    const newInput = newTask.querySelector('input[value=""]');
+    newInput.focus();
+
+    // Attach event listeners to the new elements
+    const priorityButton = newTask.querySelector(".open-priority-menu");
+    const priorityMenu = newTask.querySelector(".priority-options");
+    const priorityOptions = newTask.querySelectorAll(".priority-options li");
+    const hiddenInput = newTask.querySelector('input[type="hidden"]');
+
+    // Toggle dropdown visibility
+    priorityButton.addEventListener("click", () => {
+      priorityMenu.classList.toggle("hidden");
+    });
+
+    // Handle option selection
+    priorityOptions.forEach((option) => {
+      option.addEventListener("click", () => {
+        priorityButton.innerHTML = option.innerHTML; // Update button icon
+        hiddenInput.value = option.dataset.value; // Update hidden input value
+        priorityMenu.classList.add("hidden"); // Hide menu
+      });
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", (event) => {
+      if (!newTask.contains(event.target)) {
+        priorityMenu.classList.add("hidden");
       }
     });
   });
