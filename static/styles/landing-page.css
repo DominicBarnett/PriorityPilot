@@ -1,3 +1,10 @@
+:root {
+  --font-primary: "Quicksand", serif;
+  --font-title: "Luckiest Guy", serif;
+  --font-cloud: "CloudFont", sans-serif;
+  --font-secondary: "Liter", serif;
+}
+
 body {
   background-color: rgb(106, 157, 215);
   margin: 0;
@@ -10,12 +17,13 @@ body {
   height: calc(100vh - 2rem);
   overflow: hidden;
   margin-top: 10rem;
+  z-index: 1;
 }
 
 #cloud-left {
   position: absolute;
   left: 0;
-  top: 50%;
+  top: 40%;
   transform: translateY(-50%);
   width: 50vw;
   max-width: 800px;
@@ -25,7 +33,7 @@ body {
 #cloud-right {
   position: absolute;
   right: 0;
-  top: 50%;
+  top: 40%;
   transform: translateY(-50%);
   width: 50vw;
   max-width: 800px;
@@ -74,7 +82,7 @@ body {
 #signup-logo {
   width: 4.5rem;
   height: 100%;
-  filter: invert(85%) sepia(0%) saturate(19%) hue-rotate(153deg) brightness(93%) contrast(92%);
+  filter: brightness(0) invert(1);
 }
 
 #signup-logo:hover {
@@ -83,7 +91,7 @@ body {
 }
 
 #app-name{
-  font-family: "Luckiest Guy", serif;
+  font-family: var(--font-title);
   font-style: normal;
   font-size: 11rem;
   margin: 1rem 0;
@@ -91,7 +99,7 @@ body {
 }
 
 #app-description{
-  font-family: "Quicksand", serif;
+  font-family: var(--font-primary);
   font-style: normal;
   font-size: 1.5rem;
   margin: 2rem auto;
@@ -121,26 +129,26 @@ body {
 }
 
 .fluffy-clouds-container {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   overflow: hidden;
   z-index: 0;
+  pointer-events: none;
 }
 
 .fluffy-cloud {
   position: absolute;
-  width: 20vw;
-  max-width: 300px;
+  width: 40rem;
   height: auto;
   opacity: 0.6;
   animation: moveLeft 20s linear infinite;
 }
 
 .fluffy-cloud:nth-child(1) {
-  top: 10%;
+  top: 0%;
   animation-delay: 0s;
 }
 
@@ -173,6 +181,31 @@ body {
   z-index: 1;
 }
 
+/* TITLE NAME */
+svg path {
+  fill: transparent;
+  stroke: #fff;
+  stroke-width: 0.1;
+  stroke-dasharray: 35;
+  stroke-dashoffset: 35;
+  animation: textAnimation 3s ease-in-out 1 forwards;
+}
+
+@keyframes textAnimation {
+  0% {
+    stroke-dashoffset: 35;
+  }
+  80% {
+    fill: transparent;
+  }
+  100% {
+    fill: #fff;
+    stroke-dashoffset: 0;
+  }
+}
+
+
+/* ======================================== */
 
 .penguin-plane {
   position: absolute;
@@ -183,6 +216,8 @@ body {
   z-index: 2;
   transition: transform 0.3s ease-out;
 }
+
+
 /* LANDING PAGE INFO STYLING OR ABOUT US */
 @font-face {
   font-family: "CloudFont";
@@ -192,37 +227,109 @@ body {
 }
 
 .about-us {
-  margin-top: 10rem;
-  margin-left: 2rem;
+  position: relative;
+  background: linear-gradient(180deg, rgb(106, 157, 215) 0%, #ffffff 100%);
+  margin-top: 0;
+  margin-left: 0;
+  padding: 8rem 4rem;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 -50px 50px -20px rgba(0, 0, 0, 0.1);
 }
 
 #info-section-header {
-  font-family: "CloudFont", sans-serif;
-  font-size: 8vh;
+  font-family: var(--font-primary);
+  font-size: 4.5rem;
   margin: 0;
+  color: #1c6d4d;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s ease forwards;
 }
 
 #info-section-sub-header, .info-section-wrapper > * {
-  font-family: "Liter", serif;
+  font-family: var(--font-primary);
   font-style: normal;
 }
 
 #info-section-sub-header {
-    font-size: 4vh;
-    margin: 0;
-    padding: 2vh 0;
+  font-size: 2rem;
+  margin: 2rem 0;
+  padding: 1rem 0;
+  color: #333;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s ease forwards 0.2s;
+}
+
+.info-section-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
 }
 
 .info-point {
-    display: flex;
-    align-items: center;
-    column-gap: 2vw;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s ease forwards;
 }
 
 .info-point h4 {
     font-size: 2.5vh;
 }
 
-.plane-bullet-points-image {
-    width: 5vw;
+
+.info-point:nth-child(1) { animation-delay: 0.4s; }
+.info-point:nth-child(2) { animation-delay: 0.6s; }
+.info-point:nth-child(3) { animation-delay: 0.8s; }
+.info-point:nth-child(4) { animation-delay: 1s; }
+
+.info-point:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
+
+.info-point h4 {
+  font-size: 1.25rem;
+  color: #333;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.plane-bullet-points-image {
+  width: 50px;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+.info-point:hover .plane-bullet-points-image {
+  transform: rotate(-10deg);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
