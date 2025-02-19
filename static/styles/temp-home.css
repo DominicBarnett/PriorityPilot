@@ -1,0 +1,201 @@
+* {
+  font-family: "Quicksand", serif;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#sidebar-container {
+  width: 20%;
+  background-color: blue;
+  height: 100vh;
+}
+
+#main-content-wrapper {
+  width: 80%;
+  height: 100vh;
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+#greeting-header-wrapper {
+  height: 4.5rem;
+}
+
+.todays-date-header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 4.5rem;
+}
+
+.todays-date-header-wrapper button {
+  cursor: pointer;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.todays-date-header-wrapper i {
+  font-size: 2rem;
+}
+/* 
+.flip-letter {
+  background-color: #000;
+  border-right: 1px solid #1d1e1e;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  height: 40px;
+  text-align: center;
+  width: 40px;
+}
+
+.flip-letter::before {
+  background-color: #000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 40px;
+  height: 20px;
+  line-height: 40px;
+  overflow: hidden;
+  width: 100%;
+  z-index: 20;
+}
+.flip-letter::after {
+  background-color: #000;
+  flex-grow: 0;
+  font-size: 40px;
+  height: 40px;
+  line-height: 40px;
+  margin-top: -50%;
+  overflow: hidden;
+  width: 100%;
+  z-index: 10;
+} */
+
+.tasks-main-area-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  column-gap: 1.5rem;
+}
+
+.tasks-main-area-wrapper > div {
+  width: 100%;
+  border: 1px solid blue;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+#todays-task-list {
+    padding: 1rem;
+}
+
+.todays-task-header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.todays-task-header-wrapper h2 {
+    font-size: 2rem;
+    padding: 0;
+    margin: 0;
+}
+
+.todays-task-header-wrapper button {
+    cursor: pointer;
+    background-color: transparent;
+    border-color: transparent;
+    font-size: 1.5rem;
+}
+
+.today-single-task-wrapper {
+    border-bottom: 1px solid black;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    column-gap: 1rem;
+    margin-top: 1rem;
+    padding-bottom: 1rem;
+}
+.today-single-task-wrapper form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.today-single-task-wrapper form i {
+    font-size: 1.6rem;
+}
+
+.today-single-task-wrapper input {
+    font-size: 1.4rem;
+    width: 100%;
+    border-color: transparent;
+}
+
+.today-single-task-wrapper input:focus {
+    border-color: transparent;
+    outline: none;
+}
+
+.todays-task-header-wrapper > h3 {
+    font-size: 1.5rem;
+}
+
+.todays-task-header-wrapper > div {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 1rem;
+    align-items: center;
+}
+
+.completion-circle {
+    cursor: pointer;
+}
+
+.fa-plane-circle-exclamation {
+    color: red;
+}
+
+.fa-plane-departure {
+    color: yellow;
+}
+
+.fa-paper-plane {
+    color: green;
+}
+
+#custom-priority-wraper {
+    position: relative;
+}
+
+#custom-priority-wraper > button {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.hidden {
+    display: none;
+}
+
+.priority-options {
+    position: absolute;
+}
