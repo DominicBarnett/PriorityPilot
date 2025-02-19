@@ -79,7 +79,7 @@ def login():
         else:
             return render_template('login.html', message='Invalid username or password')
 
-    return render_template('login-page.html')
+    return render_template('login.html')
 
 
 # Layout Route
