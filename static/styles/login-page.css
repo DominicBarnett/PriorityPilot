@@ -3,13 +3,20 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'CloudFont2';
+  src: url('../fonts/InflateptxChrome-X3oPg.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 #log-in-header {
+  font-family: "CloudFont2", sans-serif;
   font-weight: 800;
   font-size: 10vh;
-  text-shadow: -15px 30px 8px #DDDDDD;
+  /* text-shadow: -15px 30px 8px #DDDDDD; */
   margin: 0;
-  margin-bottom: 1vh;
-  color: #2a5c87;
+  /* margin-bottom: 1vh; */
 }
 
 #login-main-content {
