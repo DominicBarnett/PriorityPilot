@@ -17,6 +17,7 @@
   /* text-shadow: -15px 30px 8px #DDDDDD; */
   margin: 0;
   /* margin-bottom: 1vh; */
+  text-align: center;
 }
 
 #login-main-content {
@@ -153,4 +154,14 @@
 
 .eye-icon-button i {
   font-size: 1.25rem;
+}
+
+#forgot-password-link {
+  text-decoration: none;
+  font-size: 2vh;
+  text-align: right;
+  width: 100%;
+  margin-top: 5px;
+  color: black;
+  font-weight: 600;
 }
