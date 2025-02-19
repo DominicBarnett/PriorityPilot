@@ -79,7 +79,7 @@ def login():
         else:
             return render_template('login.html', message='Invalid username or password')
 
-    return render_template('login-page.html')
+    return render_template('login.html')
 
 
 # Layout Route
@@ -142,7 +142,10 @@ def reset_password(token):
 
     return render_template('reset_password.html')
 
-
+@app.route("/temp-home")
+def temp_home():
+    return render_template('temp-home.html')
+    
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
 
