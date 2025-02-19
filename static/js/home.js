@@ -134,6 +134,8 @@ document.addEventListener("DOMContentLoaded", () => {
         priorityMenu.classList.add("hidden");
       }
     });
+
+    todayTaskCount.innerText = todayTasks.children.length;
   });
 });
 
