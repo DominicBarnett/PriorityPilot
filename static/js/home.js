@@ -1,16 +1,50 @@
+// Array of possible characters
+const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".split("");
+
+// Function to get a random character
+function getRandomChar() {
+  return chars[Math.floor(Math.random() * chars.length)];
+}
+
+// Function to flip text before settling on the final letter
+function flipToFinalLetter(span, finalLetter, duration = 2000) {
+  let counter = 0;
+  let maxFlips = Math.floor(duration / 100); // Number of random flips before stopping
+
+  const interval = setInterval(() => {
+    if (counter < maxFlips) {
+      span.textContent = getRandomChar(); // Show random letters during flip
+    } else {
+      clearInterval(interval);
+      span.textContent = finalLetter === " " ? "\u00A0" : finalLetter; // Ensure spaces are visible
+      span.classList.remove("flipping"); // Remove animation class
+    }
+    counter++;
+  }, 100); // Change every 100ms
+}
+
+// Function to start the flip animation
+function startFlipAnimation(greeting) {
+  const wrapper = document.getElementById("greeting-header-wrapper");
+  wrapper.innerHTML = ""; // Clear existing spans
+
+  // Create spans for each character, including spaces
+  greeting.split("").forEach((char, index) => {
+    const span = document.createElement("span");
+    span.textContent = "\u00A0"
+    wrapper.appendChild(span);
+
+    const delay = index * 300; // Staggered start for a realistic effect
+    setTimeout(() => {
+      flipToFinalLetter(span, char);
+    }, delay);
+  });
+}
+
+
 document.addEventListener("DOMContentLoaded", () => {
   const dateHeader = document.getElementById("todays-date-header");
   dateHeader.innerText = formatDate();
-
-  const greetingHeader = document.getElementById("greeting-header-wrapper");
-  const greeting = formatGreeting("Ca'Sandra");
-
-  for (let char of greeting) {
-    const letterSpan = document.createElement("span");
-    letterSpan.innerText = char;
-    letterSpan.classList.add("flip-letter");
-    greetingHeader.appendChild(letterSpan);
-  }
 
   const todayTaskCount = document.getElementById("total-task-count");
   const todayTasks = document.getElementsByClassName(
@@ -137,7 +171,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     todayTaskCount.innerText = todayTasks.children.length;
   });
+
+  startFlipAnimation(formatGreeting("Ca'Sandra").toUpperCase())
 });
+
 
 function formatDate() {
   const months = [
@@ -167,13 +204,13 @@ function formatGreeting(name) {
   let greeting = "";
 
   if (hours <= 4 || hours >= 20) {
-    greeting = "Good night";
+    greeting = "Good Night";
   } else if (hours >= 5 && hours <= 11) {
-    greeting = "Good morning";
+    greeting = "Good Morning";
   } else if (hours >= 12 && hours <= 16) {
-    greeting = "Good afternoon";
+    greeting = "Good Afternoon";
   } else {
-    greeting = "Good evening";
+    greeting = "Good Evening";
   }
 
   return `${greeting} ${name}`;
