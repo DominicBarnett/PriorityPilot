@@ -105,14 +105,12 @@ main {
 
 #todays-task-list {
     padding: 1rem;
-    border: 0.05rem solid black;
     border-radius: 15px;
     background-color: rgba(255, 255, 255, 0.678);
 }
 
 .home-main-tasks-summary, .home-main-game-summary {
     padding: 1rem;
-    border: 0.05rem solid black;
     border-radius: 15px;
     width: 100%;
     box-sizing: border-box;
