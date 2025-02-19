@@ -50,7 +50,6 @@ main {
   text-align: center;
   font-size: 2.5rem;
   font-family: sans-serif;
-  color: #000;
   backface-visibility: hidden;
   transform-style: preserve-3d;
   background-color: black;
@@ -58,6 +57,19 @@ main {
   margin: 0;
   padding: 5px;
   box-sizing: border-box;
+  position: relative;
+}
+
+#greeting-header-wrapper span::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px; /* Line thickness */
+  background-color: rgba(255, 255, 255, 0.3); /* Line color */
+  top: 50%; /* Position it at the middle of the span */
+  left: 0;
+  transform: translateY(-50%); /* Adjust for perfect centering */
+  z-index: 1; /* Ensure the line stays above the background */
 }
 
 .flipping {
