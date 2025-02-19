@@ -33,32 +33,56 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  const priorityWrapper = document.getElementById("custom-priority-wraper")
-  const priorityButtons = document.getElementsByClassName("open-priority-menu")
+  // Select all priority wrappers
+  const priorityWrappers = document.querySelectorAll(".custom-priority-wraper");
 
-  const prioritySelectMenu = document.createElement("ul")
-  prioritySelectMenu.classList.add("hidden")
-  prioritySelectMenu.classList.add("priority-options")
-  const highPriorityOption = document.createElement("li")
-  highPriorityOption.innerHTML = '<i class="fa-solid fa-plane-circle-exclamation"></i>'
-  prioritySelectMenu.appendChild(highPriorityOption)
-  const mediumPriorityOption = document.createElement("li")
-  mediumPriorityOption.innerHTML = '<i class="fa-solid fa-plane-departure"></i>'
-  prioritySelectMenu.appendChild(mediumPriorityOption)
-  const lowPriorityOption = document.createElement("li")
-  lowPriorityOption.innerHTML = '<i class="fa-solid fa-paper-plane"></i>'
-  prioritySelectMenu.appendChild(lowPriorityOption)
-  priorityWrapper.appendChild(prioritySelectMenu)
+  priorityWrappers.forEach((wrapper) => {
+    const button = wrapper.querySelector(".open-priority-menu"); // Get the button inside the wrapper
+    const hiddenInput = wrapper.nextElementSibling; // Get the hidden input (assumes it's right after the wrapper)
 
-  Array.from(priorityButtons).forEach(button => {
+    const prioritySelectMenu = document.createElement("ul");
+    prioritySelectMenu.classList.add("hidden", "priority-options");
+
+    const priorities = [
+      {
+        value: "high-priority",
+        icon: '<i class="fa-solid fa-plane-circle-exclamation"></i>',
+      },
+      {
+        value: "medium-priority",
+        icon: '<i class="fa-solid fa-plane-departure"></i>',
+      },
+      {
+        value: "low-priority",
+        icon: '<i class="fa-solid fa-paper-plane"></i>',
+      },
+    ];
+
+    priorities.forEach((priority) => {
+      const option = document.createElement("li");
+      option.innerHTML = priority.icon;
+      option.dataset.value = priority.value;
+      prioritySelectMenu.appendChild(option);
+
+      option.addEventListener("click", () => {
+        button.innerHTML = priority.icon;
+        hiddenInput.value = priority.value;
+        prioritySelectMenu.classList.add("hidden");
+      });
+    });
+
+    wrapper.appendChild(prioritySelectMenu);
+
     button.addEventListener("click", () => {
-      if (prioritySelectMenu.classList.contains("hidden")) {
-        prioritySelectMenu.classList.remove("hidden")
-      } else {
-        prioritySelectMenu.classList.add("hidden")
+      prioritySelectMenu.classList.toggle("hidden");
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!wrapper.contains(event.target)) {
+        prioritySelectMenu.classList.add("hidden");
       }
-    })
-  })
+    });
+  });
 });
 
 function formatDate() {

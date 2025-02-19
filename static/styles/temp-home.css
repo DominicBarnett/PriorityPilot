@@ -183,11 +183,11 @@ main {
     color: green;
 }
 
-#custom-priority-wraper {
+.custom-priority-wraper {
     position: relative;
 }
 
-#custom-priority-wraper > button {
+.custom-priority-wraper > button {
     background-color: transparent;
     border-color: transparent;
 }
@@ -198,4 +198,19 @@ main {
 
 .priority-options {
     position: absolute;
+    text-decoration: none;
+    list-style: none;
+    left: 30px;
+    background-color: black;
+    z-index: 2;
+    border-radius: 10px;
+}
+
+ul {
+    margin: 0;
+    padding: 10px;
+}
+
+.priority-options li {
+    margin-bottom: .5rem;
 }
