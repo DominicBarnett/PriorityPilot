@@ -1,15 +1,23 @@
 * {
-  font-family: "Liter", serif;
+  font-family: "Quicksand", serif;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'CloudFont2';
+  src: url('../fonts/InflateptxChrome-X3oPg.ttf') format('truetype');
+  font-weight: normal;
   font-style: normal;
 }
 
 #log-in-header {
+  font-family: "CloudFont2", sans-serif;
   font-weight: 800;
   font-size: 10vh;
-  text-shadow: -15px 30px 8px #DDDDDD;
+  /* text-shadow: -15px 30px 8px #DDDDDD; */
   margin: 0;
-  margin-bottom: 1vh;
-  color: #2a5c87;
+  /* margin-bottom: 1vh; */
+  text-align: center;
 }
 
 #login-main-content {
@@ -52,7 +60,7 @@
   margin-bottom: 1rem;
 }
 
-.form-input-wrapper > input {
+.form-input-wrapper  input {
   width: 100%;
   padding: 1rem;
   box-sizing: border-box;
@@ -120,4 +128,40 @@
   transition: transform 0.1s linear;
   opacity: 0.9;
   transition: opacity 0.3s ease-in-out; 
+}
+
+.password-input-wrapper {
+  position: relative;
+}
+
+.eye-icon-button {
+  position: absolute;
+  height: 100%;
+  background-color: transparent;
+  border-color: transparent;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+.eye-icon-button:hover {
+  cursor: pointer;
+}
+
+.password-input-wrapper > input {
+  padding-right: 40px;
+}
+
+.eye-icon-button i {
+  font-size: 1.25rem;
+}
+
+#forgot-password-link {
+  text-decoration: none;
+  font-size: 2vh;
+  text-align: right;
+  width: 100%;
+  margin-top: 5px;
+  color: black;
+  font-weight: 600;
 }

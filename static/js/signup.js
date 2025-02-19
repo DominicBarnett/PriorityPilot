@@ -55,4 +55,35 @@ document.addEventListener("DOMContentLoaded", function () {
   document.addEventListener("mouseleave", function () {
     cloud1.remove();
   });
+
+  let passwordViewButton = document.querySelector(".eye-icon-button.password")
+  let passwordInput = document.getElementById("password")
+  let passwordHidden = true
+
+  passwordViewButton.addEventListener("click", function () {
+    passwordHidden = changePasswordFieldVisibility(passwordViewButton, passwordInput, passwordHidden)
+  })
+
+  let confirmPasswordViewButton = document.querySelector(".eye-icon-button.confirm")
+  let confirmPasswordInput = document.getElementById("confirm-password")
+  let confirmPasswordHidden = true
+
+  confirmPasswordViewButton.addEventListener("click", function () {
+    confirmPasswordHidden = changePasswordFieldVisibility(confirmPasswordViewButton, confirmPasswordInput, confirmPasswordHidden)
+  })
 });
+
+function changePasswordFieldVisibility(passwordViewButton, passwordInput, isHidden) {
+    let eyeIcon = passwordViewButton.firstElementChild
+    if (isHidden) {
+      eyeIcon.classList.remove("fa-eye")
+      eyeIcon.classList.add("fa-eye-slash")
+      passwordInput.type = "text"
+      return false
+    } else {
+      eyeIcon.classList.remove("fa-eye-slash")
+      eyeIcon.classList.add("fa-eye")
+      passwordInput.type = "password"
+      return true
+    }
+}

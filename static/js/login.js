@@ -54,4 +54,23 @@ document.addEventListener("DOMContentLoaded", function () {
   document.addEventListener("mouseleave", function () {
     cloud1.remove();
   });
+
+  let passwordViewButton = document.querySelector(".eye-icon-button")
+  let passwordInput = document.getElementById("password")
+  let passwordHidden = true
+
+  passwordViewButton.addEventListener("click", function () {
+    let eyeIcon = passwordViewButton.firstElementChild
+    if (passwordHidden) {
+      eyeIcon.classList.remove("fa-eye")
+      eyeIcon.classList.add("fa-eye-slash")
+      passwordInput.type = "text"
+      passwordHidden = false
+    } else {
+      eyeIcon.classList.remove("fa-eye-slash")
+      eyeIcon.classList.add("fa-eye")
+      passwordHidden = true
+      passwordInput.type = "password"
+    }
+  })
 });
