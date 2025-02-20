@@ -11,15 +11,44 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-  <div class="sidebar">
-    <header>Priority Pilot</header>
+  <nav id="sidebar">
     <ul>
-      <li><a href="#"><i class="fa-solid fa-calendar"></i>Home</a></li>
-      <li><a href="#"><i class="fa-solid fa-calendar"></i>Dashboard</a></li>
-      <li><a href="#"><i class="fa-solid fa-calendar"></i>Todo-Lists</a></li>
-      <li><a href="#"><i class="fa-solid fa-calendar"></i>Calendar</a></li>
-      <li><a href="#"><i class="fa-solid fa-calendar"></i>Profile</a></li>
-      <li><a href="#"><i class="fa-solid fa-calendar"></i>Contact Us</a></li>
+      <li class="active">
+        <img src="../static/images/icons/home_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="home" />
+        <a href="#"><span>Home</span>
+      </li>
+
+      <li>
+        <img src="../static/images/icons/dashboard_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="dashboard" />
+        <a href="#"><span>Dashboard</span>
+      </li>
+
+      <li>
+        <button class="dropdown-btn">
+        <img src="../static/images/icons/checklist_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="tasks" />
+        <span>Todo-Lists</span>
+        <img src="../static/images/icons/keyboard_arrow_down_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg"  alt="arrow" />
+      </button>
+      <ul class="sub-menu">
+
+      </ul>
+
+      
+      </li>
+      <li>
+        <img src="../static/images/icons/calendar_month_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="calendar" />
+        <a href="#"><span>Calendar</span>
+      </li>
+
+      <li>
+        <img src="../static/images/icons/person_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="profile" />
+        <a href="#"><span>Profile</span>
+      </li>
+
+      <li>
+        <img src="../static/images/icons/contact_support_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="contact" />
+        <a href="#"><span>Contact Us</span>
+      </li>
     </ul>
   </div>
   
