@@ -34,17 +34,21 @@ def index():
 
 
 # Signup Route
-# Prompt user to enter First name and Last name
-# Prompt user to enter password for double verification
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
+        first_name = request.form.get('first_name')
+        last_name = request.form.get('last_name')
+        confirm_password = request.form.get('confirm_password')
         email = request.form.get('email')
 
-        if not (username and password and email):
+        if not (username and first_name and last_name and password and confirm_password and email):
             return render_template('register.html', message='All fields are required.')
+
+        if password != confirm_password:  # Check if passwords match
+            return render_template('register.html', message='Passwords do not match.')
 
         existing_user = mongo.db.users.find_one({'$or': [{'username': username}, {'email': email}]})
         if existing_user:
@@ -52,8 +56,11 @@ def register():
 
         hashed_password = generate_password_hash(password, method="pbkdf2:sha256")
 
+
         user_data = {
             'username': username,
+            'first_name': first_name,
+            'last_name': last_name,
             'password': hashed_password,
             'email': email
         }
@@ -88,14 +95,63 @@ def layout():
     if 'user_id' not in session:
         return redirect('/login')
 
-    user = mongo.db.users.find_one({'_id': ObjectId(session['user_id'])})
+    user_id = ObjectId(session['user_id'])
 
-    if not user:
-        session.clear()
+    #Fetch user's task, notes, and todos
+    tasks = list(mongo.db.tasks.find({'user_id': user_id}))
+    notes = list(mongo.db.notes.find({'user_id': user_id}))
+    todos = list(mongo.db.todos.find({'user_id': user_id}))
+
+    return render_template('temp-home.html', tasks=tasks, notes=notes, todos=todos)
+
+@app.route('/add', methods=['POST'])
+def add():
+    if 'user_id' not in session:
         return redirect('/login')
+    
+    user_id = ObjectId(session['user_id'])
+    content = request.form.get('content')
+    data_type = request.form.get('data_type')
 
-    return render_template('layout.html', username=user['username'])
+    if data_type == 'task':
+        mongo.db.tasks.insert_one({'user_id': user_id, 'content': content})
+    elif data_type == 'note':
+        mongo.db.notes.insert_one({'user_id': user_id, 'content': content})
+    elif data_type == 'todo':
+        mongo.db.todos.insert_one({'user_id': user_id, 'content': content})
+    
+    return redirect(url_for('layout'))
 
+# Update Data (tasks, Notes, Todos)
+@app.route('/update/<data_type>/<data_id>', methods=['POST'])
+def update(data_type, data_id):
+    if 'user_id' not in session:
+        return redirect('/login')
+    
+    updated_content = request.form.get('content')
+
+    if data_type == 'task':
+        mongo.db.tasks.update_one({'_id': ObjectId(data_id)}, {'$set': {'content': updated_content}})
+    elif data_type == 'note':
+        mongo.db.notes.update_one({'_id': ObjectId(data_id)}, {'$set': {'content': updated_content}})
+    elif data_type == 'todo':
+        mongo.db.todos.update_one({'_id': ObjectId(data_id)}, {'$set': {'content': updated_content}})
+
+    return redirect(url_for('layout'))
+
+@app.route('/delete/<data_type>/<data_id>', methods=['POST'])
+def delete(data_type, data_id):
+    if 'user_id' not in session:
+        return redirect('/login')
+    
+    if data_type == 'task':
+        mongo.db.tasks.delete_one({'_id': ObjectId(data_id)})
+    elif data_type == 'note':
+        mongo.db.notes.delete_one({'_id': ObjectId(data_id)})
+    elif data_type == 'todo':
+        mongo.db.todos.delete_one({'_id': ObjectId(data_id)})
+
+    return redirect(url_for('layout'))
 
 # Logout Route
 @app.route('/logout')
