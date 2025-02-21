@@ -18,12 +18,6 @@ main {
   align-items: center;
 }
 
-#sidebar-container {
-  width: 20%;
-  background-color: blue;
-  height: 100vh;
-}
-
 #main-content-wrapper {
   width: 80%;
   height: 100vh;
@@ -260,10 +254,13 @@ main {
   border-radius: 10px;
 }
 
+/*===== BREAKING SIDEBAR====== */
+/*
 ul {
   margin: 0;
   padding: 10px;
 }
+*/
 
 .priority-options li {
   margin-bottom: 0.5rem;
