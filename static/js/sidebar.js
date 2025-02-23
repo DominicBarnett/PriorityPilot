@@ -1,5 +1,6 @@
 const toggleButton = document.getElementById('toggle-btn')
 const sidebar = document.getElementById('sidebar')
+const main = document.querySelector('main')
 
 function toggleSidebar(){
   sidebar.classList.toggle('close')
