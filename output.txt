@@ -1,4 +1,26 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+# Use an official Python runtime as a parent image
+FROM python:3.11
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the project files into the container
+COPY . .
+
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Expose the Flask port
+EXPOSE 5000
+
+# Set the entry point to run the Flask app
+CMD ["python", "app.py"]
+A Flask-based task manager with user authentication and task prioritization.
+
+```sh
+pip install -r requirements.txt
+python app.py
+```from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -13,7 +35,7 @@ load_dotenv()
 app = Flask(__name__)
 
 # Set configurations
-app.config["SECRET_KEY"] = "your-strong_secret_key_here"
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "your_default_secret_key")
 app.config["MONGO_URI"] = os.getenv("MONGO_URI", "mongodb://localhost:27017/prioritypilotdev")
 
 # Initialize MongoDB connection
@@ -56,6 +78,7 @@ def register():
 
         hashed_password = generate_password_hash(password, method="pbkdf2:sha256")
 
+
         user_data = {
             'username': username,
             'first_name': first_name,
@@ -65,7 +88,7 @@ def register():
         }
         mongo.db.users.insert_one(user_data)
 
-        return redirect(url_for('login'))  # Redirect to login after registration
+        return redirect('/login')
 
     return render_template('register.html')
 
@@ -81,9 +104,9 @@ def login():
 
         if user and check_password_hash(user['password'], password):
             session['user_id'] = str(user['_id'])  # Store as string
-            return redirect(url_for('layout'))  # Redirect to /layout after successful login
+            return redirect(url_for('/layout'))
         else:
-            flash("Invalid username or password", "error")
+            flash("invalid username or password", "error")
             return render_template('login.html', message='Invalid username or password')
 
     return render_template('login.html')
@@ -93,12 +116,12 @@ def login():
 @app.route('/layout')
 def layout():
     if 'user_id' not in session:
-        return redirect(url_for('login'))
+        return redirect('/login')
 
     user = mongo.db.users.find_one({'_id': ObjectId(session['user_id'])})
     if not user:
         session.clear()
-        return redirect(url_for('login'))
+        return redirect('/login')
 
     tasks = list(mongo.db.tasks.find({'user_id': session['user_id']}))
     overdue_tasks = sum(1 for task in tasks if task.get('overdue', False))
@@ -120,11 +143,10 @@ def layout():
         achievements=achievements
     )
 
-
 @app.route('/add-task', methods=['POST'])
 def add_task():
     if 'user_id' not in session:
-        return redirect(url_for('login'))
+        return redirect('/login')
 
     task = request.form.get('task')
     priority = request.form.get('priority', 'normal')
@@ -137,49 +159,45 @@ def add_task():
         'overdue': False
     })
 
-    return redirect(url_for('layout'))
-
+    return redirect(url_for('/layout'))
 
 @app.route('/update-task/<task_id>', methods=['POST'])
 def update_task(task_id):
     if 'user_id' not in session:
-        return redirect(url_for('login'))
+        return redirect(url_for('/login'))
 
     updated_task = request.form.get('task')
     mongo.db.tasks.update_one(
         {'_id': ObjectId(task_id), 'user_id': session['user_id']},
         {'$set': {'task': updated_task}}
     )
-    return redirect(url_for('layout'))
-
+    return redirect('/layout')
 
 @app.route('/delete-task/<task_id>', methods=['POST'])
 def delete_task(task_id):
     if 'user_id' not in session:
-        return redirect(url_for('login'))
+        return redirect('/login')
 
     mongo.db.tasks.delete_one({'_id': ObjectId(task_id), 'user_id': session['user_id']})
-    return redirect(url_for('layout'))
-
+    return redirect('/layout')
 
 @app.route('/toggle-completion/<task_id>', methods=['POST'])
 def toggle_completion(task_id):
     if 'user_id' not in session:
-        return redirect(url_for('login'))
+        return redirect('/login')
 
     task = mongo.db.tasks.find_one({'_id': ObjectId(task_id), 'user_id': session['user_id']})
     if task:
-        new_status = not task.get('completed', False)  # Fixed syntax error
+        new_status = not task.get['completed', False]
         mongo.db.tasks.update_one({'_id': ObjectId(task_id)}, {'$set': {'completed': new_status}})
     
-    return redirect(url_for('layout'))
-
+    return redirect('/layout')
 
 # Logout Route
 @app.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('index'))
+    return redirect('/')
 
 
 # Forgot Password Route
@@ -199,7 +217,7 @@ def forgot_password():
             mail.send(msg)
 
             flash("Check your email for reset instructions.", "success")
-            return redirect(url_for('login'))
+            return redirect('/login')
 
     return render_template('forgot_password.html')
 
@@ -216,15 +234,111 @@ def reset_password(token):
         new_password = request.form.get('password')
         hashed_password = generate_password_hash(new_password)
         mongo.db.users.update_one({'_id': user['_id']}, {'$set': {'password': hashed_password, 'reset_token': None}})
-        return redirect(url_for('login'))
+        return redirect('/login')
 
     return render_template('reset_password.html')
-
 
 @app.route("/temp-home")
 def temp_home():
     return render_template('temp-home.html')
-
-
+    
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
+
+services:
+  flask-app:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/mydatabase
+    volumes:
+      - .:/app
+    restart: always
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    restart: always
+
+volumes:
+  mongo-data:
+from bson.objectid import ObjectId
+
+class User:
+    def __init__(self, name, email, username, password, _id=None):
+        self.id = ObjectId(_id) if _id else None
+        self.name = name  # New name field
+        self.email = email
+        self.username = username
+        self.password = password  # Hash this in production!
+
+    def to_dict(self):
+        return {
+            "_id": str(self.id) if self.id else None,
+            "name": self.name,
+            "email": self.email,
+            "username": self.username,
+            "password": self.password
+        }
+
+class Task:
+    def __init__(self, name, priority_id, completed, description, due_date, task_type, user_id, _id=None):
+        self.id = ObjectId(_id) if _id else None
+        self.name = name
+        self.priority_id = ObjectId(priority_id) if priority_id else None  # Foreign key reference
+        self.completed = completed  # Boolean (True/False)
+        self.description = description
+        self.due_date = due_date  # Store as a string or convert to datetime
+        self.task_type = task_type
+        self.user_id = ObjectId(user_id) if user_id else None  # Foreign key reference to User
+
+    def to_dict(self):
+        return {
+            "_id": str(self.id) if self.id else None,
+            "name": self.name,
+            "priority_id": str(self.priority_id) if self.priority_id else None,
+            "completed": self.completed,
+            "description": self.description,
+            "due_date": self.due_date,
+            "task_type": self.task_type,
+            "user_id": str(self.user_id) if self.user_id else None
+        }
+
+class Priority:
+    def __init__(self, name, point_value, rarity, _id=None):
+        self.id = ObjectId(_id) if _id else None
+        self.name = name
+        self.point_value = point_value
+        self.rarity = rarity
+
+    def to_dict(self):
+        return {
+            "_id": str(self.id) if self.id else None,
+            "name": self.name,
+            "point_value": self.point_value,
+            "rarity": self.rarity
+        }
+Flask
+Flask-PyMongo
+Werkzeug
+python-dotenv
+Flask-Mail
+python-dotenvfrom db.users import seed_users
+from db.priorities import seed_priorities
+from db.tasks import seed_tasks
+
+def seed_all():
+    print("🚀 Seeding database...")
+    seed_users()
+    seed_priorities()
+    seed_tasks()
+    print("✅ Database seeding complete!")
+
+if __name__ == "__main__":
+    seed_all()
