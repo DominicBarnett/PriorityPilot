@@ -52,6 +52,10 @@ body {
   margin: 2rem;
   border-radius: 1.5rem;
 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
 }
 
 #sidebar.close{
@@ -162,7 +166,9 @@ body {
 }
 
 .logout {
-
+  margin-top: auto;
+  margin-bottom: 1rem;
+  list-style: none;
 }
 
 /* ====== SIDEBAR RESPONSIVE TO MOBILE DEVICE ===== */
