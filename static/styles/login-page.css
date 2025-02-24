@@ -5,7 +5,7 @@
 
 @font-face {
   font-family: 'CloudFont2';
-  src: url('../fonts/InflateptxChrome-X3oPg.ttf') format('truetype');
+  src: url('../static/fonts/InflateptxChrome-X3oPg.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }

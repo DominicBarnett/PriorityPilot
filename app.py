@@ -61,7 +61,7 @@ def register():
 
         return redirect('/login')
 
-    return render_template('signup-page.html')
+    return render_template('register.html')
 
 
 # Login Route (Allows Login with Either Username or Email)
@@ -153,6 +153,14 @@ def home():
 @app.route("/sidebar")
 def sidebar():
     return render_template('sidebar.html')
+
+@app.route("/landing")
+def landing():
+    return render_template('landing-page.html')
+
+@app.route("/contact")
+def contact():
+    return render_template('contact-us.html')
     
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)

@@ -13,7 +13,7 @@ body {
 }
 
 .image-hero {
-  position: relative;
+  position: fixed;
   width: 100%;
   height: calc(100vh - 2rem);
   overflow: hidden;
@@ -49,7 +49,14 @@ body {
   max-width: 80%;
   margin: 0 auto;
 }
+.hero-hidden {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
 
+
+
+/* NAVBAR */
 .navbar {
   position: fixed;
   display: flex;
@@ -220,30 +227,24 @@ svg path {
 
 
 /* LANDING PAGE INFO STYLING OR ABOUT US */
-@font-face {
-  font-family: "CloudFont";
-  src: url("/static/fonts/so-cloudy-font/SoCloudy-PV7yd.woff2") format("woff2");
-  font-weight: normal;
-  font-style: normal;
-}
 
 .about-us {
   position: relative;
-  margin-top: 0;
-  margin-left: 0;
-  padding: 8rem 4rem;
+  margin: 0;
+  padding: 0;
   z-index: 1;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: var(--background-clr);
 
 }
 
 #info-section-header {
   font-family: var(--font-primary);
   font-size: 4.5rem;
-  margin: 0;
+  margin: 1rem;
   color: white;
   text-align: center;
   opacity: 0;
