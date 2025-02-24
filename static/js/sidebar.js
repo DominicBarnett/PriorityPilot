@@ -24,6 +24,11 @@ function toggleSubMenu(button){
 
   if (!subMenu) return; // If no submenu exists, exit
 
+  if (sidebar.classList.contains('close')) {
+    sidebar.classList.remove('close');
+    main.style.width = "77vw"; 
+  }
+
   if (subMenu.classList.contains("show")) {
       subMenu.classList.remove("show"); // If already open, close it
   } else {
@@ -50,11 +55,11 @@ function setInitialMainWidth() {
 window.onload = function () {
   setInitialMainWidth(); 
 
-  if (toggleBtn) {
-      toggleBtn.onclick = toggleSidebar; 
+  if (toggleButton) {
+    toggleButton.onclick = toggleSidebar; 
   }
 
-  dropdownButtons.forEach(button => {
+  dropdownButttons.forEach(button => {
       button.onclick = function () {
           toggleSubMenu(this);
       };

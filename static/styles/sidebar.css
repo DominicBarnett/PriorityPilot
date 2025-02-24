@@ -51,6 +51,7 @@ body {
   text-wrap: nowrap;
   margin: 2rem;
   border-radius: 1.5rem;
+
 }
 
 #sidebar.close{
@@ -158,6 +159,10 @@ body {
 
 #toggle-btn:hover{
   background-color: var(--hover-clr);
+}
+
+.logout {
+
 }
 
 /* ====== SIDEBAR RESPONSIVE TO MOBILE DEVICE ===== */
