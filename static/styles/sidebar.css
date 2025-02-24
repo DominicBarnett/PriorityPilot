@@ -105,6 +105,7 @@ body {
 
 #sidebar a span, #sidebar .dropdown-btn span {
   flex-grow: 1;
+  font-size: 1.2rem;
 }
 
 #sidebar a:hover, #sidebar .dropdown-btn:hover {
@@ -120,6 +121,7 @@ body {
   display: grid;
   grid-template-rows: 0fr;
   transition: 300mx ease-in-out;
+  font-size: 1rem;
 
   > div {
     overflow: hidden;
@@ -225,17 +227,5 @@ body {
     }
   }
 }
-
-/* ===========STYLING FOR MAIN CONTENT ============= */
-/* main {
-  padding: min(30px, 7%);
-}
-
-.container {
-  border: 1px solid white;
-  border-radius: 1em;
-  margin-bottom: 20px;
-  padding: min(3em, 15%);
-} */
 
 
