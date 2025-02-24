@@ -49,7 +49,13 @@
                               <input name="task" value="{{ task.task }}" class="{% if task.completed %}task-completed{% endif %}" />
                               <div class="custom-priority-wrapper">
                                   <button class="open-priority-menu" type="button">
-                                      <i class="fa-solid fa-plane-circle-exclamation"></i>
+                                    {% if task.priority == 'high-priority' %}
+                                        <i class="fa-solid fa-plane-circle-exclamation"></i>
+                                    {% elif task.priority == 'medium-priority' %}
+                                        <i class="fa-solid fa-plane-departure"></i>
+                                    {% else %}
+                                        <i class="fa-solid fa-paper-plane"></i>
+                                    {% endif %}
                                   </button>
                                   <ul class="hidden priority-options">
                                       <li data-value="high-priority"><i class="fa-solid fa-plane-circle-exclamation"></i></li>
