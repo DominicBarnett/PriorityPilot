@@ -180,23 +180,12 @@
     </nav>
     <main>
       <div>
-        <div class="profile-header">
-          <img
-            id="header-icon"
-            src="../static/images/airplane-icon.png"
-            alt="black airplane icon"
-          />
-          <h1>Pilot Stats</h1>
-        </div>
-        <div>
-          <h2 id="rank-headging"></h2>
-        </div>
         <div class="flight-board-wrapper">
           <table>
             <thead>
               <tr>
                 <th colspan="4" class="flight-board-header">
-                    <i class="fa-solid fa-plane-departure"></i> Departures
+                  <i class="fa-solid fa-plane-departure"></i> Departures
                 </th>
               </tr>
               <tr>
@@ -214,9 +203,9 @@
                 <td class="flip boarding">BOARDING</td>
               </tr>
               <tr>
-                <td class="flip">12:30</td>
-                <td class="flip">Goal Getter</td>
-                <td class="flip">2</td>
+                <td class="flip white-text">12:30</td>
+                <td class="flip white-text">Goal Getter</td>
+                <td class="flip white-text">2</td>
                 <td class="flip on-time">ON TIME</td>
               </tr>
               <tr>
@@ -228,8 +217,27 @@
             </tbody>
           </table>
         </div>
+        <div>
+          <div id="altitude-gauge">
+            <div class="gauge-background"></div>
+            <div class="gauge-needle"></div>
+            <div class="altitude-display">0 ft</div>
+          </div>
+        </div>
       </div>
-      <div></div>
+      <div>
+        <div class="profile-header">
+          <img
+            id="header-icon"
+            src="../static/images/airplane-icon.png"
+            alt="black airplane icon"
+          />
+          <h1>Pilot Stats</h1>
+        </div>
+        <div>
+          <h2 id="rank-headging"></h2>
+        </div>
+      </div>
     </main>
   </body>
 </html>
