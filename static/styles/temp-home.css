@@ -1,5 +1,22 @@
+:root {
+  --font-primary: "Quicksand", serif;
+  --font-title: "Luckiest Guy", serif;
+  --font-cloud: "CloudFont", sans-serif;
+  --font-secondary: "Liter", serif;
+  --main-clr: #a3c7e0;
+  --container-clr: #6a9dd7;
+  --sidebar-clr: #3a7d9c;
+  --lightgreen-clr: #239a7a;
+  --darkgreen-clr: #1c6d4d;
+  --text-clr: white;
+  --extra-clr: #005f6b;
+  --accent-clr: #FFD166;
+  --hover-clr: #1E5B74;
+  --hover-txt-clr: #FFD166;
+}
+
 * {
-  font-family: "Quicksand", serif;
+  font-family: var(--font-primary);
   font-style: normal;
 }
 
@@ -25,7 +42,7 @@ main {
   padding: 0 10px;
   display: flex;
   flex-direction: column;
-  background-color: #a3c7e0;
+  background-color: var(--main-clr);
   border-radius: 1.5rem;
 }
 
@@ -37,6 +54,7 @@ main {
   align-items: center;
   column-gap: 0.2rem;
   padding-bottom: 0.5rem;
+  margin: 1rem 0rem;
 }
 
 #greeting-header-wrapper span {
@@ -85,6 +103,10 @@ main {
     transform: rotateX(360deg);
     color: #000;
   }
+}
+
+#todays-date-header {
+  font-size: 1.5rem;
 }
 
 .todays-date-header-wrapper {
@@ -297,4 +319,44 @@ ul {
 
 .achievements {
   flex-grow: 1;
+}
+
+
+/* ============= SEARCH BAR ============== */
+.search {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  padding: 14px;
+  border-radius: 3rem;
+  transition: box-shadow 0.25s;
+}
+
+.search:focus-within {
+  box-shadow: 0 0 2px rgba(28, 14, 14, 0.75);
+  background: rgba(255, 255, 255, 0.678);
+}
+
+.search-input {
+  font-size: 1rem;
+  color: #333333;
+  
+  outline: none;
+  border: none;
+  background: transparent;
+  width: 300px;
+  
+}
+
+.search-input::placeholder, .search-icon {
+  color: rgba(0, 0, 0, 0.25);
+}
+
+.search-input::placeholder {
+  text-align: right;
+  padding-right: 2rem;
+}
+
+.search-icon {
+  margin-left: 14px;
 }
