@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PriorityPilot</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Quicksand:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/cca020387c.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="../static/styles/forgotten-password.css" />
+  </head>
+  <body>
+    <div id="forgotten-password-page-wrapper">
+      <form id="forgotten-password-form">
+        <div>
+          <h1>Forgot password?</h1>
+          <h2>Enter your email address</h2>
+        </div>
+        <input
+          type="text"
+          name="forgotten-email"
+          id="forgotten-email"
+          required
+        />
+        <button type="button">Continue</button>
+      </form>
+
+      <div class="moving-footer">
+        <div class="moving-footer-subsection">
+          <div class="moving-footer-section">
+            <img src="../static/images/transparent-plane.png" />
+            <h1>PRIORITYPILOT</h1>
+          </div>
+          <div class="moving-footer-section">
+            <img src="../static/images/transparent-plane.png" />
+            <h1>PRIORITYPILOT</h1>
+          </div>
+          <div class="moving-footer-section">
+            <img src="../static/images/transparent-plane.png" />
+            <h1>PRIORITYPILOT</h1>
+          </div>
+          <div class="moving-footer-section">
+            <img src="../static/images/transparent-plane.png" />
+            <h1>PRIORITYPILOT</h1>
+          </div>
+          <div class="moving-footer-section">
+            <img src="../static/images/transparent-plane.png" />
+            <h1>PRIORITYPILOT</h1>
+          </div>
+          <div class="moving-footer-section">
+            <img src="../static/images/transparent-plane.png" />
+            <h1>PRIORITYPILOT</h1>
+          </div>
+          <div class="moving-footer-section">
+            <img src="../static/images/transparent-plane.png" />
+            <h1>PRIORITYPILOT</h1>
+          </div>
+          <div class="moving-footer-section">
+            <img src="../static/images/transparent-plane.png" />
+            <h1>PRIORITYPILOT</h1>
+          </div>
+          <div class="moving-footer-section">
+            <img src="../static/images/transparent-plane.png" />
+            <h1>PRIORITYPILOT</h1>
+          </div>
+          <div class="moving-footer-section">
+            <img src="../static/images/transparent-plane.png" />
+            <h1>PRIORITYPILOT</h1>
+          </div>
+        </div>
+
+        <div class="moving-footer-subsection" aria-hidden="true">
+          <div class="moving-footer-section">
+            <img src="../static/images/transparent-plane.png" />
+            <h1>PRIORITYPILOT</h1>
+          </div>
+          <div class="moving-footer-section">
+            <img src="../static/images/transparent-plane.png" />
+            <h1>PRIORITYPILOT</h1>
+          </div>
+          <div class="moving-footer-section">
+            <img src="../static/images/transparent-plane.png" />
+            <h1>PRIORITYPILOT</h1>
+          </div>
+          <div class="moving-footer-section">
+            <img src="../static/images/transparent-plane.png" />
+            <h1>PRIORITYPILOT</h1>
+          </div>
+          <div class="moving-footer-section">
+            <img src="../static/images/transparent-plane.png" />
+            <h1>PRIORITYPILOT</h1>
+          </div>
+          <div class="moving-footer-section">
+            <img src="../static/images/transparent-plane.png" />
+            <h1>PRIORITYPILOT</h1>
+          </div>
+          <div class="moving-footer-section">
+            <img src="../static/images/transparent-plane.png" />
+            <h1>PRIORITYPILOT</h1>
+          </div>
+          <div class="moving-footer-section">
+            <img src="../static/images/transparent-plane.png" />
+            <h1>PRIORITYPILOT</h1>
+          </div>
+          <div class="moving-footer-section">
+            <img src="../static/images/transparent-plane.png" />
+            <h1>PRIORITYPILOT</h1>
+          </div>
+          <div class="moving-footer-section">
+            <img src="../static/images/transparent-plane.png" />
+            <h1>PRIORITYPILOT</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+{% extends "landing-page.html" %}
+
+{% block content %}
+<h1>Your Tasks</h1>
+<ul>
+    <h1>bbbb</h1>
+    <!-- {% for task in tasks %}
+        <li>{{ task.title }} - Priority: {{ task.priority }}</li>
+    {% endfor %} -->
+</ul>
+{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=<h2>>, initial-scale=1.0" />
+    <title>PriorityPilot</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Liter&display=swap"
+      rel="stylesheet"
+    />
+    <link href="../static/styles/landing-page-info.css" rel="stylesheet" />
+  </head>
+  <body>
+    <img src="../static/images/fluffy-cloud.svg" id="fluffy-cloud" />
+    <h2 id="info-section-header">What's PriorityPilot?</h2>
+    <h3 id="info-section-sub-header">
+      PriorityPilot is a task manager to help you:
+    </h3>
+    <div class="info-section-wrapper">
+      <div class="info-point">
+        <div>
+          <img
+            src="../static/images/plane-bullet-points.png"
+            class="plane-bullet-points-image"
+          />
+        </div>
+        <div>
+          <h4>
+            Organize tasks by urgency and importance to stay focused on what
+            matters most.
+          </h4>
+        </div>
+      </div>
+      <div class="info-point">
+        <div>
+          <img
+            src="../static/images/plane-bullet-points.png"
+            class="plane-bullet-points-image"
+          />
+        </div>
+        <div>
+          <h4>
+            Plan your day effortlessly with an intuitive calendar and reminders.
+          </h4>
+        </div>
+      </div>
+      <div class="info-point">
+        <div>
+          <img
+            src="../static/images/plane-bullet-points.png"
+            class="plane-bullet-points-image"
+          />
+        </div>
+        <div>
+          <h4>
+            Create, edit, and reorder tasks.
+          </h4>
+        </div>
+      </div>
+      <div class="info-point">
+        <div>
+          <img
+            src="../static/images/plane-bullet-points.png"
+            class="plane-bullet-points-image"
+          />
+        </div>
+        <div>
+          <h4>
+            Compete against your friends to see who can complete the most tasks.
+          </h4>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landing Page 2</title>
+  <link rel="stylesheet" href="../static/styles/landing-page.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+  
+</head>
+<body>
+  <nav class="navbar">
+    <a href="#" ><img src="../static/images/prioritypilot-logo.svg" class="nav-logo"></a>
+    <div class="nav-right">
+        <a href="{{ url_for('login') }}"><img src="../static/images/signup-logo.svg" id="signup-logo"></a>
+    </div>
+  </nav>
+
+  <section class="image-hero">
+    <div class="fluffy-clouds-container">
+      <img src="../static/images/fluffy-cloud.svg" class="fluffy-cloud" />
+      <img src="../static/images/fluffy-cloud.svg" class="fluffy-cloud" />
+      <img src="../static/images/fluffy-cloud.svg" class="fluffy-cloud" />
+      <img src="../static/images/fluffy-cloud.svg" class="fluffy-cloud" />
+    </div>
+    <img src="../static/images/penguin-plane.svg" class="penguin-plane" alt="Flying penguin">
+    <div class="hero-text">
+      <p id="app-name">PRIORITY PILOT</p>
+      <p id="app-description">Too many tasks, not enough time? Priority Pilot helps you rank, organize, and schedule your to-do list—so you can focus on what truly matters.</p>
+      <a href="{{ url_for('login') }}" id="get-started">Get Started</a>
+    </div>
+    <img src="../static/images/cloud-left.svg" id="cloud-left">
+    <img src="../static/images/cloud-right.svg" id="cloud-right">
+  </section>
+
+  <section class="about-us">
+    <h2 id="info-section-header">What's PriorityPilot?</h2>
+    <h3 id="info-section-sub-header">
+      PriorityPilot is a task manager to help you:
+    </h3>
+    <div class="info-section-wrapper">
+      <div class="info-point">
+        <div>
+          <img
+            src="../static/images/plane-bullet-points.png"
+            class="plane-bullet-points-image"
+          />
+        </div>
+        <div>
+          <h4>
+            Organize tasks by urgency and importance to stay focused on what
+            matters most.
+          </h4>
+        </div>
+      </div>
+      <div class="info-point">
+        <div>
+          <img
+            src="../static/images/plane-bullet-points.png"
+            class="plane-bullet-points-image"
+          />
+        </div>
+        <div>
+          <h4>
+            Plan your day effortlessly with an intuitive calendar and reminders.
+          </h4>
+        </div>
+      </div>
+      <div class="info-point">
+        <div>
+          <img
+            src="../static/images/plane-bullet-points.png"
+            class="plane-bullet-points-image"
+          />
+        </div>
+        <div>
+          <h4>
+            Create, edit, and reorder tasks.
+          </h4>
+        </div>
+      </div>
+      <div class="info-point">
+        <div>
+          <img
+            src="../static/images/plane-bullet-points.png"
+            class="plane-bullet-points-image"
+          />
+        </div>
+        <div>
+          <h4>
+            Compete against your friends to see who can complete the most tasks.
+          </h4>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <script src="{{url_for('static', filename='js/landing-page.js') }}"></script>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+    </nav>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PriorityPilot</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Quicksand:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/cca020387c.js"
+      crossorigin="anonymous"
+    ></script>
+    <link href="../static/styles/login-page.css" rel="stylesheet" />
+  </head>
+  <body id="login-body">
+    <main id="login-main-content">
+      <div class="login-main-content-wrapper">
+        <h1 id="log-in-header">Log in</h1>
+        <form class="login-form" action="{{ url_for('login') }}" method="POST">
+          <div class="form-input-wrapper">
+            <label for="username">Email or Username</label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              required
+              maxlength="200"
+            />
+          </div>
+          <div class="form-input-wrapper">
+            <label for="password">Password</label>
+            <div class="password-input-wrapper">
+              <input
+                type="password"
+                name="password"
+                id="password"
+                required
+                maxlength="25"
+              />
+              <button type="button" class="eye-icon-button">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+            </div>
+            <a id="forgot-password-link" href="{{ url_for('forgot_password') }}">Forgot password</a>
+          </div>
+          <div class="form-button-wrapper">
+            <button type="submit">Log In</button>
+          </div>
+        </form>
+        
+        <div class="login-button-footer">
+          <p>Don't have an account?</p>
+          <a href="{{ url_for('register') }}">
+            <button>Sign up</button>
+          </a>
+        </div>
+      </div>
+    </main>
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+  </body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PriorityPilot</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Quicksand:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/cca020387c.js"
+      crossorigin="anonymous"
+    ></script>
+    <link href="../static/styles/signup-page.css" rel="stylesheet" />
+  </head>
+  <body id="login-body">
+    <main id="login-main-content">
+      <div class="login-main-content-wrapper">
+        <h1 id="log-in-header">Sign up</h1>
+        <form class="login-form">
+          <div id="full-name-inputs-wraper">
+            <div class="form-input-wrapper">
+              <label for="firstname">First Name</label>
+              <input type="text" name="firstname" id="firstname" required/>
+            </div>
+            <div class="form-input-wrapper">
+              <label for="lastname">Last Name</label>
+              <input type="text" name="lastname" id="lastname" required/>
+            </div>
+          </div>
+          <div class="form-input-wrapper">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              required
+              maxlength="200"
+            />
+          </div>
+          <div class="form-input-wrapper">
+            <label for="password">Password</label>
+            <div class="password-input-wrapper">
+              <input
+                type="password"
+                name="password"
+                id="password"
+                required
+                maxlength="25"
+              />
+              <button type="button" class="eye-icon-button password">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+            </div>
+          </div>
+          <div class="form-input-wrapper">
+            <label for="confirm-password">Confirm Password</label>
+            <div class="password-input-wrapper">
+              <input
+                type="password"
+                name="confirm-password"
+                id="confirm-password"
+                required
+                maxlength="25"
+              />
+              <button type="button" class="eye-icon-button confirm">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+            </div>
+          </div>
+          <div class="form-button-wrapper">
+            <button type="submit">Sign up</button>
+          </div>
+        </form>
+        <div class="login-button-footer">
+          <p>Have an account?</p>
+          <a href="{{ url_for('login') }}">
+            <button>Log in</button>
+          </a>
+        </div>
+      </div>
+    </main>
+    <script src="{{ url_for('static', filename='js/signup.js') }}"></script>
+  </body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PriorityPilot</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Quicksand:wght@300..700&display=swap">
+    <script src="https://kit.fontawesome.com/cca020387c.js" crossorigin="anonymous"></script>
+    <link href="{{ url_for('static', filename='styles/temp-home.css') }}" rel="stylesheet" />
+</head>
+<body>
+    <main>
+        <div id="sidebar-container">Insert sidebar</div>
+        <div id="main-content-wrapper">
+            <div class="todays-date-header-wrapper">
+                <h1 id="todays-date-header"></h1>
+                <div>
+                    <button><i class="fa-solid fa-plus"></i></button>
+                    <button><i class="fa-solid fa-calendar-days"></i></button>
+                    <button><i class="fa-solid fa-bell"></i></button>
+                    <button><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+            </div>
+            <div id="greeting-header-wrapper">
+                <h2>Welcome, {{ username }}!</h2>
+            </div>
+            <div class="tasks-main-area-wrapper">
+                <div id="todays-task-list">
+                    <div class="todays-task-header-wrapper">
+                        <h2>Today's list</h2>
+                        <div>
+                            <h3 id="total-task-count">{{ tasks|length }}</h3>
+                            <button id="add-today-task-button" onclick="showTaskForm()"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="today-all-tasks-wrapper">
+                        {% for task in tasks %}
+                        <div class="today-single-task-wrapper">
+                          <form class="{{ url_for('toggle_completetion', task_id=task._id) }}" method="POST">
+                            <button tyoe="submit" class="completion-circle">
+                              {% if task.completed %}
+                                <i class="fa-solid fa-circle-check"></i> <!-- Task Completed -->
+                              {% else %}
+                                <i class="fa-regular fa-circle"></i> <!-- Task not completed -->
+                              {% endif %}
+                            </button>
+                          </form>
+                            <form action="{{ url_for('update_task', task_id=task._id) }}" method="POST">
+                                <input name="task" value="{{ task.task }}" class="{% if task.completed %}" />
+                                <div class="custom-priority-wrapper">
+                                    <button class="open-priority-menu" type="button">
+                                        <i class="fa-solid fa-plane-circle-exclamation"></i>
+                                    </button>
+                                </div>
+                                <input type="hidden" name="priority" value="{{ task.priority }}" />
+                                <button type="submit" class="save-task-btn">Save</button>
+                            </form>
+                            <form action="{{ url_for('delete_task', task_id=task._id) }}" method="POST">
+                                <button type="submit" class="delete-task-btn"><i class="fa-solid fa-trash"></i></button>
+                            </form>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="home-main-right-section">
+                    <div class="home-main-tasks-summary">
+                        <h2>Tasks Summary</h2>
+                        <h3>{{ tasks|length }} total</h3>
+                        <h3>{{ overdue_tasks }} overdue</h3>
+                        <h3>{{ completed_tasks_today }} completed today</h3>
+                    </div>
+                    <div class="home-main-game-summary">
+                        <h2>Pilot Points</h2>
+                        <div class="home-main-game-total-points">
+                            <h3>Total points</h3>
+                            <h3>{{ total_points }}</h3>
+                        </div>
+                        <div class="home-main-game-streak">
+                            <h3>Streaks</h3>
+                            <div>
+                                <h4>{{ streak_days }} day streak</h4>
+                                <h4>{{ streak_weeks }} week streak</h4>
+                            </div>
+                        </div>
+                        <div class="home-main-game-streak achievements">
+                            <h3>Recent achievements</h3>
+                            <div>
+                                {% for achievement in achievements %}
+                                <h4>{{ achievement }}</h4>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+</body>
+</html>
