@@ -14,7 +14,7 @@ app = Flask(__name__)
 
 # Set configurations
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "your_default_secret_key")
-app.config["MONGO_URI"] = os.getenv("MONGO_URI", "mongodb://localhost:27017/prioritypilotdev")
+app.config["MONGO_URI"] = os.getenv("MONGO_URI", "mongodb://localhost:27017/task_manager")
 
 # Initialize MongoDB connection
 mongo = PyMongo(app)
