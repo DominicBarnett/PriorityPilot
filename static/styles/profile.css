@@ -35,9 +35,10 @@ main > div {
 }
 
 #left-side-wrapper {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    box-sizing: border-box;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  box-sizing: border-box;
+  row-gap: 10px;
 }
 
 .flight-board-header {
@@ -131,43 +132,83 @@ tr:last-of-type td {
 }
 
 #barcode {
-    width: 100%;
-    height: 6rem;
-    object-fit: cover;
+  width: 100%;
+  height: 6rem;
+  object-fit: cover;
 }
 
 .cabin-pressure-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid #239a7a; /* Greenish-blue border for harmony */
-    height: 100%;
-    flex-shrink: 1;
-    border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #239a7a; /* Greenish-blue border for harmony */
+  height: 100%;
+  flex-shrink: 1;
+  border-radius: 15px;
 }
 
 .arrival-departure-info {
-    display: flex;
-    flex-direction: column;
-    row-gap: 3vh;
-    margin: 3vh 0;
+  display: flex;
+  flex-direction: column;
+  row-gap: 3vh;
+  margin: 3vh 0;
 }
 
 .arrival-departure-info > div {
-    display: flex;
-    justify-content: space-between;
-
+  display: flex;
+  justify-content: space-between;
 }
 
 .passenger-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+.arrival-departure-info > div > h3 {
+  text-transform: uppercase;
 }
 
 #right-side-wrapper {
-    display: grid;
-    grid-template-rows: 100px 1fr 150px;
+  display: grid;
+  grid-template-rows: 100px 1fr 150px;
+}
+
+.gauge-container {
+  position: relative;
+}
+
+.needle {
+  position: absolute;
+  width: 6px;
+  height: 130px;
+  background: red;
+  bottom: 50px;
+  left: 50%;
+  transform-origin: bottom center;
+  transform: rotate(-135deg);
+  transition: transform 0.5s ease-in-out;
+  bottom: 150px;
+}
+
+.percentage {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  font-size: 24px;
+  font-family: sans-serif;
+  color: white;
+  bottom: 50px;
+}
+
+.guague-wraper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gauge-container > svg {
+  width: 300px;
+  height: 300px;
 }
