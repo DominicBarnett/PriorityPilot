@@ -6,7 +6,7 @@ services:
     depends_on:
       - mongo
     environment:
-      - MONGO_URI=mongodb://mongo:27017/mydatabase
+      - MONGO_URI=mongodb://mongo:27017/task_manager
     volumes:
       - .:/app
     restart: always
