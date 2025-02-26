@@ -1,0 +1,41 @@
+* {
+  font-family: "Quicksand", serif;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  width: 100%;
+  height: 100vh;
+  padding: 2rem;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  border-radius: 15px;
+}
+
+main > div {
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+#calendar {
+  flex-grow: 1; /* Ensures it takes remaining space */
+  min-height: 0; /* Prevents overflow */
+}
+
+.past-day {
+    background-color: #f0f0f0 !important; /* Light gray */
+    opacity: 0.5;
+    pointer-events: none;
+}

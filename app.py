@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -157,6 +157,19 @@ def sidebar():
 @app.route("/profile")
 def profile():
     return render_template('profile.html')
+    
+@app.route("/calendar")
+def calendar():
+    return render_template('calendar.html')
+
+@app.route("/get_all_user_tasks")
+def get_all_user_tasks():
+    tasks = [
+        {"title": "Task 1", "start": "2025-02-26"},
+        {"title": "Task 3", "start": "2025-02-26"},
+        {"title": "Task 2", "start": "2025-02-27"}
+    ]
+    return jsonify(tasks)
     
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
