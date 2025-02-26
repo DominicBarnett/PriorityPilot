@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PriorityPilot</title>
+    <title>PriorityPilot - Sign Up</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -14,67 +14,69 @@
       src="https://kit.fontawesome.com/cca020387c.js"
       crossorigin="anonymous"
     ></script>
-    <link href="../static/styles/signup-page.css" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='styles/signup-page.css') }}" rel="stylesheet" />
   </head>
   <body id="login-body">
     <main id="login-main-content">
       <div class="login-main-content-wrapper">
         <h1 id="log-in-header">Sign up</h1>
-        <form class="login-form">
+        
+        <!-- ✅ Ensuring the form submits to the correct route -->
+        <form class="login-form" action="{{ url_for('register') }}" method="POST">
+          
+          <!-- Full Name Fields (Keeping original ID names) -->
           <div id="full-name-inputs-wraper">
             <div class="form-input-wrapper">
               <label for="firstname">First Name</label>
-              <input type="text" name="firstname" id="firstname" required/>
+              <input type="text" name="first_name" id="firstname" required/>
             </div>
             <div class="form-input-wrapper">
               <label for="lastname">Last Name</label>
-              <input type="text" name="lastname" id="lastname" required/>
+              <input type="text" name="last_name" id="lastname" required/>
             </div>
           </div>
+
+          <!-- ✅ Email Field (Keeping original structure) -->
+          <div class="form-input-wrapper">
+            <label for="email">Email Address</label>
+            <input type="email" name="email" id="email" required maxlength="200"/>
+          </div>
+
+          <!-- Username Field -->
           <div class="form-input-wrapper">
             <label for="username">Username</label>
-            <input
-              type="text"
-              name="username"
-              id="username"
-              required
-              maxlength="200"
-            />
+            <input type="text" name="username" id="username" required maxlength="200"/>
           </div>
+
+          <!-- Password Field -->
           <div class="form-input-wrapper">
             <label for="password">Password</label>
             <div class="password-input-wrapper">
-              <input
-                type="password"
-                name="password"
-                id="password"
-                required
-                maxlength="25"
-              />
+              <input type="password" name="password" id="password" required maxlength="25"/>
               <button type="button" class="eye-icon-button password">
                 <i class="fa-solid fa-eye"></i>
               </button>
             </div>
           </div>
+
+          <!-- Confirm Password Field -->
           <div class="form-input-wrapper">
             <label for="confirm-password">Confirm Password</label>
             <div class="password-input-wrapper">
-              <input
-                type="password"
-                name="confirm-password"
-                id="confirm-password"
-                required
-                maxlength="25"
-              />
+              <input type="password" name="confirm_password" id="confirm-password" required maxlength="25"/>
               <button type="button" class="eye-icon-button confirm">
                 <i class="fa-solid fa-eye"></i>
               </button>
             </div>
           </div>
+
+          <!-- Submit Button -->
           <div class="form-button-wrapper">
             <button type="submit">Sign up</button>
           </div>
         </form>
+
+        <!-- Login Link -->
         <div class="login-button-footer">
           <p>Have an account?</p>
           <a href="{{ url_for('login') }}">
@@ -83,6 +85,8 @@
         </div>
       </div>
     </main>
+
+    <!-- JavaScript File for Signup Page -->
     <script src="{{ url_for('static', filename='js/signup.js') }}"></script>
   </body>
 </html>
