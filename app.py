@@ -100,6 +100,7 @@ def layout():
 # Logout Route
 @app.route('/logout')
 def logout():
+    print("Logout route hit")
     session.clear()
     return redirect('/')
 
@@ -148,7 +149,7 @@ def temp_home():
 
 @app.route("/home")
 def home():
-    return render_template('home.html')
+    return render_template('home.html', active_page='home')
 
 @app.route("/sidebar")
 def sidebar():
@@ -176,7 +177,7 @@ def landing():
 
 @app.route("/contact")
 def contact():
-    return render_template('contact-us.html')
+    return render_template('contact-us.html', active_page='contact')
     
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
