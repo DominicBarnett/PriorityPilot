@@ -345,3 +345,32 @@ textarea.input {
     padding: 0.45rem 1.2rem;
   }
 }
+
+
+/* Flash message styles */
+.flash-message {
+  position: fixed;
+  top: 20px;
+  left: 60%;
+  transform: translateX(-50%);
+  margin-top: 1rem;
+  padding: 1rem 2rem;
+  border-radius: 5px;
+  font-size: 0.9rem;    
+  line-height: 1.2;     
+  text-align: center;   
+  z-index: 9999;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  opacity: 0.9;
+}
+
+.flash-message.success {
+  background-color: #4CAF50; 
+  color: #fff;
+}
+
+.flash-message.error {
+  background-color: #f44336; 
+  color: #fff;
+}
+
