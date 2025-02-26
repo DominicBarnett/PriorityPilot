@@ -66,24 +66,24 @@
           <!-- TODO: ADD FULL NAME FROM DATABASE -->
           <!-- need to change the 'value' in input field, and then span field -->
           <div class="input-container">
-            <input type="text" name="name" class="input" value=""/>
+            <input type="text" name="name" class="input" value="" required/>
             <label for="">Full Name</label>
             <span> INPUT JINJA USER FIRST NAME AND LAST NAME</span>
           </div>
 
           <!-- TODO: ADD EMAIL JINJA FROM DATABASE -->
           <div class="input-container">
-            <input type="email" name="email" class="input" />
+            <input type="email" name="email" class="input" required/>
             <label for="">Email</label>
             <span>Email</span>
           </div>
 
           <div class="input-container textarea">
-            <textarea name="message" class="input"></textarea>
+            <textarea name="message" class="input" required></textarea>
             <label for="">Message</label>
             <span>Message</span>
           </div>
-          <input type="submit" value="Send" class="btn" />
+          <button type="button" id="send-button" class="btn">Send</button>
         </form>
       </div>
     </div>
