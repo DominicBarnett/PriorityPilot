@@ -102,6 +102,7 @@ def layout():
 def logout():
     print("Logout route hit")
     session.clear()
+    flash("You are now logged out. See you soon!", "info")
     return redirect('/')
 
 
