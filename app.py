@@ -130,8 +130,9 @@ def layout():
     overdue_tasks = sum(1 for task in tasks if task.get("due_date") and task["due_date"] < datetime.now())
     completed_tasks_today = sum(1 for task in tasks if task.get("completed") and task.get("completed_date") == datetime.now().date())
 
+    print("overdue_tasks", overdue_tasks)
     return render_template(
-        "temp-home.html",
+        "home.html",
         username=user["username"],
         tasks=tasks,
         overdue_tasks=overdue_tasks,
@@ -140,6 +141,7 @@ def layout():
         streak_days=user.get("streak_days", 0),
         streak_weeks=user.get("streak_weeks", 0),
         achievements=user.get("achievements", []),
+        active_page='home'
     )
 
 
@@ -284,22 +286,13 @@ def reset_password(token):
 
     return render_template("reset_password.html")
 
-
-@app.route("/temp-home")
-def temp_home():
-    return render_template("temp-home.html")
-
-@app.route("/home")
-def home():
-    return render_template('home.html', active_page='home')
-
 @app.route("/sidebar")
 def sidebar():
     return render_template('sidebar.html')
 
 @app.route("/profile")
 def profile():
-    return render_template('profile.html')
+    return render_template('profile.html', active_page='profile')
     
 @app.route("/calendar")
 def calendar():
