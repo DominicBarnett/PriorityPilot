@@ -20,7 +20,7 @@
     <main id="login-main-content">
       <div class="login-main-content-wrapper">
         <h1 id="log-in-header">Log in</h1>
-        <form class="login-form">
+        <form class="login-form" action="{{ url_for('login') }}" method="POST">
           <div class="form-input-wrapper">
             <label for="username">Email or Username</label>
             <input
@@ -51,6 +51,7 @@
             <button type="submit">Log In</button>
           </div>
         </form>
+        
         <div class="login-button-footer">
           <p>Don't have an account?</p>
           <a href="{{ url_for('register') }}">
