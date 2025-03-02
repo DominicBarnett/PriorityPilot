@@ -12,7 +12,8 @@
     href="https://fonts.googleapis.com/css2?family=Liter&display=swap"
     rel="stylesheet"
   />
-  <link href="../static/styles/landing-page-info.css" rel="stylesheet" />
+  <script src="{{url_for('static', filename='js/landing-page.js') }}"></script>
+  <!-- <link href="../static/styles/landing-page-info.css" rel="stylesheet" /> -->
 </head>
 <body>
   <div class="fluffy-clouds-container">
@@ -46,13 +47,12 @@
     <img src="../static/images/cloud-right.svg" id="cloud-right">
   </section>
 
-  <section class="cloud-break">
-    <img src="../static/images/fluffy-cloud1.svg"/>
-    <img src="../static/images/fluffy-cloud1.svg"/>
-    <img src="../static/images/fluffy-cloud1.svg"/>
-    <img src="../static/images/fluffy-cloud1.svg"/>
-    <img src="../static/images/fluffy-cloud1.svg"/>
-  </section>
+    <!-- Spacer for scroll effect -->
+    <div style="height: 200vh;">
+      <div class="container text-center py-5">
+      </div>
+  </div>
+
 
   <!-- ABOUT US SECTION -->
   <section class="about-us">
@@ -117,7 +117,7 @@
     </div>
   </section>
   
-  <script src="{{url_for('static', filename='js/landing-page.js') }}"></script>
+  
 </body>
 </html>
 

@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   window.addEventListener('scroll', () => {
     let value = window.scrollY;
-    let scrollSpeed = 0.15;
+    let scrollSpeed = 0.1;
     let penguinSpeed = 2;
     
     // Move left cloud leftward
