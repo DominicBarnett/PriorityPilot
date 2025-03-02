@@ -38,7 +38,7 @@
       src="{{ url_for('static', filename='js/sidebar.js') }}"
       defer
     ></script>
-    <script src="{{url_for('static', filename='js/profile.js') }}"></script>
+    <script type="module" src="{{url_for('static', filename='js/profile.js') }}"></script>
   </head>
   <body>
     <div>{% include 'sidebar.html' %}</div>
@@ -124,8 +124,8 @@
           <div>
             <h3>Passenger:</h3>
             <div class="passenger-info">
-              <h2>Ca'Sandra</h2>
-              <h3>@casandra</h3>
+              <h2 id="user-first-name"></h2>
+              <h3 id="user-username"></h3>
             </div>
           </div>
           <div>

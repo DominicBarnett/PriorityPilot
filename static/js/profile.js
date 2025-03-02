@@ -1,11 +1,22 @@
-document.addEventListener("DOMContentLoaded", function () {
+import { fetchCurrentUser } from './sharedFunctions.js';
+
+document.addEventListener("DOMContentLoaded", async function () {
+  const currentUser = await fetchCurrentUser()
+  console.log("points", currentUser.points)
+  console.log("user", currentUser)
+
   const rankHeaderFrom = document.getElementById("rank-headging");
   const rankHeaderTo = document.getElementById("rank-heading-goal");
   const rankHeaderPoints = document.getElementById("rank-heading-points");
-  const [from, to, difference] = formatRank(300);
+  const [from, to, difference] = formatRank(currentUser.points);
   rankHeaderFrom.innerText = from;
   rankHeaderTo.innerText = to;
   rankHeaderPoints.innerText = `${difference} points`;
+
+  const userFirstNameHeader = document.getElementById("user-first-name");
+  userFirstNameHeader.innerText = currentUser.first_name
+  const userUsernameHeader = document.getElementById("user-username");
+  userUsernameHeader.innerText = `@${currentUser.username}`
 
   const flipElements = document.querySelectorAll("td");
 

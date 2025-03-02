@@ -319,7 +319,6 @@ def get_all_user_tasks():
 
     # Query the tasks for the logged-in user
     tasks = list(mongo.db.tasks.find({"user_id": get_current_user_id()}))
-    print("TASKS", tasks)
 
     # Convert ObjectId to string for JSON serialization
     for task in tasks:
@@ -336,6 +335,18 @@ def landing():
 @app.route("/contact")
 def contact():
     return render_template('contact-us.html', active_page='contact')
+
+@app.route("/get_current_user_info")
+def get_current_user_info():
+    if not is_logged_in():
+        return jsonify({"error": "User not logged in"}), 401 
+
+    user = mongo.db.users.find_one({"_id": ObjectId(get_current_user_id())})
+
+    if user:
+        return jsonify(user)
+
+    return jsonify({"error": "User not found"}), 404
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
