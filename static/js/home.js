@@ -1,3 +1,5 @@
+import { fetchCurrentUser } from './sharedFunctions.js';
+
 // Array of possible characters
 const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".split("");
 
@@ -137,7 +139,7 @@ function handleFormSubmit(event) {
 
 
 // DOMContentLoaded event listener
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async() => {
     // Set today's date
     const dateHeader = document.getElementById("todays-date-header");
     if (dateHeader) {
@@ -218,12 +220,6 @@ document.addEventListener("DOMContentLoaded", () => {
             // Attach form submission handler to the new form
             const newForm = newTask.querySelector(".task-form");
             newForm.addEventListener("submit", handleFormSubmit);
-
-            // Update task count
-            const todayTaskCount = document.getElementById("total-task-count");
-            if (todayTaskCount) {
-                todayTaskCount.innerText = todayTasks.children.length;
-            }
         });
     }
 
@@ -234,5 +230,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Start flip animation for the greeting
-    startFlipAnimation(formatGreeting("Ca'Sandra").toUpperCase());
+    const currentUser = await fetchCurrentUser()
+    startFlipAnimation(formatGreeting(currentUser.first_name).toUpperCase());
 });
