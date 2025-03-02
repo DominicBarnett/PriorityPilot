@@ -14,18 +14,8 @@ load_dotenv()
 app = Flask(__name__)
 
 # Set configurations
-<<<<<<< HEAD
-<<<<<<< HEAD
-app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "your_default_secret_key")
-app.config["MONGO_URI"] = os.getenv("MONGO_URI", "mongodb://localhost:27017/task_manager")
-=======
-app.config["SECRET_KEY"] = "your-strong_secret_key_here"
-app.config["MONGO_URI"] = os.getenv("MONGO_URI", "mongodb://localhost:27017/prioritypilotdev")
->>>>>>> e6f64fe (storing data)
-=======
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "your_strong_secret_key_here")
-app.config["MONGO_URI"] = os.getenv("MONGO_URI", "mongodb://localhost:27017/task_manager")
->>>>>>> d1ed9ab (storting tasks and users)
+app.config["MONGO_URI"] = os.getenv("MONGO_URI", "mongodb://mongo:27017/task_manager")
 
 # Initialize MongoDB connection
 mongo = PyMongo(app)
@@ -317,12 +307,28 @@ def calendar():
 
 @app.route("/get_all_user_tasks")
 def get_all_user_tasks():
-    tasks = [
-        {"title": "Task 1", "start": "2025-02-26"},
-        {"title": "Task 3", "start": "2025-02-26"},
-        {"title": "Task 2", "start": "2025-02-27"}
-    ]
+    if 'user_id' not in session:
+        return redirect('/login')
+
+    # Get the current user from the session
+    user = mongo.db.users.find_one({'_id': ObjectId(session['user_id'])})
+
+    if not user:
+        session.clear()
+        return redirect('/login')
+
+    # Query the tasks for the logged-in user
+    tasks = list(mongo.db.tasks.find({"user_id": get_current_user_id()}))
+    print("TASKS", tasks)
+
+    # Convert ObjectId to string for JSON serialization
+    for task in tasks:
+        print("single task", task['due_date'])
+        task['title'] = str(task['task'])
+        task['start'] = task['due_date'].date().isoformat()
+
     return jsonify(tasks)
+
 @app.route("/landing")
 def landing():
     return render_template('landing-page.html')
@@ -330,14 +336,6 @@ def landing():
 @app.route("/contact")
 def contact():
     return render_template('contact-us.html', active_page='contact')
-
-@app.route("/profile")
-def profile():
-    return render_template('profile.html')
-    
-if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000, debug=True)
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
