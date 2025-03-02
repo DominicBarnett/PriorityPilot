@@ -13,7 +13,7 @@
         <div id="sidebar-container">Insert sidebar</div>
         <div id="main-content-wrapper">
             <div class="todays-date-header-wrapper">
-                <h1 id="todays-date-header"></h1>
+                <h1 id="todays-date-header">{{ today_date }}</h1>
                 <div>
                     <button><i class="fa-solid fa-plus"></i></button>
                     <button><i class="fa-solid fa-calendar-days"></i></button>
@@ -35,27 +35,32 @@
                     </div>
                     <div class="today-all-tasks-wrapper">
                         {% for task in tasks %}
-                        <div class="today-single-task-wrapper">
-                          <form class="{{ url_for('toggle_completetion', task_id=task._id) }}" method="POST">
-                            <button tyoe="submit" class="completion-circle">
-                              {% if task.completed %}
-                                <i class="fa-solid fa-circle-check"></i> <!-- Task Completed -->
-                              {% else %}
-                                <i class="fa-regular fa-circle"></i> <!-- Task not completed -->
-                              {% endif %}
-                            </button>
-                          </form>
-                            <form action="{{ url_for('update_task', task_id=task._id) }}" method="POST">
-                                <input name="task" value="{{ task.task }}" class="{% if task.completed %}" />
-                                <div class="custom-priority-wrapper">
-                                    <button class="open-priority-menu" type="button">
-                                        <i class="fa-solid fa-plane-circle-exclamation"></i>
-                                    </button>
-                                </div>
-                                <input type="hidden" name="priority" value="{{ task.priority }}" />
-                                <button type="submit" class="save-task-btn">Save</button>
+                        <div class="today-single-task-wrapper {% if task.overdue %}overdue{% endif %}">
+                            <form class="task-form" action="{{ url_for('toggle_completion', task_id=task._id) }}" method="POST">
+                                <button type="submit" class="completion-circle">
+                                    {% if task.completed %}
+                                        <i class="fa-solid fa-circle-check"></i> <!-- Task Completed -->
+                                    {% else %}
+                                        <i class="fa-regular fa-circle"></i> <!-- Task not completed -->
+                                    {% endif %}
+                                </button>
                             </form>
-                            <form action="{{ url_for('delete_task', task_id=task._id) }}" method="POST">
+                            <form class="task-form" action="{{ url_for('update_task', task_id=task._id) }}" method="POST">
+                              <input name="task" value="{{ task.task }}" class="{% if task.completed %}task-completed{% endif %}" />
+                              <div class="custom-priority-wrapper">
+                                  <button class="open-priority-menu" type="button">
+                                      <i class="fa-solid fa-plane-circle-exclamation"></i>
+                                  </button>
+                                  <ul class="hidden priority-options">
+                                      <li data-value="high-priority"><i class="fa-solid fa-plane-circle-exclamation"></i></li>
+                                      <li data-value="medium-priority"><i class="fa-solid fa-plane-departure"></i></li>
+                                      <li data-value="low-priority"><i class="fa-solid fa-paper-plane"></i></li>
+                                  </ul>
+                                  <input type="hidden" name="priority" value="{{ task.priority }}" /> <!-- Hidden input -->
+                              </div>
+                              <button type="submit" class="save-task-btn">Save</button>
+                          </form>
+                            <form class="task-form" action="{{ url_for('delete_task', task_id=task._id) }}" method="POST">
                                 <button type="submit" class="delete-task-btn"><i class="fa-solid fa-trash"></i></button>
                             </form>
                         </div>
