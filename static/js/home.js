@@ -46,43 +46,49 @@ function startFlipAnimation(greeting) {
 
 // Function to set up priority menu logic
 function setupPriorityMenu(wrapper) {
-  const button = wrapper.querySelector(".open-priority-menu");
-  const priorityMenu = wrapper.querySelector(".priority-options");
-  const hiddenInput = wrapper.querySelector('input[type="hidden"][name="priority"]'); 
-
-  if (!hiddenInput) {
-      console.error("Hidden input for priority not found within wrapper:", wrapper);
-      return; // Stop execution to prevent further errors
-  }
-
-  button.addEventListener("click", () => {
+    const button = wrapper.querySelector(".open-priority-menu");
+    const priorityMenu = wrapper.querySelector(".priority-options");
+    // Look for the hidden input in the parent form rather than directly in the wrapper
+    const hiddenInput = wrapper.closest('.task-form').querySelector('input[type="hidden"][name="priority"]');
+  
+    if (!button || !priorityMenu) {
+      console.error("Button or priority menu not found within wrapper:", wrapper);
+      return;
+    }
+    
+    if (!hiddenInput) {
+      console.error("Hidden input for priority not found - looking in parent form of:", wrapper);
+      return;
+    }
+  
+    button.addEventListener("click", (e) => {
+      e.stopPropagation(); // Stop event from bubbling up
+      console.log("Priority button clicked"); // Debug log
       priorityMenu.classList.toggle("hidden");
-  });
-
-  priorityMenu.querySelectorAll("li").forEach((option) => {
-      option.addEventListener("click", () => {
-          const selectedPriority = option.dataset.value; // Get the selected priority
-          if (!selectedPriority) {
-              console.error("No data-value found for selected priority option", option);
-              return;
-          }
-
-          console.log(`Priority selected: ${selectedPriority}`); // Debugging
-
-          button.innerHTML = option.innerHTML; // Update button icon
-          hiddenInput.value = selectedPriority; // Correctly update hidden input
-          priorityMenu.classList.add("hidden"); // Hide menu
+    });
+  
+    priorityMenu.querySelectorAll("li").forEach((option) => {
+      option.addEventListener("click", (e) => {
+        e.stopPropagation(); // Stop event from bubbling up
+        const selectedPriority = option.dataset.value;
+        console.log(`Priority selected: ${selectedPriority}`); // Debug log
+  
+        // Update the button icon
+        button.innerHTML = option.innerHTML;
+        
+        // Update the hidden input value
+        hiddenInput.value = selectedPriority;
+        
+        // Hide the menu
+        priorityMenu.classList.add("hidden");
       });
-  });
-
-  document.addEventListener("click", (event) => {
-      if (!wrapper.contains(event.target)) {
-          priorityMenu.classList.add("hidden");
-      }
-  });
+    });
+  
+    // Close priority menu when clicking elsewhere
+    document.addEventListener("click", () => {
+      priorityMenu.classList.add("hidden");
+    });
 }
-
-
 
 // Function to format the date
 function formatDate() {

@@ -131,7 +131,7 @@ def layout():
     completed_tasks_today = sum(1 for task in tasks if task.get("completed") and task.get("completed_date") == datetime.now().date())
 
     return render_template(
-        "temp-home.html",
+        "home.html",
         username=user["username"],
         tasks=tasks,
         overdue_tasks=overdue_tasks,
