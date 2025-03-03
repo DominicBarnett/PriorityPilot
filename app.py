@@ -52,6 +52,10 @@ def check_achievements(user):
     user_id = user["_id"]
     achievements = user.get("achievements", [])
     tasks = list(mongo.db.tasks.find({"user_id": str(user_id), "completed": True}))
+    
+    # Get the latest user data to ensure we have current streak information
+    updated_user = mongo.db.users.find_one({"_id": user_id})
+    streak_days = updated_user.get("streak_days", 0)
 
     # First Task Completed
     if len(tasks) == 1 and "First Task Completed" not in achievements:
@@ -63,20 +67,28 @@ def check_achievements(user):
         achievements.append("Task Master")
         flash("Achievement Unlocked: Task Master!", "success")
 
-    # Streak Starter
-    if user.get("streak_days", 0) >= 3 and "Streak Starter" not in achievements:
+    # Streak Starter - using the updated streak_days value
+    if streak_days >= 3 and "Streak Starter" not in achievements:
         achievements.append("Streak Starter")
         flash("Achievement Unlocked: Streak Starter!", "success")
 
     # Weekend Warrior
     if datetime.now().weekday() in [5, 6]:  # Saturday (5) or Sunday (6)
-        weekend_tasks = list(mongo.db.tasks.find({"user_id": str(user_id), "completed": True, "completed_date": {"$gte": datetime.now() - timedelta(days=2)}}))
+        weekend_tasks = list(mongo.db.tasks.find({
+            "user_id": str(user_id), 
+            "completed": True, 
+            "completed_date": {"$gte": datetime.now() - timedelta(days=2)}
+        }))
         if len(weekend_tasks) >= 2 and "Weekend Warrior" not in achievements:
             achievements.append("Weekend Warrior")
             flash("Achievement Unlocked: Weekend Warrior!", "success")
 
     # High Priority Hero
-    high_priority_tasks = list(mongo.db.tasks.find({"user_id": str(user_id), "completed": True, "priority": "high-priority"}))
+    high_priority_tasks = list(mongo.db.tasks.find({
+        "user_id": str(user_id), 
+        "completed": True, 
+        "priority": "high-priority"
+    }))
     if len(high_priority_tasks) >= 5 and "High Priority Hero" not in achievements:
         achievements.append("High Priority Hero")
         flash("Achievement Unlocked: High Priority Hero!", "success")
@@ -174,10 +186,25 @@ def home():
     print(f"User ID: {str(user['_id'])}")
     print(f"Found {len(tasks)} tasks for user")
     
-    overdue_tasks = sum(1 for task in tasks if task.get("due_date") and task["due_date"] < datetime.now())
-    completed_tasks_today = sum(1 for task in tasks if task.get("completed") and task.get("completed_date") == datetime.now().date())
+    # FIX: Only count uncompleted tasks with due dates before today as overdue
+    current_date = datetime.now()
+    today_date = current_date.date()
+    
+    overdue_tasks = sum(1 for task in tasks if 
+                     not task.get("completed", False) and 
+                     task.get("due_date") and 
+                     task["due_date"] < current_date)
+
+    # IMPROVED: Count completed tasks today more accurately
+    completed_tasks_today = sum(1 for task in tasks if 
+                             task.get("completed", True) and 
+                             task.get("completed_date") and 
+                             isinstance(task["completed_date"], datetime) and
+                             task["completed_date"].date() == today_date)
 
     print("overdue_tasks", overdue_tasks)
+    print("completed_tasks_today", completed_tasks_today)
+    
     return render_template(
         "home.html",
         username=user["username"],
@@ -202,6 +229,7 @@ def add_task():
 
     # Debug output
     print(f"Adding task: {task} with priority {priority} for user {user_id}")
+    
 
     # Fetch the priority document to get its ID
     priority_doc = mongo.db.priorities.find_one({"name": priority})
@@ -263,6 +291,7 @@ def toggle_completion(task_id):
     
     if task:
         completed = not task.get("completed", False)
+        current_time = datetime.now()
         
         # Check if priority_id exists and is valid
         if "priority_id" in task and task["priority_id"]:
@@ -281,22 +310,60 @@ def toggle_completion(task_id):
             }
             point_value = priority_values.get(task.get("priority"), 0)
 
+        # Update the task with completion status and timestamp
+        update_data = {
+            "completed": completed,
+            "points_earned": point_value if completed else 0,
+        }
+        
+        # Only set completed_date if task is marked as completed
+        if completed:
+            update_data["completed_date"] = current_time
+        
         mongo.db.tasks.update_one(
             {"_id": ObjectId(task_id)},
-            {
-                "$set": {
-                    "completed": completed,
-                    "completed_date": datetime.now() if completed else None,
-                    "points_earned": point_value if completed else 0,
-                }
-            },
+            {"$set": update_data}
         )
 
         if completed:
             user = mongo.db.users.find_one({"_id": ObjectId(get_current_user_id())})
+            
+            # Update streak logic
+            today = current_time.date()
+            last_completed = user.get("last_completed")
+            streak_days = user.get("streak_days", 0)
+            streak_weeks = user.get("streak_weeks", 0)
+            
+            if last_completed:
+                last_completed_date = last_completed.date() if isinstance(last_completed, datetime) else last_completed
+                # If completed yesterday, increase streak
+                if (today - last_completed_date).days == 1:
+                    streak_days += 1
+                # If same day, don't change streak
+                elif (today - last_completed_date).days == 0:
+                    pass
+                # If more than 1 day gap, reset streak
+                else:
+                    streak_days = 1
+            else:
+                # First time completing a task
+                streak_days = 1
+            
+            # Update week streak if applicable (every 7 days)
+            if streak_days % 7 == 0 and streak_days > 0:
+                streak_weeks += 1
+            
+            # Update user with new streak information and points
             mongo.db.users.update_one(
                 {"_id": ObjectId(get_current_user_id())},
-                {"$inc": {"points": point_value}},
+                {
+                    "$set": {
+                        "last_completed": current_time,
+                        "streak_days": streak_days,
+                        "streak_weeks": streak_weeks
+                    },
+                    "$inc": {"points": point_value}
+                },
             )
 
             # Check for achievements
@@ -357,7 +424,55 @@ def sidebar():
 
 @app.route("/profile")
 def profile():
-    return render_template('profile.html', active_page='profile')
+    if not is_logged_in():
+        return redirect(url_for("login"))
+    
+    user = get_current_user()
+    if not user:
+        session.clear()
+        return redirect(url_for("login"))
+    
+    # Get all user tasks
+    tasks = list(mongo.db.tasks.find({"user_id": str(user["_id"])}))
+    
+    # Calculate task statistics
+    total_tasks = len(tasks)
+    completed_tasks = sum(1 for task in tasks if task.get("completed", False))
+    on_time_tasks = sum(1 for task in tasks if 
+                      task.get("completed", False) and 
+                      task.get("completed_date") and 
+                      task.get("due_date") and 
+                      task["completed_date"] <= task["due_date"])
+    
+    # Calculate cabin pressure (on-time percentage)
+    cabin_pressure = round((on_time_tasks / completed_tasks * 100) if completed_tasks > 0 else 0)
+    
+    # Count tasks by priority
+    high_priority_tasks = sum(1 for task in tasks if task.get("priority") == "high-priority")
+    medium_priority_tasks = sum(1 for task in tasks if task.get("priority") == "medium-priority")
+    low_priority_tasks = sum(1 for task in tasks if task.get("priority") == "low-priority")
+    
+    # Count overdue tasks
+    current_date = datetime.now()
+    overdue_tasks = sum(1 for task in tasks if 
+                     not task.get("completed", False) and 
+                     task.get("due_date") and 
+                     task["due_date"] < current_date)
+    
+    # Pass all the data to the template
+    return render_template(
+        'profile.html', 
+        active_page='profile',
+        user=user,
+        total_tasks=total_tasks,
+        completed_tasks=completed_tasks,
+        on_time_tasks=on_time_tasks,
+        cabin_pressure=cabin_pressure,
+        high_priority_tasks=high_priority_tasks,
+        medium_priority_tasks=medium_priority_tasks,
+        low_priority_tasks=low_priority_tasks,
+        overdue_tasks=overdue_tasks
+    )
     
 @app.route("/calendar")
 def calendar():
@@ -401,7 +516,55 @@ def get_current_user_info():
     user = mongo.db.users.find_one({"_id": ObjectId(get_current_user_id())})
 
     if user:
-        return jsonify(user)
+        # Get all user tasks for statistics
+        tasks = list(mongo.db.tasks.find({"user_id": str(user["_id"])}))
+        
+        # Calculate task statistics
+        total_tasks = len(tasks)
+        completed_tasks = sum(1 for task in tasks if task.get("completed", False))
+        on_time_tasks = sum(1 for task in tasks if 
+                          task.get("completed", False) and 
+                          task.get("completed_date") and 
+                          task.get("due_date") and 
+                          task["completed_date"] <= task["due_date"])
+        
+        # Calculate cabin pressure (on-time percentage)
+        cabin_pressure = round((on_time_tasks / completed_tasks * 100) if completed_tasks > 0 else 0)
+        
+        # Count tasks by priority
+        high_priority_tasks = sum(1 for task in tasks if task.get("priority") == "high-priority")
+        medium_priority_tasks = sum(1 for task in tasks if task.get("priority") == "medium-priority")
+        low_priority_tasks = sum(1 for task in tasks if task.get("priority") == "low-priority")
+        
+        # Count overdue tasks
+        current_date = datetime.now()
+        overdue_tasks = sum(1 for task in tasks if 
+                         not task.get("completed", False) and 
+                         task.get("due_date") and 
+                         task["due_date"] < current_date)
+        
+        # Add task statistics to user data
+        user_data = {
+            "_id": str(user["_id"]),
+            "username": user["username"],
+            "first_name": user["first_name"],
+            "last_name": user["last_name"],
+            "email": user["email"],
+            "points": user.get("points", 0),
+            "streak_days": user.get("streak_days", 0),
+            "streak_weeks": user.get("streak_weeks", 0),
+            "achievements": user.get("achievements", []),
+            "total_tasks": total_tasks,
+            "completed_tasks": completed_tasks,
+            "on_time_tasks": on_time_tasks,
+            "cabin_pressure": cabin_pressure,
+            "high_priority_tasks": high_priority_tasks,
+            "medium_priority_tasks": medium_priority_tasks,
+            "low_priority_tasks": low_priority_tasks,
+            "overdue_tasks": overdue_tasks
+        }
+        
+        return jsonify(user_data)
 
     return jsonify({"error": "User not found"}), 404
 
