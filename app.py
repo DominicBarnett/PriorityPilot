@@ -157,10 +157,7 @@ def login():
 
     return render_template("login.html")
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 4426871 (Fixed styling on home page)
 @app.route("/home")
 def home():
     if not is_logged_in():
@@ -194,10 +191,6 @@ def home():
         achievements=user.get("achievements", []),
         active_page='home'
     )
-
-@app.route("/contact")
-def contact():
-    return render_template('contact-us.html', active_page='contact')
 
 @app.route("/add-task", methods=["POST"])
 def add_task():
