@@ -361,7 +361,7 @@ def profile():
     
 @app.route("/calendar")
 def calendar():
-    return render_template('calendar.html')
+    return render_template('calendar.html', active_page="calendar")
 
 @app.route("/get_all_user_tasks")
 def get_all_user_tasks():
@@ -393,6 +393,29 @@ def landing():
 def contact():
     return render_template('contact-us.html', active_page='contact')
 
+
+@app.route("/todo", defaults={"filter_type": "completed"})
+@app.route("/todo/<filter_type>")
+def todo(filter_type):
+    # Capitalize the first letter for the heading
+    heading = filter_type.capitalize()
+    
+    # Set active_submenu for sidebar highlighting
+    active_submenu = filter_type.lower()
+    
+    # Get the current user's tasks based on filter type
+    if filter_type.lower() == "completed":
+        tasks = list(mongo.db.tasks.find({"user_id": str(get_current_user_id()), "completed": True}))
+    elif filter_type.lower() == "pending":
+        tasks = list(mongo.db.tasks.find({"user_id": str(get_current_user_id()), "completed": False}))
+    else:
+        # Default to completed if invalid filter_type is provided
+        tasks = list(mongo.db.tasks.find({"user_id": str(get_current_user_id()), "completed": True}))
+        heading = "Completed"
+        active_submenu = "completed"
+    
+    return render_template('todo-list.html', heading=heading, tasks=tasks, active_page='todo', active_submenu=active_submenu, filter_type=filter_type)
+
 @app.route("/get_current_user_info")
 def get_current_user_info():
     if not is_logged_in():
@@ -405,11 +428,7 @@ def get_current_user_info():
 
     return jsonify({"error": "User not found"}), 404
 
-if __name__ == "__main__":
 
-@app.route("/todo")
-def todo():
-    return render_template('todo-list.html', active_page='todo')
     
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
