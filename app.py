@@ -191,10 +191,6 @@ def home():
         active_page='home'
     )
 
-@app.route("/contact")
-def contact():
-    return render_template('contact-us.html', active_page='contact')
-
 @app.route("/add-task", methods=["POST"])
 def add_task():
     if not is_logged_in():
