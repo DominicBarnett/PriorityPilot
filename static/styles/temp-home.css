@@ -211,14 +211,11 @@ main {
   justify-content: space-between;
 }
 
-<<<<<<< HEAD
-=======
 .complete-status-form {
   width: 2rem;
   margin-right: 1rem;
 }
 
->>>>>>> 4426871 (Fixed styling on home page)
 .today-single-task-wrapper form {
   display: flex;
   align-items: center;
@@ -423,19 +420,19 @@ ul {
 }
 
 /* Ensure space is reserved but button is hidden */
-.save-task-btn,
+/* .save-task-btn,
 .delete-task-btn {
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
   cursor: pointer;
-}
+} */
 
 /* Show save button when the input is in focus */
-.today-single-task-input-wrapper:focus-within .save-task-btn {
+/* .today-single-task-input-wrapper:focus-within .save-task-btn {
   visibility: visible;
   opacity: 1;
-}
+} */
 
 /* Show delete button when hovering over the task wrapper */
 .today-single-task-wrapper:hover .delete-task-btn {
