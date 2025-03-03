@@ -12,30 +12,46 @@
       href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Quicksand:wght@300..700&display=swap"
       rel="stylesheet"
     />
-    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Quicksand:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script
+      src="https://kit.fontawesome.com/cca020387c.js"
+      crossorigin="anonymous"
+    ></script>
 
     <!-- ICONS -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=search" />
-
-    <!-- ICONS -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=search" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=search"
+    />
 
     <!-- STYLES -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/sidebar.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/temp-home.css') }}">
+    <!-- <link href="../static/styles/temp-home.css" rel="stylesheet" /> -->
+    <link rel="stylesheet" href="../static/styles/sidebar.css" />
+    <link rel="stylesheet" href="../static/styles/temp-home.css" />
 
     <!-- FONT AWESOME -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
 
     <!-- JS -->
-    <script src="{{ url_for('static', filename='js/sidebar.js') }}" defer></script>
-    <script src="{{url_for('static', filename='js/home.js') }}" defer></script>
-
+    <script
+      src="{{ url_for('static', filename='js/sidebar.js') }}"
+      defer
+    ></script>
+    <script
+      src="{{url_for('static', filename='js/home.js') }}"
+      type="module"
+      defer
+    ></script>
   </head>
   <body>
-    <div>
-      {% include 'sidebar.html' %}
-    </div>
+    <div>{% include 'sidebar.html' %}</div>
 
     <main>
       <div id="main-content-wrapper">
@@ -43,9 +59,8 @@
           <h1 id="todays-date-header"></h1>
           <form>
             <div class="search">
-              <input class="search-input" type="search" placeholder="Search">
+              <input class="search-input" type="search" placeholder="Search" />
               <span class="search-icon material-symbols-outlined">search</span>
-              
             </div>
           </form>
         </div>
@@ -57,36 +72,81 @@
               <h2>Today's list</h2>
               <div>
                 <h3 id="total-task-count">{{ tasks|length }}</h3>
-                <button id="add-today-task-button"><i class="fa-solid fa-plus"></i></button>
+                <button id="add-today-task-button">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
               </div>
             </div>
             <div class="today-all-tasks-wrapper">
               {% for task in tasks %}
-              <div class="today-single-task-wrapper">
-                <i class="fa-regular fa-circle completion-circle" data-task-id="{{ task._id }}"></i>
-                <form class="task-form" action="{{ url_for('update_task', task_id=task._id) }}" method="POST">
-                  <input name="task" value="{{ task.task }}" />
-                  <div class="custom-priority-wrapper">
-                    <button class="open-priority-menu" type="button">
-                      {% if task.priority == 'high-priority' %}
-                        <i class="fa-solid fa-plane-circle-exclamation"></i>
-                      {% elif task.priority == 'medium-priority' %}
-                        <i class="fa-solid fa-plane-departure"></i>
+              <div
+                class="today-single-task-wrapper {% if task.overdue %}overdue{% endif %}"
+              >
+                <div class="today-single-task-left">
+                  <form
+                    class="task-form complete-status-form"
+                    action="{{ url_for('toggle_completion', task_id=task._id) }}"
+                    method="POST"
+                  >
+                    <button type="submit" class="completion-circle">
+                      {% if task.completed %}
+                      <i class="fa-solid fa-circle-check"></i>
+                      <!-- Task Completed -->
                       {% else %}
-                        <i class="fa-solid fa-paper-plane"></i>
+                      <i class="fa-regular fa-circle"></i>
+                      <!-- Task not completed -->
                       {% endif %}
                     </button>
-                    <ul class="hidden priority-options">
-                      <li data-value="high-priority"><i class="fa-solid fa-plane-circle-exclamation"></i></li>
-                      <li data-value="medium-priority"><i class="fa-solid fa-plane-departure"></i></li>
-                      <li data-value="low-priority"><i class="fa-solid fa-paper-plane"></i></li>
-                    </ul>
-                  </div>
-                  <input type="hidden" name="priority" value="{{ task.priority }}" />
-                  <button type="submit" class="save-task-btn">Save</button>
-                </form>
-                <form class="task-form" action="{{ url_for('delete_task', task_id=task._id) }}" method="POST">
-                  <button type="submit" class="delete-task-btn"><i class="fa-solid fa-trash"></i></button>
+                  </form>
+                  <form
+                    class="task-form today-single-task-input-wrapper"
+                    action="{{ url_for('update_task', task_id=task._id) }}"
+                    method="POST"
+                  >
+                    <input
+                      name="task"
+                      value="{{ task.task }}"
+                      class="{% if task.completed %}task-completed{% endif %}"
+                    />
+                    <div class="custom-priority-wrapper">
+                      <button class="open-priority-menu" type="button">
+                        {% if task.priority == 'high-priority' %}
+                        <i class="fa-solid fa-plane-circle-exclamation"></i>
+                        {% elif task.priority == 'medium-priority' %}
+                        <i class="fa-solid fa-plane-departure"></i>
+                        {% else %}
+                        <i class="fa-solid fa-paper-plane"></i>
+                        {% endif %}
+                      </button>
+                      <ul class="hidden priority-options">
+                        <li data-value="high-priority">
+                          <i class="fa-solid fa-plane-circle-exclamation"></i>
+                        </li>
+                        <li data-value="medium-priority">
+                          <i class="fa-solid fa-plane-departure"></i>
+                        </li>
+                        <li data-value="low-priority">
+                          <i class="fa-solid fa-paper-plane"></i>
+                        </li>
+                      </ul>
+                      <input
+                        type="hidden"
+                        name="priority"
+                        value="{{ task.priority }}"
+                      />
+                      <!-- Hidden input -->
+                    </div>
+                    <button type="submit" class="save-task-btn">Save</button>
+                  </form>
+                </div>
+                <form
+                  class="task-form"
+                  action="{{ url_for('delete_task', task_id=task._id) }}"
+                  method="POST"
+                >
+                  <button type="submit" class="delete-task-btn">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
                 </form>
               </div>
               {% endfor %}
@@ -95,7 +155,7 @@
           <div class="home-main-right-section">
             <div class="home-main-tasks-summary">
               <h2>Tasks Summary</h2>
-              <h3>{{ tasks|length }} upcoming</h3>
+              <h3>{{ tasks|length }} total</h3>
               <h3>{{ overdue_tasks }} overdue</h3>
               <h3>{{ completed_tasks_today }} completed today</h3>
             </div>

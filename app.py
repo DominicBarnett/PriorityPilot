@@ -177,6 +177,7 @@ def home():
     overdue_tasks = sum(1 for task in tasks if task.get("due_date") and task["due_date"] < datetime.now())
     completed_tasks_today = sum(1 for task in tasks if task.get("completed") and task.get("completed_date") == datetime.now().date())
 
+    print("overdue_tasks", overdue_tasks)
     return render_template(
         "home.html",
         username=user["username"],
@@ -187,6 +188,7 @@ def home():
         streak_days=user.get("streak_days", 0),
         streak_weeks=user.get("streak_weeks", 0),
         achievements=user.get("achievements", []),
+        active_page='home'
     )
 
 @app.route("/contact")
@@ -353,5 +355,59 @@ def reset_password(token):
 
     return render_template("reset_password.html")
 
-if __name__ == '__main__':
+@app.route("/sidebar")
+def sidebar():
+    return render_template('sidebar.html')
+
+@app.route("/profile")
+def profile():
+    return render_template('profile.html', active_page='profile')
+    
+@app.route("/calendar")
+def calendar():
+    return render_template('calendar.html')
+
+@app.route("/get_all_user_tasks")
+def get_all_user_tasks():
+    if 'user_id' not in session:
+        return redirect('/login')
+
+    # Get the current user from the session
+    user = mongo.db.users.find_one({'_id': ObjectId(session['user_id'])})
+
+    if not user:
+        session.clear()
+        return redirect('/login')
+
+    # Query the tasks for the logged-in user
+    tasks = list(mongo.db.tasks.find({"user_id": get_current_user_id()}))
+
+    # Convert ObjectId to string for JSON serialization
+    for task in tasks:
+        task['title'] = str(task['task'])
+        task['start'] = task['due_date'].date().isoformat()
+
+    return jsonify(tasks)
+
+@app.route("/landing")
+def landing():
+    return render_template('landing-page.html')
+
+@app.route("/contact")
+def contact():
+    return render_template('contact-us.html', active_page='contact')
+
+@app.route("/get_current_user_info")
+def get_current_user_info():
+    if not is_logged_in():
+        return jsonify({"error": "User not logged in"}), 401 
+
+    user = mongo.db.users.find_one({"_id": ObjectId(get_current_user_id())})
+
+    if user:
+        return jsonify(user)
+
+    return jsonify({"error": "User not found"}), 404
+
+if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
