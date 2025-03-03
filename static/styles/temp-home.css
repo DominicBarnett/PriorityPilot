@@ -206,15 +206,33 @@ main {
   display: flex;
   align-items: center;
   width: 100%;
-  column-gap: 1rem;
+  column-gap: 0.5rem; /* Reduced gap */
   margin-top: 1rem;
   padding-bottom: 1rem;
 }
+
 .today-single-task-wrapper form {
   display: flex;
   align-items: center;
   width: 100%;
   justify-content: space-between;
+}
+
+.task-form {
+  display: flex;
+  align-items: center;
+  width: auto; /* Let individual forms size naturally */
+}
+
+.open-priority-menu, 
+.save-task-btn, 
+.delete-task-btn {
+  background-color: transparent;
+  border-color: transparent;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .today-single-task-wrapper form i {
@@ -260,11 +278,11 @@ main {
   color: green;
 }
 
-.custom-priority-wraper {
+.custom-priority-wrapper {
   position: relative;
 }
 
-.custom-priority-wraper > button {
+.custom-priority-wrapper > button {
   background-color: transparent;
   border-color: transparent;
 }

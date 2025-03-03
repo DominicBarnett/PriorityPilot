@@ -46,43 +46,49 @@ function startFlipAnimation(greeting) {
 
 // Function to set up priority menu logic
 function setupPriorityMenu(wrapper) {
-  const button = wrapper.querySelector(".open-priority-menu");
-  const priorityMenu = wrapper.querySelector(".priority-options");
-  const hiddenInput = wrapper.querySelector('input[type="hidden"][name="priority"]'); 
-
-  if (!hiddenInput) {
-      console.error("Hidden input for priority not found within wrapper:", wrapper);
-      return; // Stop execution to prevent further errors
-  }
-
-  button.addEventListener("click", () => {
+    const button = wrapper.querySelector(".open-priority-menu");
+    const priorityMenu = wrapper.querySelector(".priority-options");
+    // Look for the hidden input in the parent form rather than directly in the wrapper
+    const hiddenInput = wrapper.closest('.task-form').querySelector('input[type="hidden"][name="priority"]');
+  
+    if (!button || !priorityMenu) {
+      console.error("Button or priority menu not found within wrapper:", wrapper);
+      return;
+    }
+    
+    if (!hiddenInput) {
+      console.error("Hidden input for priority not found - looking in parent form of:", wrapper);
+      return;
+    }
+  
+    button.addEventListener("click", (e) => {
+      e.stopPropagation(); // Stop event from bubbling up
+      console.log("Priority button clicked"); // Debug log
       priorityMenu.classList.toggle("hidden");
-  });
-
-  priorityMenu.querySelectorAll("li").forEach((option) => {
-      option.addEventListener("click", () => {
-          const selectedPriority = option.dataset.value; // Get the selected priority
-          if (!selectedPriority) {
-              console.error("No data-value found for selected priority option", option);
-              return;
-          }
-
-          console.log(`Priority selected: ${selectedPriority}`); // Debugging
-
-          button.innerHTML = option.innerHTML; // Update button icon
-          hiddenInput.value = selectedPriority; // Correctly update hidden input
-          priorityMenu.classList.add("hidden"); // Hide menu
+    });
+  
+    priorityMenu.querySelectorAll("li").forEach((option) => {
+      option.addEventListener("click", (e) => {
+        e.stopPropagation(); // Stop event from bubbling up
+        const selectedPriority = option.dataset.value;
+        console.log(`Priority selected: ${selectedPriority}`); // Debug log
+  
+        // Update the button icon
+        button.innerHTML = option.innerHTML;
+        
+        // Update the hidden input value
+        hiddenInput.value = selectedPriority;
+        
+        // Hide the menu
+        priorityMenu.classList.add("hidden");
       });
-  });
-
-  document.addEventListener("click", (event) => {
-      if (!wrapper.contains(event.target)) {
-          priorityMenu.classList.add("hidden");
-      }
-  });
+    });
+  
+    // Close priority menu when clicking elsewhere
+    document.addEventListener("click", () => {
+      priorityMenu.classList.add("hidden");
+    });
 }
-
-
 
 // Function to format the date
 function formatDate() {
@@ -109,87 +115,110 @@ function formatGreeting(name) {
         greeting = "Good Evening";
     }
 
-    return `${greeting} ${name}`;
+    // Try to get the username from the page, or fall back to the provided name
+    const username = document.querySelector('.user-name')?.textContent?.trim() || name;
+    return `${greeting} ${username}`;
 }
 
 // Function to handle form submission asynchronously
 function handleFormSubmit(event) {
-  event.preventDefault(); 
-
-  const form = event.target;
-  const formData = new FormData(form);
-
-  console.log("Submitting task with priority:", formData.get("priority")); // Debugging
-
-  fetch(form.action, {
+    event.preventDefault();  // Prevent default form submission
+  
+    const form = event.target;
+    const formData = new FormData(form);
+    
+    console.log("Submitting form:", form.action, form.method);
+    
+    // Log form data for debugging
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
+  
+    fetch(form.action, {
       method: form.method,
       body: formData,
-  })
-  .then((response) => {
-      if (response.ok) {
-          window.location.reload();
-      } else {
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("Form submission successful");
+          window.location.reload();  // Reload the page to reflect changes
+        } else {
           console.error("Error:", response.statusText);
-      }
-  })
-  .catch((error) => console.error("Error:", error));
+        }
+      })
+      .catch((error) => console.error("Error:", error));
+}
+  
+// Function to toggle task completion
+function toggleTaskCompletion(taskId) {
+    console.log("Toggling completion for task:", taskId);
+    
+    fetch(`/toggle-completion/${taskId}`, { 
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        }
+    })
+    .then((response) => {
+        if (response.ok) {
+            console.log("Task completion toggled successfully");
+            window.location.reload();  // Reload the page to reflect changes
+        } else {
+            console.error("Error toggling task completion:", response.statusText);
+        }
+    })
+    .catch((error) => console.error("Error toggling task completion:", error));
 }
 
-
-// DOMContentLoaded event listener
+// DOMContentLoaded event listener - MAIN EVENT HANDLER
 document.addEventListener("DOMContentLoaded", () => {
+    console.log("DOM loaded - initializing task management");
+    
     // Set today's date
     const dateHeader = document.getElementById("todays-date-header");
     if (dateHeader) {
         dateHeader.textContent = formatDate();
     }
-
-    // Toggle task completion
-    const completionButtons = document.querySelectorAll(".completion-circle");
-    completionButtons.forEach((button) => {
-        button.addEventListener("click", (event) => {
-            event.preventDefault(); // Prevent default form submission
-
-            const form = button.closest("form");
-            const taskId = form.action.split("/").pop(); // Get the task ID from the form action
-
-            fetch(`/toggle-completion/${taskId}`, { method: "POST" })
-                .then((response) => {
-                    if (response.ok) {
-                        // Toggle the completion circle
-                        const icon = button.querySelector("i");
-                        icon.classList.toggle("fa-regular");
-                        icon.classList.toggle("fa-solid");
-                        icon.classList.toggle("fa-circle-check");
-
-                        // Apply strike-through for completed tasks
-                        const taskInput = button
-                            .closest(".today-single-task-wrapper")
-                            .querySelector("input[name='task']");
-                        taskInput.classList.toggle("task-completed");
-                    }
-                })
-                .catch((error) => console.error("Error:", error));
+    
+    // Attach event listeners to task forms for submission
+    document.querySelectorAll(".task-form").forEach((form) => {
+        form.addEventListener("submit", handleFormSubmit);
+    });
+    
+    // Attach event listeners to completion circles
+    document.querySelectorAll(".completion-circle").forEach((circle) => {
+        circle.addEventListener("click", (event) => {
+            event.preventDefault();
+            const taskId = circle.dataset.taskId;
+            if (taskId) {
+                toggleTaskCompletion(taskId);
+            } else {
+                console.error("No task ID found on completion circle");
+            }
         });
     });
 
     // Set up priority menus
-    const priorityWrappers = document.querySelectorAll(".custom-priority-wrapper");
-    priorityWrappers.forEach((wrapper) => {
+    document.querySelectorAll(".custom-priority-wrapper").forEach((wrapper) => {
         setupPriorityMenu(wrapper);
     });
 
-    // Add new task
+    // Add new task button functionality
     const addTodayTaskButton = document.getElementById("add-today-task-button");
     if (addTodayTaskButton) {
         addTodayTaskButton.addEventListener("click", () => {
             const todayTasks = document.querySelector(".today-all-tasks-wrapper");
             const newTask = document.createElement("div");
             newTask.classList.add("today-single-task-wrapper");
+            
+            // Create a unique temporary ID for this new task element
+            const tempId = 'new-task-' + Date.now();
+            newTask.id = tempId;
+            
             newTask.innerHTML = `
                 <i class="fa-regular fa-circle completion-circle"></i>
                 <form class="task-form" action="/add-task" method="POST">
-                    <input name="task" value="" />
+                    <input name="task" value="" placeholder="Enter your task..." />
                     <div class="custom-priority-wrapper">
                         <button class="open-priority-menu" type="button">
                             <i class="fa-solid fa-paper-plane"></i>
@@ -203,36 +232,44 @@ document.addEventListener("DOMContentLoaded", () => {
                     <input type="hidden" name="priority" value="low-priority" />
                     <button type="submit" class="save-task-btn">Save</button>
                 </form>
-                <form class="task-form" action="/delete-task" method="POST">
-                    <button type="submit" class="delete-task-btn"><i class="fa-solid fa-trash"></i></button>
-                </form>`;
+                <button class="delete-task-btn temp-delete"><i class="fa-solid fa-trash"></i></button>`;
 
             todayTasks.appendChild(newTask);
             const newInput = newTask.querySelector('input[name="task"]');
             newInput.focus();
 
-            // Attach event listeners to the new elements
+            // Set up the priority menu
             const priorityWrapper = newTask.querySelector(".custom-priority-wrapper");
             setupPriorityMenu(priorityWrapper);
 
-            // Attach form submission handler to the new form
+            // Add form submission handler
             const newForm = newTask.querySelector(".task-form");
             newForm.addEventListener("submit", handleFormSubmit);
+            
+            // Add handler for the temporary delete button
+            const tempDeleteBtn = newTask.querySelector('.temp-delete');
+            if (tempDeleteBtn) {
+                tempDeleteBtn.addEventListener('click', () => {
+                    newTask.remove();
+                    updateTaskCount();
+                });
+            }
 
             // Update task count
-            const todayTaskCount = document.getElementById("total-task-count");
-            if (todayTaskCount) {
-                todayTaskCount.innerText = todayTasks.children.length;
-            }
+            updateTaskCount();
         });
     }
 
-    // Attach form submission handlers to all existing forms
-    const taskForms = document.querySelectorAll(".task-form");
-    taskForms.forEach((form) => {
-        form.addEventListener("submit", handleFormSubmit);
-    });
+    // Helper function to update task count
+    function updateTaskCount() {
+        const todayTaskCount = document.getElementById("total-task-count");
+        const taskCount = document.querySelectorAll(".today-single-task-wrapper").length;
+        if (todayTaskCount) {
+            todayTaskCount.textContent = taskCount;
+        }
+    }
 
-    // Start flip animation for the greeting
-    startFlipAnimation(formatGreeting("Ca'Sandra").toUpperCase());
+    // Start flip animation for the greeting - extract username if possible
+    const username = document.querySelector("meta[name='username']")?.content || "User";
+    startFlipAnimation(formatGreeting(username).toUpperCase());
 });
