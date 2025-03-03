@@ -171,6 +171,34 @@ body {
   list-style: none;
 }
 
+#sidebar .sub-menu li a {
+  color: var(--text-clr);
+}
+
+#sidebar .sub-menu li a svg {
+  fill: var(--text-clr);
+}
+
+/* Styling for submenus */
+#sidebar .sub-menu li.active a {
+  color: var(--accent-clr);
+}
+
+#sidebar .sub-menu li.active a svg {
+  fill: var(--accent-clr);
+}
+
+#sidebar li.active .sub-menu li:not(.active) a {
+  color: var(--text-clr);
+}
+
+#sidebar li.active .sub-menu li:not(.active) a svg {
+  fill: var(--text-clr);
+}
+
+
+
+
 /* ====== SIDEBAR RESPONSIVE TO MOBILE DEVICE ===== */
 @media(max-width: 800px){
   body{

@@ -4,7 +4,7 @@ const sidebar = document.getElementById('sidebar');
 const main = document.querySelector('main');
 const dropdownButttons = document.querySelectorAll('.dropdown-btn');
 
-function toggleSidebar(){
+function toggleSidebar() {
   sidebar.classList.toggle('close');
   toggleButton.classList.toggle('rotate');
 
@@ -19,7 +19,7 @@ function toggleSidebar(){
   }
 }
 
-function toggleSubMenu(button){
+function toggleSubMenu(button) {
   const subMenu = button.nextElementSibling
 
   if (!subMenu) return; // If no submenu exists, exit
@@ -30,14 +30,14 @@ function toggleSubMenu(button){
   }
 
   if (subMenu.classList.contains("show")) {
-      subMenu.classList.remove("show"); // If already open, close it
+    subMenu.classList.remove("show"); // If already open, close it
   } else {
-      closeAllSubMenus(); // Close all other submenus first
-      subMenu.classList.add("show"); // Then open this submenu
+    closeAllSubMenus(); // Close all other submenus first
+    subMenu.classList.add("show"); // Then open this submenu
   }
 }
 
-function closeAllSubMenus(){
+function closeAllSubMenus() {
   Array.from(sidebar.getElementsByClassName('show')).forEach(ul => {
     ul.classList.remove('show')
     ul.previousElementSibling.classList.remove('rotate')
@@ -50,18 +50,39 @@ function setInitialMainWidth() {
   main.style.width = sidebar.classList.contains("close") ? "90vw" : "77vw";
 }
 
-
-// Ensure the main content has the correct width on load
-window.onload = function () {
-  setInitialMainWidth(); 
-
+function initializeSidebar() {
+  // Set initial main width
+  setInitialMainWidth();
+  
+  // Set click events
   if (toggleButton) {
-    toggleButton.onclick = toggleSidebar; 
+    toggleButton.onclick = toggleSidebar;
   }
-
+  
   dropdownButttons.forEach(button => {
-      button.onclick = function () {
-          toggleSubMenu(this);
-      };
+    button.onclick = function() {
+      toggleSubMenu(this);
+    };
   });
-};
+  
+  // Auto-expand submenus that contain active items
+  const activeSubmenuItems = document.querySelectorAll('#sidebar .sub-menu li.active');
+  activeSubmenuItems.forEach(item => {
+    const parentSubMenu = item.closest('.sub-menu');
+    if (parentSubMenu && !parentSubMenu.classList.contains('show')) {
+      parentSubMenu.classList.add('show');
+    }
+  });
+
+  // Auto-rotate dropdown buttons for expanded submenus
+  const expandedSubmenus = document.querySelectorAll('#sidebar .sub-menu.show');
+  expandedSubmenus.forEach(submenu => {
+    const dropdownBtn = submenu.previousElementSibling;
+    if (dropdownBtn && dropdownBtn.classList.contains('dropdown-btn')) {
+      dropdownBtn.classList.add('rotate');
+    }
+  });
+}
+
+
+window.onload = initializeSidebar;

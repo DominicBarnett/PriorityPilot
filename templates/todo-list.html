@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo-Lists - {{ heading }}</title>
+  <link rel="stylesheet" href="../static/styles/todo-list.css">
+  <script src="{{ url_for('static', filename='js/sidebar.js') }}" defer></script>
+</head>
+<body>
+  <div>
+    {% include 'sidebar.html' %}
+  </div>
+  <main>
+    <h1 class="header">{{ heading }}</h1>
+    
+    <div class="task-list-container">
+      {% if tasks %}
+        {% for task in tasks %}
+          <div class="task-item {% if task.priority == 'high-priority' %}high-priority{% elif task.priority == 'medium-priority' %}medium-priority{% else %}low-priority{% endif %}">
+            <div class="task-content">
+              <h3>{{ task.task }}</h3>
+              <p class="task-date">
+                {% if filter_type == 'past-deadlines' or filter_type == 'pending' %}
+                  Due: {{ task.due_date.strftime('%b %d, %Y') }}
+                {% else %}
+                  Completed: {{ task.completed_date.strftime('%b %d, %Y') if task.completed_date else 'N/A' }}
+                {% endif %}
+              </p>
+            </div>
+            <div class="task-actions">
+              <!-- action buttons if any -->
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="no-tasks">
+          <p>No {{ heading.lower() }} tasks found.</p>
+        </div>
+      {% endif %}
+    </div>
+  </main>
+  
+</body>
+</html>
