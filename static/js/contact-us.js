@@ -1,8 +1,5 @@
 // Select all DOM elements that have class input from contact-us.js
 const inputs = document.querySelectorAll(".input");
-const fullName = document.querySelector('input[name="name"]').value.trim();
-const email = document.querySelector('input[name="email"]').value.trim();
-const message = document.querySelector('textarea[name="message"]').value.trim();
 
 // When a user clicks or tabs into the input field
 function focusFunc() {

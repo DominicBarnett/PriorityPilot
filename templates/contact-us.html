@@ -63,17 +63,17 @@
         <form action="contact-us.html" autocomplete="off">
           <h3 class="title">Contact us</h3>
 
-          <!-- TODO: ADD FULL NAME FROM DATABASE -->
-          <!-- need to change the 'value' in input field, and then span field -->
           <div class="input-container">
-            <input type="text" name="name" class="input" value="" required/>
+            <input type="text" name="name" class="input" 
+              {% if user %}value="{{ user.first_name }} {{ user.last_name }}"{% endif %} required/>
             <label for="">Full Name</label>
-            <span> INPUT JINJA USER FIRST NAME AND LAST NAME</span>
+            <span>Full Name</span>
           </div>
 
-          <!-- TODO: ADD EMAIL JINJA FROM DATABASE -->
+
           <div class="input-container">
-            <input type="email" name="email" class="input" required/>
+            <input type="email" name="email" class="input" 
+              {% if user %}value="{{ user.email }}"{% endif %}required/>
             <label for="">Email</label>
             <span>Email</span>
           </div>

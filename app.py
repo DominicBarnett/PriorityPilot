@@ -506,7 +506,12 @@ def landing():
 
 @app.route("/contact")
 def contact():
-    return render_template('contact-us.html', active_page='contact')
+    user = get_current_user()
+    if not user:
+        session.clear()
+        return redirect(url_for('login'))
+    
+    return render_template('contact-us.html', active_page='contact', user=user)
 
 
 @app.route("/todo", defaults={"filter_type": "completed"})
