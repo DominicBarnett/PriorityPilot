@@ -4,7 +4,7 @@ from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import secrets
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
 from dotenv import load_dotenv
 from flask_mail import Mail, Message
 
@@ -243,7 +243,7 @@ def add_task():
             "priority": priority,
             "priority_id": priority_id,  # Add priority_id
             "completed": False,
-            "due_date": datetime.now() + timedelta(days=7),  # Example: Set due date to 7 days from now
+            "due_date": datetime.combine(datetime.now().date(), time(23, 59, 59)) 
         }
     )
 
