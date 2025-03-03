@@ -20,11 +20,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   const userUsernameHeader = document.getElementById("user-username");
   userUsernameHeader.innerText = `@${currentUser.username}`;
 
-  // Set join date
-  const joinDate = new Date(currentUser._id.toString().substring(0, 8));
-  const joinDateElement = document.querySelector('.arrival-departure-info div:nth-child(5) h2');
-  joinDateElement.innerText = joinDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
-
   // Set missions completed (total completed tasks)
   const missionsCompletedElement = document.querySelector('.arrival-departure-info div:nth-child(6) h2');
   const completedTasks = currentUser.completed_tasks || 0;
