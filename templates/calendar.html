@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PriorityPilot</title>
+
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Quicksand:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Quicksand:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Calendar Package -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+
+    <!-- FONT AWESOME -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <!-- JS -->
+    <script
+      src="{{ url_for('static', filename='js/sidebar.js') }}"
+      defer
+    ></script>
+
+    <script src="{{ url_for('static', filename='js/calendar.js') }}"></script>
+
+    <!-- STYLES -->
+    <link rel="stylesheet" href="../static/styles/sidebar.css" />
+    <link rel="stylesheet" href="../static/styles/calendar.css" />
+  </head>
+  <body>
+    <div>{% include 'sidebar.html' %}</div>
+    <main>
+        <div>
+            <div id="calendar"></div>
+        </div>
+    </main>
+  </body>
+</html>

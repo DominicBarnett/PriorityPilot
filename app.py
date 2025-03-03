@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -31,6 +31,11 @@ mail = Mail(app)
 # Helper function to check if a user is logged in
 def is_logged_in():
     return "user_id" in session
+
+# Helper function to check if a user is logged in
+def is_logged_in():
+    return "user_id" in session
+
 
 # Helper function to get the current user's ID
 def get_current_user_id():
@@ -87,6 +92,8 @@ def check_achievements(user):
 def index():
     return render_template("index.html")
 
+
+# Signup Route
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -131,6 +138,8 @@ def register():
 
     return render_template("register.html")
 
+
+# Login Route (Allows Login with Either Username or Email)
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
