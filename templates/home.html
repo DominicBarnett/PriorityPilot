@@ -82,61 +82,63 @@
               <div
                 class="today-single-task-wrapper {% if task.overdue %}overdue{% endif %}"
               >
-                <form
-                  class="task-form"
-                  action="{{ url_for('toggle_completion', task_id=task._id) }}"
-                  method="POST"
-                >
-                  <button type="submit" class="completion-circle">
-                    {% if task.completed %}
-                    <i class="fa-solid fa-circle-check"></i>
-                    <!-- Task Completed -->
-                    {% else %}
-                    <i class="fa-regular fa-circle"></i>
-                    <!-- Task not completed -->
-                    {% endif %}
-                  </button>
-                </form>
-                <form
-                  class="task-form"
-                  action="{{ url_for('update_task', task_id=task._id) }}"
-                  method="POST"
-                >
-                  <input
-                    name="task"
-                    value="{{ task.task }}"
-                    class="{% if task.completed %}task-completed{% endif %}"
-                  />
-                  <div class="custom-priority-wrapper">
-                    <button class="open-priority-menu" type="button">
-                      {% if task.priority == 'high-priority' %}
-                      <i class="fa-solid fa-plane-circle-exclamation"></i>
-                      {% elif task.priority == 'medium-priority' %}
-                      <i class="fa-solid fa-plane-departure"></i>
+                <div class="today-single-task-left">
+                  <form
+                    class="task-form complete-status-form"
+                    action="{{ url_for('toggle_completion', task_id=task._id) }}"
+                    method="POST"
+                  >
+                    <button type="submit" class="completion-circle">
+                      {% if task.completed %}
+                      <i class="fa-solid fa-circle-check"></i>
+                      <!-- Task Completed -->
                       {% else %}
-                      <i class="fa-solid fa-paper-plane"></i>
+                      <i class="fa-regular fa-circle"></i>
+                      <!-- Task not completed -->
                       {% endif %}
                     </button>
-                    <ul class="hidden priority-options">
-                      <li data-value="high-priority">
-                        <i class="fa-solid fa-plane-circle-exclamation"></i>
-                      </li>
-                      <li data-value="medium-priority">
-                        <i class="fa-solid fa-plane-departure"></i>
-                      </li>
-                      <li data-value="low-priority">
-                        <i class="fa-solid fa-paper-plane"></i>
-                      </li>
-                    </ul>
+                  </form>
+                  <form
+                    class="task-form today-single-task-input-wrapper"
+                    action="{{ url_for('update_task', task_id=task._id) }}"
+                    method="POST"
+                  >
                     <input
-                      type="hidden"
-                      name="priority"
-                      value="{{ task.priority }}"
+                      name="task"
+                      value="{{ task.task }}"
+                      class="{% if task.completed %}task-completed{% endif %}"
                     />
-                    <!-- Hidden input -->
-                  </div>
-                  <button type="submit" class="save-task-btn">Save</button>
-                </form>
+                    <div class="custom-priority-wrapper">
+                      <button class="open-priority-menu" type="button">
+                        {% if task.priority == 'high-priority' %}
+                        <i class="fa-solid fa-plane-circle-exclamation"></i>
+                        {% elif task.priority == 'medium-priority' %}
+                        <i class="fa-solid fa-plane-departure"></i>
+                        {% else %}
+                        <i class="fa-solid fa-paper-plane"></i>
+                        {% endif %}
+                      </button>
+                      <ul class="hidden priority-options">
+                        <li data-value="high-priority">
+                          <i class="fa-solid fa-plane-circle-exclamation"></i>
+                        </li>
+                        <li data-value="medium-priority">
+                          <i class="fa-solid fa-plane-departure"></i>
+                        </li>
+                        <li data-value="low-priority">
+                          <i class="fa-solid fa-paper-plane"></i>
+                        </li>
+                      </ul>
+                      <input
+                        type="hidden"
+                        name="priority"
+                        value="{{ task.priority }}"
+                      />
+                      <!-- Hidden input -->
+                    </div>
+                    <button type="submit" class="save-task-btn">Save</button>
+                  </form>
+                </div>
                 <form
                   class="task-form"
                   action="{{ url_for('delete_task', task_id=task._id) }}"

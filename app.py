@@ -108,7 +108,7 @@ def login():
 
         if user and check_password_hash(user["password"], password):
             session["user_id"] = str(user["_id"])  # Store user_id as a string
-            return redirect(url_for("layout"))
+            return redirect(url_for("home"))
 
         flash("Invalid username or password", "error")
         return redirect(url_for("login"))
@@ -116,8 +116,8 @@ def login():
     return render_template("login.html")
 
 
-@app.route("/layout")
-def layout():
+@app.route("/home")
+def home():
     if not is_logged_in():
         return redirect(url_for("login"))
 
@@ -315,7 +315,6 @@ def get_all_user_tasks():
 
     # Convert ObjectId to string for JSON serialization
     for task in tasks:
-        print("single task", task['due_date'])
         task['title'] = str(task['task'])
         task['start'] = task['due_date'].date().isoformat()
 
