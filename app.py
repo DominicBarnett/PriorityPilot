@@ -216,7 +216,7 @@ def add_task():
             "priority": priority,
             "priority_id": priority_id,  # Add priority_id
             "completed": False,
-            "due_date": datetime.combine(datetime.now().date(), time(23, 59, 59))
+            "due_date": datetime.combine(datetime.now().date(), time(23, 59, 59)) # end of today
         }
     )
 
