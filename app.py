@@ -157,6 +157,10 @@ def login():
 
     return render_template("login.html")
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4426871 (Fixed styling on home page)
 @app.route("/home")
 def home():
     if not is_logged_in():
@@ -384,7 +388,6 @@ def get_all_user_tasks():
 
     # Convert ObjectId to string for JSON serialization
     for task in tasks:
-        print("single task", task['due_date'])
         task['title'] = str(task['task'])
         task['start'] = task['due_date'].date().isoformat()
 
