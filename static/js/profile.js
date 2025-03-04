@@ -2,8 +2,6 @@ import { fetchCurrentUser } from './sharedFunctions.js';
 
 document.addEventListener("DOMContentLoaded", async function () {
   const currentUser = await fetchCurrentUser();
-  console.log("points", currentUser.points);
-  console.log("user", currentUser);
 
   // Set user rank information
   const rankHeaderFrom = document.getElementById("rank-headging");
@@ -20,11 +18,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   const userUsernameHeader = document.getElementById("user-username");
   userUsernameHeader.innerText = `@${currentUser.username}`;
 
-  // Set join date
-  const joinDate = new Date(currentUser._id.toString().substring(0, 8));
-  const joinDateElement = document.querySelector('.arrival-departure-info div:nth-child(5) h2');
-  joinDateElement.innerText = joinDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
-
   // Set missions completed (total completed tasks)
   const missionsCompletedElement = document.querySelector('.arrival-departure-info div:nth-child(6) h2');
   const completedTasks = currentUser.completed_tasks || 0;
@@ -36,7 +29,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   onTimeDeparturesElement.innerText = onTimeTasks;
 
   // Set emergency landings (overdue tasks)
-  const emergencyLandingsElement = document.querySelector('.arrival-departure-info div:nth-child(8) h2');
+  const emergencyLandingsElement = document.getElementById('emergency-landings-count');
   const overdueTasks = currentUser.overdue_tasks || 0;
   emergencyLandingsElement.innerText = overdueTasks;
 
@@ -53,7 +46,6 @@ document.addEventListener("DOMContentLoaded", async function () {
       }, 10);
     });
   }
-  setInterval(triggerFlip, 10 * 1000);
 
   // Update cabin pressure gauge
   const cabinPressure = currentUser.cabin_pressure || 0;
@@ -91,20 +83,16 @@ function formatRank(points) {
 }
 
 function updateGauge(percentage) {
-  const progressArc = document.getElementById("gauge-progress");
-  const needle = document.getElementById("gauge-needle");
-  const percentageText = document.getElementById("percentage-text");
-  
-  // Update the progress arc - 376 is the total length of the path
-  const offset = 376 - (percentage / 100) * 376;
+  const hardcodedPercentage = 45;
+
+  let progressArc = document.getElementById("progress");
+  let offset = 180 - (percentage / 100) * 55; // Converts percentage to arc offset
   progressArc.style.strokeDashoffset = offset;
-  
-  // Update the needle rotation (0% = -135°, 100% = 45°)
-  const needleAngle = -135 + (percentage / 100) * 180;
-  needle.setAttribute("transform", `rotate(${needleAngle}, 200, 220)`);
-  
-  // Update the percentage text
-  percentageText.textContent = `${percentage}%`;
+  progressArc.style.opacity = percentage > 0 ? 1 : 0; // Hide when at 0%
+
+  let needleAngle = 35 + (percentage / 100) * 270; // Convert to 270° rotation range
+  document.querySelector(".needle").style.transform = `rotate(${needleAngle}deg)`;
+  document.querySelector(".percentage").textContent = hardcodedPercentage + "%";
 }
 
 function updateFlightBoard(userData) {
