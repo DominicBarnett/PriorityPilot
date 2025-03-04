@@ -174,20 +174,26 @@ document.addEventListener("DOMContentLoaded", async() => {
                             .querySelector("input[name='task']");
                         taskInput.classList.toggle("task-completed");
                         
-                        // Update task summary
-                        const completedTasksToday = document.querySelector(".home-main-tasks-summary h3:nth-child(3)");
-                        if (completedTasksToday) {
-                            let count = parseInt(completedTasksToday.textContent.split(" ")[0]);
-                            
-                            // If we're completing a task, increment; if uncompleting, decrement
+                        // Update task summary after completion toggle
+                        const completedTasksToday = document.querySelector(".home-main-tasks-summary h3:nth-child(4)");
+                        const overdueTasks = document.querySelector(".home-main-tasks-summary h3:nth-child(3)"); 
+
+                        if (completedTasksToday && overdueTasks) {
+                            let completedCount = parseInt(completedTasksToday.textContent.split(" ")[0]);
+                            let overdueCount = parseInt(overdueTasks.textContent.split(" ")[0]);
+
                             if (isCompleting) {
-                                count += 1;
+                                completedCount += 1;
+                                overdueCount = Math.max(0, overdueCount - 1); // Decrease overdue count
                             } else {
-                                count = Math.max(0, count - 1);
+                                completedCount = Math.max(0, completedCount - 1);
+                                overdueCount += 1; // Increase overdue count back
                             }
-                            
-                            completedTasksToday.textContent = `${count} completed today`;
+
+                            completedTasksToday.textContent = `${completedCount} completed today`;
+                            overdueTasks.textContent = `${overdueCount} overdue`;
                         }
+
                     }
                 })
                 .catch((error) => console.error("Error:", error));
