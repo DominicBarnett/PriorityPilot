@@ -134,6 +134,8 @@ main {
   column-gap: 1.5rem;
   box-sizing: border-box;
   margin-bottom: 0.5rem;
+  max-height: calc(92vh - 10rem);
+  overflow: hidden;
 }
 
 .tasks-main-area-wrapper > div {
@@ -152,6 +154,34 @@ main {
   padding: 1rem;
   border-radius: 15px;
   background-color: rgba(255, 255, 255, 0.678);
+
+  /* added these styles to make sure that today-lists don't go over beyond the main content */
+  display: flex;
+  flex-direction: column;
+  max-height: calc(92vh - 12rem);
+  overflow: hidden; 
+}
+
+/* For scrolling styling */
+.today-all-tasks-wrapper {
+  overflow-y: auto; 
+  flex-grow: 1; 
+  padding-right: 5px; 
+}
+
+/* Add a custom scrollbar style */
+.today-all-tasks-wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+
+.today-all-tasks-wrapper::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+.today-all-tasks-wrapper::-webkit-scrollbar-thumb {
+  background: var(--sidebar-clr);
+  border-radius: 10px;
 }
 
 .overdue {
@@ -282,11 +312,11 @@ main {
 }
 
 .fa-plane-departure {
-  color: yellow;
+  color: var(--hover-txt-clr);
 }
 
 .fa-paper-plane {
-  color: green;
+  color: var(--lightgreen-clr);
 }
 
 .custom-priority-wrapper {
@@ -306,8 +336,8 @@ main {
   position: absolute;
   text-decoration: none;
   list-style: none;
-  left: 30px;
-  background-color: black;
+  background-color: var(--container-clr);
+  padding: 0.5rem;
   z-index: 2;
   border-radius: 10px;
 }
