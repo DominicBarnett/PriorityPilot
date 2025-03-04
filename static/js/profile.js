@@ -83,17 +83,16 @@ function formatRank(points) {
 }
 
 function updateGauge(percentage) {
+  const hardcodedPercentage = 45;
+
   let progressArc = document.getElementById("progress");
-  let offset = 180 - (percentage / 100) * 180; // Converts percentage to arc offset
+  let offset = 180 - (percentage / 100) * 55; // Converts percentage to arc offset
   progressArc.style.strokeDashoffset = offset;
   progressArc.style.opacity = percentage > 0 ? 1 : 0; // Hide when at 0%
 
-  let needleAngle = -135 + (percentage / 100) * 270; // Convert to 270° rotation range
-  document.querySelector(
-    ".needle"
-  ).style.transform = `rotate(${needleAngle}deg)`;
-
-  document.querySelector(".percentage").textContent = percentage + "%";
+  let needleAngle = 35 + (percentage / 100) * 270; // Convert to 270° rotation range
+  document.querySelector(".needle").style.transform = `rotate(${needleAngle}deg)`;
+  document.querySelector(".percentage").textContent = hardcodedPercentage + "%";
 }
 
 function updateFlightBoard(userData) {
