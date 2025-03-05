@@ -46,7 +46,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       }, 10);
     });
   }
-
+  setInterval(triggerFlip, 10 * 1000);
+  
   // Update cabin pressure gauge
   const cabinPressure = currentUser.cabin_pressure || 0;
   updateGauge(cabinPressure);
