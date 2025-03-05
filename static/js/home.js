@@ -211,46 +211,152 @@ document.addEventListener("DOMContentLoaded", async() => {
     });
 
     // Add new task
-    const addTodayTaskButton = document.getElementById("add-today-task-button");
-    if (addTodayTaskButton) {
-        addTodayTaskButton.addEventListener("click", () => {
-            const todayTasks = document.querySelector(".today-all-tasks-wrapper");
-            const newTask = document.createElement("div");
-            newTask.classList.add("today-single-task-wrapper");
-            newTask.innerHTML = `
-                <i class="fa-regular fa-circle completion-circle"></i>
-                <form class="task-form" action="/add-task" method="POST">
-                    <input name="task" value="" />
-                    <div class="custom-priority-wrapper">
-                        <button class="open-priority-menu" type="button">
-                            <i class="fa-solid fa-paper-plane"></i>
-                        </button>
-                        <ul class="hidden priority-options">
-                            <li data-value="high-priority"><i class="fa-solid fa-plane-circle-exclamation"></i></li>
-                            <li data-value="medium-priority"><i class="fa-solid fa-plane-departure"></i></li>
-                            <li data-value="low-priority"><i class="fa-solid fa-paper-plane"></i></li>
-                        </ul>
-                    </div>
-                    <input type="hidden" name="priority" value="low-priority" />
-                    <button type="submit" class="save-task-btn">Save</button>
-                </form>
-                <form class="task-form" action="/delete-task" method="POST">
-                    <button type="submit" class="delete-task-btn"><i class="fa-solid fa-trash"></i></button>
-                </form>`;
+    const addTaskButton = document.getElementById("add-today-task-button");
+    const taskListContainer = document.getElementById("today-all-tasks-wrapper");
+  
+    addTaskButton.addEventListener("click", function () {
+        addNewTaskInput();
+    });
 
-            todayTasks.appendChild(newTask);
-            const newInput = newTask.querySelector('input[name="task"]');
-            newInput.focus();
+    function addNewTaskInput(task = null) {
+        const taskElement = document.createElement("div");
+        taskElement.classList.add("today-single-task-wrapper");
+        taskElement.setAttribute("data-taskId", "None")
+    
+        taskElement.innerHTML = `
+    <div class="today-single-task-left">
+      <!-- Completion form (HIDDEN) -->
+      <form class="task-form complete-status-form" style="display: none;">
+        <button type="submit" class="completion-circle">
+          <i class="fa-regular fa-circle"></i>
+        </button>
+      </form>
 
-            // Attach event listeners to the new elements
-            const priorityWrapper = newTask.querySelector(".custom-priority-wrapper");
-            setupPriorityMenu(priorityWrapper);
+      <!-- Task input form -->
+      <form class="task-form today-single-task-input-wrapper">
+        <input
+          name="task"
+          value="${task ? task.task : ""}"
+          class="${task && task.completed ? "task-completed" : ""}"
+          placeholder="Enter task"
+        />
+        
+        <!-- Priority Selection -->
+        <div class="custom-priority-wrapper">
+          <button class="open-priority-menu" type="button">
+            <i class="fa-solid ${getPriorityIcon(task ? task.priority : "low-priority")}"></i>
+          </button>
+          <ul class="hidden priority-options">
+            <li data-value="high-priority">
+              <i class="fa-solid fa-plane-circle-exclamation"></i>
+            </li>
+            <li data-value="medium-priority">
+              <i class="fa-solid fa-plane-departure"></i>
+            </li>
+            <li data-value="low-priority">
+              <i class="fa-solid fa-paper-plane"></i>
+            </li>
+          </ul>
+          <input type="hidden" name="priority" value="${task ? task.priority : "low-priority"}" />
+        </div>
 
-            // Attach form submission handler to the new form
-            const newForm = newTask.querySelector(".task-form");
-            newForm.addEventListener("submit", handleFormSubmit);
+        <!-- Save button -->
+        <button type="submit" class="save-task-btn">Save</button>
+      </form>
+    </div>
+
+    <!-- Delete form -->
+    <form class="task-form" action="/delete_task/${task ? task._id : ""}" method="POST">
+      <button type="submit" class="delete-task-btn cancel-task-btn">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+    </form>
+        `;
+    
+        taskListContainer.prepend(taskElement);
+        taskElement.querySelector("[name='task']").focus()
+    
+        const saveButton = taskElement.querySelector(".save-task-btn");
+        const cancelButton = taskElement.querySelector(".cancel-task-btn");
+        const taskInput = taskElement.querySelector("[name='task']");
+    
+        saveButton.addEventListener("click", async function (e) {
+            e.preventDefault()
+          const taskName = taskInput.value.trim();
+          const taskId = taskElement.getAttribute("data-taskId")
+
+          if (!taskName) return alert("Task name cannot be empty.");
+    
+          let response;
+          let newTask;
+          
+          if (taskId !== "None") {
+            // Task already exists, update it
+            response = await fetch(`/update_task/${taskId}`, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ task: taskName, priority: "low-priority" }),
+            });
+          } else {
+            console.log("in else", taskName)
+            // New task, create it
+            response = await fetch("/add-task", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ task: taskName, priority: "low-priority" }),
+            });
+          }
+    
+          if (response.ok) {
+            newTask = await response.json();
+            updateTaskUI(taskElement, newTask);
+          } else {
+            alert("Failed to save task.");
+          }
         });
-    }
+    
+        cancelButton.addEventListener("click", function () {
+          taskElement.remove(); // Remove the input field if the user cancels
+        });
+      }
+    
+      function updateTaskUI(taskElement, task) {
+        taskElement.setAttribute("data-taskId", task._id)
+        taskElement.innerHTML = `
+          <div class="today-single-task-left">
+            <form class="task-form complete-status-form" action="/toggle_completion/${task._id}" method="POST">
+              <button type="submit" class="completion-circle">
+                <i class="fa-regular fa-circle"></i>
+              </button>
+            </form>
+            <form class="task-form today-single-task-input-wrapper">
+              <input name="task" value="${task.task}" />
+              <button class="edit-task-btn">Edit</button>
+            </form>
+          </div>
+          <form class="task-form" action="/delete_task/${task._id}" method="POST">
+            <button type="submit" class="delete-task-btn">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </form>
+        `;
+    
+        const editButton = taskElement.querySelector(".edit-task-btn");
+        editButton.addEventListener("click", function () {
+          addNewTaskInput(task);
+          taskElement.remove();
+        });
+      }
+    
+      function getPriorityIcon(priority) {
+        if (priority === "high-priority") return "fa-plane-circle-exclamation";
+        if (priority === "medium-priority") return "fa-plane-departure";
+        return "fa-paper-plane";
+      }
 
     // Attach form submission handlers to all existing forms
     const taskForms = document.querySelectorAll(".task-form");

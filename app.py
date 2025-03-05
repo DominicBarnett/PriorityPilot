@@ -224,8 +224,8 @@ def add_task():
         return redirect(url_for("login"))
 
     user_id = get_current_user_id()
-    task = request.form.get("task")
-    priority = request.form.get("priority", "low-priority")  # Default to "low-priority"
+    task = request.json.get("task")
+    priority = request.json.get("priority", "low-priority")  # Default to "low-priority"
 
     # Debug output
     print(f"Adding task: {task} with priority {priority} for user {user_id}")
@@ -236,7 +236,7 @@ def add_task():
     priority_id = str(priority_doc["_id"]) if priority_doc else None
 
     # Store user_id as string to match query format
-    mongo.db.tasks.insert_one(
+    new_task = mongo.db.tasks.insert_one(
         {
             "user_id": str(user_id),  # Explicitly store as string
             "task": task,
@@ -246,8 +246,8 @@ def add_task():
             "due_date": datetime.combine(datetime.now().date(), time(23, 59, 59)) 
         }
     )
-
-    return "", 204  # Return an empty response with status code 204 (No Content)
+    print("this is the form", request.form, flush=True)
+    return jsonify({"_id": str(new_task.inserted_id), "task": task}), 201  # Return an empty response with status code 204 (No Content)
 
 @app.route("/update-task/<task_id>", methods=["POST"])
 def update_task(task_id):

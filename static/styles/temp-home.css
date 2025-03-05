@@ -163,23 +163,23 @@ main {
 }
 
 /* For scrolling styling */
-.today-all-tasks-wrapper {
+#today-all-tasks-wrapper {
   overflow-y: auto; 
   flex-grow: 1; 
   padding-right: 5px; 
 }
 
 /* Add a custom scrollbar style */
-.today-all-tasks-wrapper::-webkit-scrollbar {
+#today-all-tasks-wrapper::-webkit-scrollbar {
   width: 6px;
 }
 
-.today-all-tasks-wrapper::-webkit-scrollbar-track {
+#today-all-tasks-wrapper::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.3);
   border-radius: 10px;
 }
 
-.today-all-tasks-wrapper::-webkit-scrollbar-thumb {
+#today-all-tasks-wrapper::-webkit-scrollbar-thumb {
   background: var(--sidebar-clr);
   border-radius: 10px;
 }
