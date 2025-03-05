@@ -316,7 +316,7 @@ document.addEventListener("DOMContentLoaded", async() => {
           
           if (taskId !== "None") {
             // Task already exists, update it
-            response = await fetch(`/update_task/${taskId}`, {
+            response = await fetch(`/update-task/${taskId}`, {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",
