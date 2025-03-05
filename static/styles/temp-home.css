@@ -336,7 +336,7 @@ main {
   position: absolute;
   text-decoration: none;
   list-style: none;
-  background-color: var(--container-clr);
+  background-color: var(--main-clr);
   padding: 0.5rem;
   z-index: 2;
   border-radius: 10px;

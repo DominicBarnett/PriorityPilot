@@ -42,7 +42,9 @@
   </head>
   <body>
     <div>{% include 'sidebar.html' %}</div>
+
     <main>
+    <div id="main-content-wrapper">
       <div id="left-side-wrapper">
         <div class="flight-board-wrapper">
           <table>
@@ -83,11 +85,11 @@
         </div>
         <div class="cabin-pressure-wrapper">
           <h2>Cabin Pressure</h2>
-          <div class="guague-wraper">
+          <div class="gauge-wrapper">
             <div class="gauge-container">
               <svg width="200" height="200" viewBox="0 0 100 100">
                   <!-- Background Arc -->
-                  <path d="M 20,80 A 40,40 0 1,1 80,80" stroke="#ddd" stroke-width="8" fill="none"/>
+                  <path d="M 20,80 A 40,40 0 1,1 80,80" stroke="#a3c7e0" stroke-width="8" fill="none"/>
                   <!-- Dynamic Arc -->
                   <path id="progress" d="M 20,80 A 40,40 0 1,1 80,80" stroke="#3498db" stroke-width="8" fill="none"
                       stroke-dasharray="180" stroke-dashoffset="180" stroke-linecap="round"/>
@@ -103,10 +105,10 @@
         <div class="profile-header">
           <img
             id="header-icon"
-            src="../static/images/airplane-icon.png"
-            alt="black airplane icon"
+            src="../static/images/prioritypilot-logo.svg"
+            alt="priority pilot icon"
           />
-          <h1>Pilot Stats</h1>
+          <h1>PILOT STATS</h1>
         </div>
         <div class="arrival-departure-info">
           <div>
@@ -125,7 +127,7 @@
             <h3>Passenger:</h3>
             <div class="passenger-info">
               <h2 id="user-first-name"></h2>
-              <h3 id="user-username"></h3>
+              <h1 id="user-username"></h1>
             </div>
           </div>
           <div>
@@ -145,6 +147,7 @@
           <img src="../static/images/barcode.webp" alt="barcode" id="barcode" />
         </div>
       </div>
+    </div>
     </main>
   </body>
 </html>
