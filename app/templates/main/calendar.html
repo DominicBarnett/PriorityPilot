@@ -35,11 +35,11 @@
     <script src="{{ url_for('static', filename='js/calendar.js') }}"></script>
 
     <!-- STYLES -->
-    <link rel="stylesheet" href="../static/styles/sidebar.css" />
-    <link rel="stylesheet" href="../static/styles/calendar.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/sidebar.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/calendar.css') }}" />
   </head>
   <body>
-    <div>{% include 'sidebar.html' %}</div>
+    <div>{% include 'partials/sidebar.html' %}</div>
     <main>
         <div>
             <div id="calendar"></div>

@@ -30,8 +30,8 @@
 
     <!-- STYLES -->
     <!-- <link href="../static/styles/temp-home.css" rel="stylesheet" /> -->
-    <link rel="stylesheet" href="../static/styles/sidebar.css" />
-    <link rel="stylesheet" href="../static/styles/temp-home.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/sidebar.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/temp-home.css') }}" />
 
     <!-- FONT AWESOME -->
     <link
@@ -51,7 +51,7 @@
     ></script>
   </head>
   <body>
-    <div>{% include 'sidebar.html' %}</div>
+    <div>{% include 'partials/sidebar.html' %}</div>
 
     <main>
       <div id="main-content-wrapper">

@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Todo-Lists - {{ heading }}</title>
-  <link rel="stylesheet" href="../static/styles/todo-list.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/todo-list.css') }}">
   <script src="{{ url_for('static', filename='js/sidebar.js') }}" defer></script>
 </head>
 <body>
   <div>
-    {% include 'sidebar.html' %}
+    {% include 'partials/sidebar.html' %}
   </div>
   <main>
     <h1 class="header">{{ heading }}</h1>

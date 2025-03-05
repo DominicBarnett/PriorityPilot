@@ -24,8 +24,8 @@
 
     <!-- STYLES -->
     <!-- <link href="../static/styles/temp-home.css" rel="stylesheet" /> -->
-    <link rel="stylesheet" href="../static/styles/sidebar.css" />
-    <link rel="stylesheet" href="../static/styles/profile.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/sidebar.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/profile.css') }}" />
 
     <!-- FONT AWESOME -->
     <link
@@ -41,7 +41,7 @@
     <script type="module" src="{{url_for('static', filename='js/profile.js') }}"></script>
   </head>
   <body>
-    <div>{% include 'sidebar.html' %}</div>
+    <div>{% include 'partials/sidebar.html' %}</div>
     <main>
       <div id="left-side-wrapper">
         <div class="flight-board-wrapper">
@@ -101,11 +101,7 @@
       </div>
       <div id="right-side-wrapper">
         <div class="profile-header">
-          <img
-            id="header-icon"
-            src="../static/images/airplane-icon.png"
-            alt="black airplane icon"
-          />
+          <img id="header-icon" src="{{ url_for('static', filename='images/airplane-icon.png') }}" alt="black airplane icon" />
           <h1>Pilot Stats</h1>
         </div>
         <div class="arrival-departure-info">
@@ -142,7 +138,7 @@
           </div>
         </div>
         <div>
-          <img src="../static/images/barcode.webp" alt="barcode" id="barcode" />
+          <img src="{{ url_for('static', filename='images/barcode.webp') }}" alt="barcode" id="barcode" />
         </div>
       </div>
     </main>

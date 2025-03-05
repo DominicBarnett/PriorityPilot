@@ -22,7 +22,7 @@
         <h1 id="log-in-header">Sign up</h1>
         
         <!-- ✅ Ensuring the form submits to the correct route -->
-        <form class="login-form" action="{{ url_for('register') }}" method="POST">
+        <form class="login-form" action="{{ url_for('auth.register') }}" method="POST">
           
           <!-- Full Name Fields (Keeping original ID names) -->
           <div id="full-name-inputs-wraper">
@@ -79,7 +79,7 @@
         <!-- Login Link -->
         <div class="login-button-footer">
           <p>Have an account?</p>
-          <a href="{{ url_for('login') }}">
+          <a href="{{ url_for('auth.login') }}">
             <button>Log in</button>
           </a>
         </div>
