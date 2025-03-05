@@ -1,3 +1,8 @@
+:root {
+  --font-size-text: 1.75vh;
+}
+
+
 * {
   font-family: "Quicksand", serif;
   font-style: normal;
@@ -16,8 +21,7 @@
   font-size: 10vh;
   /* text-shadow: -15px 30px 8px #DDDDDD; */
   margin: 0;
-  /* margin-bottom: 1vh; */
-  text-align: center;
+  margin-bottom: 1vh;
 }
 
 #login-main-content {
@@ -26,7 +30,7 @@
   flex-direction: column;
   width: 30%;
   align-items: center;
-  height: 80%;
+  height: 70%;
   background-color: white;
   box-sizing: border-box;
   padding: 2rem;
@@ -64,12 +68,12 @@
   width: 100%;
   padding: 1rem;
   box-sizing: border-box;
-  font-size: 1.75vh;
+  font-size: var(--font-size-text);
 }
 
 .form-input-wrapper > label {
   font-weight: 400;
-  font-size: 2.5vh;
+  font-size: var(--font-size-text);
   margin-bottom: 0.5vh;
 }
 
@@ -85,7 +89,7 @@
 
 .form-button-wrapper > button {
   font-weight: 400;
-  font-size: 2vh;
+  font-size: var(--font-size-text);
   padding: 10px;
   border-radius: 10px;
   border-color: transparent;
@@ -97,13 +101,18 @@
 .login-button-footer {
   margin-top: 2vh;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   justify-content: center;
   align-items: center;
   text-align: center;
 }
 
-.login-button-footer > p {
+.login-button-footer a {
+  margin-left: 0.5rem;
+}
+
+
+/* .login-button-footer > p {
   font-size: 2vh;
   font-weight: 400;
   margin: 0;
@@ -118,7 +127,7 @@
   border-color: transparent;
   background-color: black;
   color: white;
-}
+} */
 
 .cloud {
   position: absolute;
@@ -158,7 +167,7 @@
 
 #forgot-password-link {
   text-decoration: none;
-  font-size: 2vh;
+  font-size: var(--font-size-text);
   text-align: right;
   width: 100%;
   margin-top: 5px;

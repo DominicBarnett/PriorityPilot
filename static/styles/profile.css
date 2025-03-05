@@ -1,37 +1,48 @@
-.profile-header {
+:root {
+  --font-primary: "Quicksand", serif;
+  --font-title: "Luckiest Guy", serif;
+  --font-cloud: "CloudFont", sans-serif;
+  --font-secondary: "Liter", serif;
+  --main-clr: #a3c7e0;
+  --background-clr: #6a9dd7;
+  --sidebar-clr: #3a7d9c;
+  --lightgreen-clr: #239a7a;
+  --darkgreen-clr: #1c6d4d;
+  --text-clr: white;
+  --extra-clr: #005f6b;
+  --accent-clr: #FFD166;
+  --hover-clr: #1E5B74;
+  --hover-txt-clr: #FFD166;
+  --font-size: 2vh;
+  --profile-clr: rgba(255, 255, 255, 0.678);
+}
+
+#main-content-wrapper {
+  width: 100%;
+  height: 92vh;
+  padding: 0 10px;
   display: flex;
-  column-gap: 1vw;
-  align-items: center;
-}
-
-#header-icon {
-  width: 3vw;
-  aspect-ratio: 1 / 1;
-  padding: 1vh;
-  border-radius: 15px;
-  border: 2px solid black;
-}
-
-.profile-header h1 {
-  font-size: 3vw;
-  margin: 0;
+  flex-direction: row;
+  border-radius: 1.5rem;
+  background-color: transparent;
+  justify-content: space-between;
 }
 
 main {
-  padding: 2vh;
-  display: grid;
-  grid-template-columns: 70% 30%;
-  column-gap: 1vw;
-  box-sizing: border-box;
-  width: calc(100% - 20px);
+  margin: 2rem 0rem;
+  padding: 0;
+  width: 77vw;
+  height: 92vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 main > div {
   background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 15px;
+  border-radius: 1.5rem;
   box-sizing: border-box;
   padding: 10px;
-  height: 100%;
 }
 
 #left-side-wrapper {
@@ -39,6 +50,15 @@ main > div {
   grid-template-rows: 1fr 1fr;
   box-sizing: border-box;
   row-gap: 10px;
+  width: 75%;
+  height: 92vh;
+  margin-right: 1.5rem;
+}
+
+.flight-board-wrapper {
+  width: 100%;
+  border-radius: 1.5rem;
+  background-color: var(--profile-clr);
 }
 
 .flight-board-header {
@@ -53,7 +73,7 @@ main > div {
 
 h2 {
   font-size: 2vw;
-  margin: 0;
+  margin-top: 1rem;
 }
 
 table * {
@@ -64,20 +84,19 @@ table * {
 
 table {
   width: 100%;
-  border-spacing: 0;
   background-color: #3a7d9c; /* Darker blue background for better contrast */
   color: #f5e6d3; /* Cream color for text (lighter for readability) */
-  font-size: 1.5em;
+  font-size: var(--font-size);
   border: 2px solid #239a7a; /* Greenish-blue border for harmony */
   table-layout: fixed;
-  border-radius: 15px;
+  border-radius: 1.5rem;
   overflow: hidden;
 }
 
 th,
 td {
   padding: 20px;
-  text-align: left;
+  text-align: center;
   border-bottom: 2px solid #1c6d4d; /* Dark green for row borders */
   width: 25%;
 }
@@ -85,7 +104,7 @@ td {
 thead {
   background-color: #239a7a; /* Green for table header */
   text-transform: uppercase;
-  font-size: 1.5rem;
+  font-size: var(--font-size);
 }
 
 tbody tr:nth-child(even) {
@@ -131,58 +150,32 @@ tr:last-of-type td {
   color: white;
 }
 
-#barcode {
-  width: 100%;
-  height: 6rem;
-  object-fit: cover;
-}
 
+
+/* cabin pressure container */
 .cabin-pressure-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border: 2px solid #239a7a; /* Greenish-blue border for harmony */
-  height: 100%;
+  height: 40.8vh;
+  width: 100%;
   flex-shrink: 1;
-  border-radius: 15px;
-}
-
-.arrival-departure-info {
-  display: flex;
-  flex-direction: column;
-  row-gap: 3vh;
-  margin: 3vh 0;
-}
-
-.arrival-departure-info > div {
-  display: flex;
-  justify-content: space-between;
-}
-
-.passenger-info {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: center;
-}
-.arrival-departure-info > div > h3 {
-  text-transform: uppercase;
-}
-
-#right-side-wrapper {
-  display: grid;
-  grid-template-rows: 100px 1fr 150px;
+  border-radius: 1.5rem;
+  background-color: var(--profile-clr);
+  box-sizing: border-box;
 }
 
 .gauge-container {
   position: relative;
+  /* height: 30vh; */
 }
 
 .needle {
   position: absolute;
   width: 6px;
-  height: 130px;
+  height: 10.8vh;
   background: red;
   bottom: 50px;
   left: 50%;
@@ -198,17 +191,127 @@ tr:last-of-type td {
   text-align: center;
   font-size: 24px;
   font-family: sans-serif;
-  color: white;
+  color: black;
   bottom: 50px;
 }
 
-.guague-wraper {
+.guage-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .gauge-container > svg {
-  width: 300px;
-  height: 300px;
+  width: 20vw;
+  height: 30vh;
+}
+
+
+
+/* RIGHT-SIDE */
+
+#right-side-wrapper {
+  display: grid;
+  grid-template-rows: auto 1fr auto; 
+  background-color: var(--profile-clr);
+  border-radius: 1.5rem;
+  padding: 1rem;
+  width: 30%;
+  box-sizing: border-box;
+  overflow: hidden; 
+  height: 92vh;
+  
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem; 
+  padding-bottom: 0.5rem;
+}
+
+#header-icon {
+  width: 3.5rem; 
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+}
+
+.profile-header h1 {
+  font-size: 1.8rem;
+  margin: 0;
+  color: var(--sidebar-clr);
+  font-weight: bold;
+  
+}
+
+.arrival-departure-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  overflow-y: auto; 
+  padding-right: 0.5rem;
+  justify-content: center;
+  height: 100%;
+}
+
+.arrival-departure-info > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(58, 125, 156, 0.2); /* Subtle dividers */
+}
+
+.arrival-departure-info h3 {
+  text-transform: uppercase;
+  font-size: 1rem;
+  color: var(--sidebar-clr);
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: 0.03rem;
+}
+
+.arrival-departure-info h2, h1 {
+  font-size: 1.3rem;
+  color: var(--hover-clr);
+  margin: 0;
+  text-align: right;
+  font-weight: bold;
+}
+
+.passenger-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.2rem; /* Small gap between elements */
+}
+
+.passenger-info h2, 
+.passenger-info h3 {
+  margin: 0;
+}
+
+#barcode {
+  width: 100%;
+  height: 5rem; /* Slightly smaller */
+  object-fit: cover;
+  border-radius: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 1200px) {
+  .arrival-departure-info h3 {
+    font-size: 0.9rem;
+  }
+  
+  .arrival-departure-info h2 {
+    font-size: 1.1rem;
+  }
+  
+  .arrival-departure-info {
+    gap: 1rem;
+  }
 }

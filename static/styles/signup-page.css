@@ -5,7 +5,7 @@
 
 @font-face {
   font-family: 'CloudFont2';
-  src: url('../fonts/InflateptxChrome-X3oPg.ttf') format('truetype');
+  src: url("../fonts/InflateptxChrome-X3oPg.ttf") format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -61,14 +61,14 @@
 
 .form-input-wrapper input {
   width: 100%;
-  padding: 1rem;
+  padding: 0.8rem;
   box-sizing: border-box;
-  font-size: 1.75vh;
+  font-size: 1.8vh;
 }
 
 .form-input-wrapper > label {
   font-weight: 400;
-  font-size: 2.5vh;
+  font-size: 1.8vh;
   margin-bottom: 0.5vh;
 }
 
@@ -96,12 +96,16 @@
 .login-button-footer {
   margin-top: 2vh;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   justify-content: center;
   align-items: center;
   text-align: center;
 }
 
+.login-button-footer a {
+  margin-left: 0.5rem;
+}
+/* 
 .login-button-footer > p {
   font-size: 2vh;
   font-weight: 400;
@@ -117,7 +121,7 @@
   border-color: transparent;
   background-color: black;
   color: white;
-}
+} */
 
 .cloud {
   position: absolute;
