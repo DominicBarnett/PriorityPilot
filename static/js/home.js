@@ -74,6 +74,7 @@ function setupPriorityMenu(wrapper) {
 
           button.innerHTML = option.innerHTML; // Update button icon
           hiddenInput.value = selectedPriority; // Correctly update hidden input
+          console.log("this was selected", selectedPriority)
           priorityMenu.classList.add("hidden"); // Hide menu
       });
   });
@@ -358,7 +359,7 @@ document.addEventListener("DOMContentLoaded", async() => {
       </form>
 
       <!-- Task input form -->
-      <form class="task-form today-single-task-input-wrapper" action="/update_task/${task._id}" method="POST">
+      <form class="task-form today-single-task-input-wrapper" action="/update-task/${task._id}" method="POST">
         <input
           name="task"
           value="${task ? task.task : ""}"
@@ -399,6 +400,9 @@ document.addEventListener("DOMContentLoaded", async() => {
         taskForms.forEach((form) => {
             form.addEventListener("submit", handleFormSubmit);
         });    
+
+        const priorityWrapper = taskElement.querySelector(".custom-priority-wrapper");
+        setupPriorityMenu(priorityWrapper);
       }
     
       function getPriorityIcon(priority) {
