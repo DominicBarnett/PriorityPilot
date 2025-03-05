@@ -463,8 +463,8 @@ ul {
   cursor: pointer;
 }
 
-/* Show save button when the input is in focus */
-.today-single-task-input-wrapper:focus-within .save-task-btn {
+/* Show save button when the hovering over task wrapper */
+.today-single-task-wrapper:hover .save-task-btn {
   visibility: visible;
   opacity: 1;
 }

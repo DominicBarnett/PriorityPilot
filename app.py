@@ -247,7 +247,7 @@ def add_task():
         }
     )
     print("this is the form", request.form, flush=True)
-    return jsonify({"_id": str(new_task.inserted_id), "task": task}), 201  # Return an empty response with status code 204 (No Content)
+    return jsonify({"_id": str(new_task.inserted_id), "task": task, "priority": priority}), 201  # Return an empty response with status code 204 (No Content)
 
 @app.route("/update-task/<task_id>", methods=["POST"])
 def update_task(task_id):

@@ -57,7 +57,8 @@ function setupPriorityMenu(wrapper) {
       return; // Stop execution to prevent further errors
   }
 
-  button.addEventListener("click", () => {
+  button.addEventListener("click", (e) => {
+    e.stopPropagation();
       priorityMenu.classList.toggle("hidden");
   });
 
@@ -127,16 +128,72 @@ function handleFormSubmit(event) {
       method: form.method,
       body: formData,
   })
-  .then((response) => {
-      if (response.ok) {
-          window.location.reload();
-      } else {
-          console.error("Error:", response.statusText);
-      }
+  .then(response =>{
+    if (response.ok) {
+          // If it's a completion toggle, update UI accordingly
+          if (form.classList.contains("complete-status-form")) {
+            const taskWrapper = form.closest(".today-single-task-wrapper");
+            taskWrapper.style.display = "none";
+        }
+    } else {
+        console.error("Error:", data.error);
+    }
   })
-  .catch((error) => console.error("Error:", error));
+  .catch(error => console.error("Error:", error));
 }
 
+function trackCompleteTaskButton(button) {
+    button.addEventListener("click", (event) => {
+        event.preventDefault(); // Prevent default form submission
+
+        const taskWrapper = button.closest(".today-single-task-wrapper");
+        const taskId = taskWrapper.getAttribute("data-taskId");
+
+        fetch(`/toggle-completion/${taskId}`, { method: "POST" })
+            .then((response) => {
+                if (response.ok) {
+                    // Toggle the completion circle
+                    const icon = button.querySelector("i");
+                    const isCompleting = icon.classList.contains("fa-regular");
+
+                    icon.classList.toggle("fa-regular");
+                    icon.classList.toggle("fa-solid");
+                    icon.classList.toggle("fa-circle-check");
+                    icon.classList.toggle("fa-circle");
+
+                    // Apply strike-through for completed tasks
+                    const taskInput = button
+                        .closest(".today-single-task-wrapper")
+                        .querySelector("input[name='task']");
+                    taskInput.classList.toggle("task-completed");
+
+                    // Update task summary
+                    const completedTasksToday = document.querySelector(".home-main-tasks-summary h3:nth-child(3)");
+                    if (completedTasksToday) {
+                        let count = parseInt(completedTasksToday.textContent.split(" ")[0]);
+
+                        // // If we're completing a task, increment; if uncompleting, decrement
+                        // if (isCompleting) {
+                        //     completedCount += 1;
+                        //     overdueCount = Math.max(0, overdueCount - 1); // Decrease overdue count
+                        // } else {
+                        //     completedCount = Math.max(0, completedCount - 1);
+                        //     overdueCount += 1; // Increase overdue count back
+                        // }
+
+                        completedTasksToday.textContent = `${count} completed today`;
+                    }
+
+                    // Remove the task from the list if completed
+                    if (isCompleting) {
+                        const taskWrapper = button.closest(".today-single-task-wrapper");
+                        taskWrapper.style.display = "none";
+                    }
+                }
+            })
+            .catch((error) => console.error("Error:", error));
+    });
+}
 
 // DOMContentLoaded event listener
 document.addEventListener("DOMContentLoaded", async() => {
@@ -151,56 +208,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 
     // In the event listener for completion buttons
     completionButtons.forEach((button) => {
-        button.addEventListener("click", (event) => {
-            event.preventDefault(); // Prevent default form submission
-    
-            const form = button.closest("form");
-            const taskId = form.action.split("/").pop(); // Get the task ID from the form action
-    
-            fetch(`/toggle-completion/${taskId}`, { method: "POST" })
-                .then((response) => {
-                    if (response.ok) {
-                        // Toggle the completion circle
-                        const icon = button.querySelector("i");
-                        const isCompleting = icon.classList.contains("fa-regular");
-    
-                        icon.classList.toggle("fa-regular");
-                        icon.classList.toggle("fa-solid");
-                        icon.classList.toggle("fa-circle-check");
-                        icon.classList.toggle("fa-circle");
-    
-                        // Apply strike-through for completed tasks
-                        const taskInput = button
-                            .closest(".today-single-task-wrapper")
-                            .querySelector("input[name='task']");
-                        taskInput.classList.toggle("task-completed");
-    
-                        // Update task summary
-                        const completedTasksToday = document.querySelector(".home-main-tasks-summary h3:nth-child(3)");
-                        if (completedTasksToday) {
-                            let count = parseInt(completedTasksToday.textContent.split(" ")[0]);
-    
-                            // If we're completing a task, increment; if uncompleting, decrement
-                            if (isCompleting) {
-                                completedCount += 1;
-                                overdueCount = Math.max(0, overdueCount - 1); // Decrease overdue count
-                            } else {
-                                completedCount = Math.max(0, completedCount - 1);
-                                overdueCount += 1; // Increase overdue count back
-                            }
-    
-                            completedTasksToday.textContent = `${count} completed today`;
-                        }
-    
-                        // Remove the task from the list if completed
-                        if (isCompleting) {
-                            const taskWrapper = button.closest(".today-single-task-wrapper");
-                            taskWrapper.style.display = "none";
-                        }
-                    }
-                })
-                .catch((error) => console.error("Error:", error));
-        });
+        trackCompleteTaskButton(button)
     });
     
 
@@ -271,8 +279,22 @@ document.addEventListener("DOMContentLoaded", async() => {
         <i class="fa-solid fa-trash"></i>
       </button>
     </form>
-        `;
+        `
+        const taskForms = taskElement.querySelectorAll(".task-form");
+        taskForms.forEach((form) => {
+            form.addEventListener("submit", handleFormSubmit);
+        });
     
+        ;
+
+        // track priority button click
+        const priorityWrapper = taskElement.querySelector(".custom-priority-wrapper");
+        setupPriorityMenu(priorityWrapper);
+        
+        // track complete button click
+        const completionButton = taskElement.querySelector(".completion-circle");
+        trackCompleteTaskButton(completionButton)
+
         taskListContainer.prepend(taskElement);
         taskElement.querySelector("[name='task']").focus()
     
@@ -284,6 +306,8 @@ document.addEventListener("DOMContentLoaded", async() => {
             e.preventDefault()
           const taskName = taskInput.value.trim();
           const taskId = taskElement.getAttribute("data-taskId")
+          const priorityInput = taskElement.querySelector("[name='priority']");
+          const priority = priorityInput.value || "low-priority";
 
           if (!taskName) return
     
@@ -297,17 +321,16 @@ document.addEventListener("DOMContentLoaded", async() => {
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ task: taskName, priority: "low-priority" }),
+              body: JSON.stringify({ task: taskName, priority }),
             });
           } else {
-            console.log("in else", taskName)
             // New task, create it
             response = await fetch("/add-task", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ task: taskName, priority: "low-priority" }),
+              body: JSON.stringify({ task: taskName, priority }),
             });
           }
     
@@ -328,14 +351,14 @@ document.addEventListener("DOMContentLoaded", async() => {
         taskElement.setAttribute("data-taskId", task._id)
         taskElement.innerHTML = `
     <div class="today-single-task-left">
-      <form class="task-form complete-status-form"">
+      <form class="task-form complete-status-form"" action="/toggle-completion/${task._id}" method="POST">
         <button type="submit" class="completion-circle">
           <i class="fa-regular fa-circle"></i>
         </button>
       </form>
 
       <!-- Task input form -->
-      <form class="task-form today-single-task-input-wrapper">
+      <form class="task-form today-single-task-input-wrapper" action="/update_task/${task._id}" method="POST">
         <input
           name="task"
           value="${task ? task.task : ""}"
@@ -372,12 +395,10 @@ document.addEventListener("DOMContentLoaded", async() => {
       </button>
     </form>
         `;
-    
-        const editButton = taskElement.querySelector(".edit-task-btn");
-        editButton.addEventListener("click", function () {
-          addNewTaskInput(task);
-          taskElement.remove();
-        });
+        const taskForms = taskElement.querySelectorAll(".task-form");
+        taskForms.forEach((form) => {
+            form.addEventListener("submit", handleFormSubmit);
+        });    
       }
     
       function getPriorityIcon(priority) {
