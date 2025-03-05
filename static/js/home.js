@@ -148,40 +148,39 @@ document.addEventListener("DOMContentLoaded", async() => {
 
     // Toggle task completion
     const completionButtons = document.querySelectorAll(".completion-circle");
+
     // In the event listener for completion buttons
     completionButtons.forEach((button) => {
         button.addEventListener("click", (event) => {
             event.preventDefault(); // Prevent default form submission
-
+    
             const form = button.closest("form");
             const taskId = form.action.split("/").pop(); // Get the task ID from the form action
-
+    
             fetch(`/toggle-completion/${taskId}`, { method: "POST" })
                 .then((response) => {
                     if (response.ok) {
                         // Toggle the completion circle
                         const icon = button.querySelector("i");
                         const isCompleting = icon.classList.contains("fa-regular");
-                        
+    
                         icon.classList.toggle("fa-regular");
                         icon.classList.toggle("fa-solid");
                         icon.classList.toggle("fa-circle-check");
                         icon.classList.toggle("fa-circle");
-
+    
                         // Apply strike-through for completed tasks
                         const taskInput = button
                             .closest(".today-single-task-wrapper")
                             .querySelector("input[name='task']");
                         taskInput.classList.toggle("task-completed");
-                        
-                        // Update task summary after completion toggle
-                        const completedTasksToday = document.querySelector(".home-main-tasks-summary h3:nth-child(4)");
-                        const overdueTasks = document.querySelector(".home-main-tasks-summary h3:nth-child(3)"); 
-
-                        if (completedTasksToday && overdueTasks) {
-                            let completedCount = parseInt(completedTasksToday.textContent.split(" ")[0]);
-                            let overdueCount = parseInt(overdueTasks.textContent.split(" ")[0]);
-
+    
+                        // Update task summary
+                        const completedTasksToday = document.querySelector(".home-main-tasks-summary h3:nth-child(3)");
+                        if (completedTasksToday) {
+                            let count = parseInt(completedTasksToday.textContent.split(" ")[0]);
+    
+                            // If we're completing a task, increment; if uncompleting, decrement
                             if (isCompleting) {
                                 completedCount += 1;
                                 overdueCount = Math.max(0, overdueCount - 1); // Decrease overdue count
@@ -189,16 +188,21 @@ document.addEventListener("DOMContentLoaded", async() => {
                                 completedCount = Math.max(0, completedCount - 1);
                                 overdueCount += 1; // Increase overdue count back
                             }
-
-                            completedTasksToday.textContent = `${completedCount} completed today`;
-                            overdueTasks.textContent = `${overdueCount} overdue`;
+    
+                            completedTasksToday.textContent = `${count} completed today`;
                         }
-
+    
+                        // Remove the task from the list if completed
+                        if (isCompleting) {
+                            const taskWrapper = button.closest(".today-single-task-wrapper");
+                            taskWrapper.style.display = "none";
+                        }
                     }
                 })
                 .catch((error) => console.error("Error:", error));
         });
     });
+    
 
     // Set up priority menus
     const priorityWrappers = document.querySelectorAll(".custom-priority-wrapper");

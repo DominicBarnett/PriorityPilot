@@ -78,7 +78,7 @@
               </div>
             </div>
             <div class="today-all-tasks-wrapper">
-              {% for task in tasks %}
+              {% for task in tasks if not task.completed %}
               <div
                 class="today-single-task-wrapper {% if task.overdue %}overdue{% endif %}"
               >
