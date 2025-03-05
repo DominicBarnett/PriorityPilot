@@ -131,10 +131,14 @@ function handleFormSubmit(event) {
   })
   .then(response =>{
     if (response.ok) {
-          // If it's a completion toggle, update UI accordingly
+          // If it's a completion or deletion toggle, update UI accordingly
           if (form.classList.contains("complete-status-form")) {
             const taskWrapper = form.closest(".today-single-task-wrapper");
             taskWrapper.style.display = "none";
+        } else if (form.classList.contains("delete-task-form")){
+            const taskWrapper = form.closest(".today-single-task-wrapper");
+            taskWrapper.style.display = "none";
+            removeTaskFromCount()
         }
     } else {
         console.error("Error:", data.error);
@@ -169,20 +173,17 @@ function trackCompleteTaskButton(button) {
                     taskInput.classList.toggle("task-completed");
 
                     // Update task summary
-                    const completedTasksToday = document.querySelector(".home-main-tasks-summary h3:nth-child(3)");
+                    const completedTasksToday = document.getElementById("completed-tasks-today-heading");
+                    
                     if (completedTasksToday) {
-                        let count = parseInt(completedTasksToday.textContent.split(" ")[0]);
+                        let completeCount = parseInt(completedTasksToday.textContent.split(" ")[0]);
 
-                        // // If we're completing a task, increment; if uncompleting, decrement
-                        // if (isCompleting) {
-                        //     completedCount += 1;
-                        //     overdueCount = Math.max(0, overdueCount - 1); // Decrease overdue count
-                        // } else {
-                        //     completedCount = Math.max(0, completedCount - 1);
-                        //     overdueCount += 1; // Increase overdue count back
-                        // }
+                        // If we're completing a task, increment; if uncompleting, decrement
+                        if (isCompleting) {
+                            completeCount += 1;
+                        }
 
-                        completedTasksToday.textContent = `${count} completed today`;
+                        completedTasksToday.textContent = `${completeCount} completed today`;
                     }
 
                     // Remove the task from the list if completed
@@ -275,7 +276,7 @@ document.addEventListener("DOMContentLoaded", async() => {
     </div>
 
     <!-- Delete form -->
-    <form class="task-form" action="/delete_task/${task ? task._id : ""}" method="POST">
+    <form class="task-form delete-task-form" action="/delete-task/${task ? task._id : ""}" method="POST">
       <button type="submit" class="delete-task-btn cancel-task-btn">
         <i class="fa-solid fa-trash"></i>
       </button>
@@ -338,6 +339,20 @@ document.addEventListener("DOMContentLoaded", async() => {
           if (response.ok) {
             newTask = await response.json();
             updateTaskUI(taskElement, newTask);
+
+            const totalTasksToday = document.getElementById("total-today-tasks-heading");
+            const totalIncompleteTasksToday = document.getElementById("total-task-count");
+        
+            if (totalTasksToday) {
+                let todayTaskCount = parseInt(totalTasksToday.textContent.split(" ")[0]);
+                todayTaskCount += 1;
+                totalTasksToday.textContent = `${todayTaskCount} total today`;
+            }
+            if (totalIncompleteTasksToday) {
+                let todayIncompleteTaskCount = parseInt(totalIncompleteTasksToday.textContent.split(" ")[0]);
+                todayIncompleteTaskCount += 1;
+                totalIncompleteTasksToday.textContent = `${todayIncompleteTaskCount}`;
+            }
           } else {
             alert("Failed to save task.");
           }
@@ -390,7 +405,7 @@ document.addEventListener("DOMContentLoaded", async() => {
     </div>
 
     <!-- Delete form -->
-    <form class="task-form" action="/delete_task/${task ? task._id : ""}" method="POST">
+    <form class="task-form delete-task-form" action="/delete-task/${task ? task._id : ""}" method="POST">
       <button type="submit" class="delete-task-btn cancel-task-btn">
         <i class="fa-solid fa-trash"></i>
       </button>
@@ -421,3 +436,21 @@ document.addEventListener("DOMContentLoaded", async() => {
     const currentUser = await fetchCurrentUser()
     startFlipAnimation(formatGreeting(currentUser.first_name).toUpperCase());
 });
+
+function decreaseTaskCount(element) {
+    let count
+    if (element) {
+        count = parseInt(element.textContent.split(" ")[0]) - 1;
+    }
+    return count
+}
+
+function removeTaskFromCount() {
+        const totalTasksToday = document.getElementById("total-today-tasks-heading");
+        const newTotalTodayCount = decreaseTaskCount(totalTasksToday)
+        totalTasksToday.textContent = `${newTotalTodayCount} total today`;
+
+        const totalIncompleteTasksToday = document.getElementById("total-task-count");
+        const newIncompleteTotalTodayCount = decreaseTaskCount(totalIncompleteTasksToday)
+        totalIncompleteTasksToday.textContent = `${newIncompleteTotalTodayCount}`;
+}
