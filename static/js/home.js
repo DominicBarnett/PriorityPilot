@@ -285,7 +285,7 @@ document.addEventListener("DOMContentLoaded", async() => {
           const taskName = taskInput.value.trim();
           const taskId = taskElement.getAttribute("data-taskId")
 
-          if (!taskName) return alert("Task name cannot be empty.");
+          if (!taskName) return
     
           let response;
           let newTask;
@@ -327,22 +327,50 @@ document.addEventListener("DOMContentLoaded", async() => {
       function updateTaskUI(taskElement, task) {
         taskElement.setAttribute("data-taskId", task._id)
         taskElement.innerHTML = `
-          <div class="today-single-task-left">
-            <form class="task-form complete-status-form" action="/toggle_completion/${task._id}" method="POST">
-              <button type="submit" class="completion-circle">
-                <i class="fa-regular fa-circle"></i>
-              </button>
-            </form>
-            <form class="task-form today-single-task-input-wrapper">
-              <input name="task" value="${task.task}" />
-              <button class="edit-task-btn">Edit</button>
-            </form>
-          </div>
-          <form class="task-form" action="/delete_task/${task._id}" method="POST">
-            <button type="submit" class="delete-task-btn">
-              <i class="fa-solid fa-trash"></i>
-            </button>
-          </form>
+    <div class="today-single-task-left">
+      <form class="task-form complete-status-form"">
+        <button type="submit" class="completion-circle">
+          <i class="fa-regular fa-circle"></i>
+        </button>
+      </form>
+
+      <!-- Task input form -->
+      <form class="task-form today-single-task-input-wrapper">
+        <input
+          name="task"
+          value="${task ? task.task : ""}"
+        />
+        
+        <!-- Priority Selection -->
+        <div class="custom-priority-wrapper">
+          <button class="open-priority-menu" type="button">
+            <i class="fa-solid ${getPriorityIcon(task ? task.priority : "low-priority")}"></i>
+          </button>
+          <ul class="hidden priority-options">
+            <li data-value="high-priority">
+              <i class="fa-solid fa-plane-circle-exclamation"></i>
+            </li>
+            <li data-value="medium-priority">
+              <i class="fa-solid fa-plane-departure"></i>
+            </li>
+            <li data-value="low-priority">
+              <i class="fa-solid fa-paper-plane"></i>
+            </li>
+          </ul>
+          <input type="hidden" name="priority" value="${task ? task.priority : "low-priority"}" />
+        </div>
+
+        <!-- Save button -->
+        <button type="submit" class="save-task-btn">Save</button>
+      </form>
+    </div>
+
+    <!-- Delete form -->
+    <form class="task-form" action="/delete_task/${task ? task._id : ""}" method="POST">
+      <button type="submit" class="delete-task-btn cancel-task-btn">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+    </form>
         `;
     
         const editButton = taskElement.querySelector(".edit-task-btn");

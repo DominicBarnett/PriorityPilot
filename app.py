@@ -180,7 +180,7 @@ def home():
         return redirect(url_for("login"))
 
     # Fixed: Changed ObjectId(user["_id"]) to str(user["_id"]) to match storage format
-    tasks = list(mongo.db.tasks.find({"user_id": str(user["_id"])}))
+    tasks = list(mongo.db.tasks.find({"user_id": str(user["_id"])}).sort("_id", -1))
     
     # Debug output
     print(f"User ID: {str(user['_id'])}")
