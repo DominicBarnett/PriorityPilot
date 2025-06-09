@@ -83,8 +83,6 @@ docker-compose up --build
 - **Environment Variables**: Set in `.env` (see `.env.example`)
   - `SECRET_KEY`
   - `MONGO_URI`
-  - `MAIL_USERNAME`
-  - `MAIL_PASSWORD`
 
 ---
 
