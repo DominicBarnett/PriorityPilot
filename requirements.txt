@@ -4,3 +4,4 @@ Werkzeug
 python-dotenv
 Flask-Mail
 python-dotenv
+"pymongo[srv]"
